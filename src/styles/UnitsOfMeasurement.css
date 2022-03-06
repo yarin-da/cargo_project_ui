@@ -1,0 +1,22 @@
+.units-of-measurement-background {
+    padding-top: 25px;
+    padding-bottom: 25px;
+    background-color: #FBCEB1;
+    margin-top: 70px;
+    margin-bottom: 70px;
+}
+
+.units-of-measurement-title {
+    margin-bottom: 70px;
+    color: black;
+    font-weight: bold;
+    font-size: 18px;
+    margin-left: 8%;
+    display: flex;
+}
+
+.toggle-buttons {
+    display: flex;
+    justify-content: space-evenly;
+    width: 65%;
+}

@@ -1,0 +1,30 @@
+.add-package-background {
+    background-color: #D3D3D3;
+    padding-bottom: 15px;
+    padding-top: 15px;
+    margin-bottom: 70px;
+    /*margin-top: 70px;*/
+}
+
+.add-package-title {
+    color: black;
+    font-weight: bold;
+    font-size: 18px;
+    margin-left: 8%;
+    display: flex;
+    margin-bottom: 70px;
+}
+
+.package-text-filed {
+    justify-content: space-evenly;
+    width: 80%;
+    margin-bottom: 50px;
+}
+
+.toggles-package {
+    display: flex;
+    justify-content: space-evenly;
+    width: 40%;
+    margin-left: 8%;
+    margin-bottom: 30px;
+}

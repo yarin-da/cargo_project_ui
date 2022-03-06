@@ -1,0 +1,79 @@
+.rectangle {
+    width: 96%;
+    height: 10%;
+    background: dimgrey;
+    position: absolute;
+    top: 6%;
+    border-radius: 20px;
+    opacity: 0.45;
+    display: flex;
+
+}
+
+.head {
+    display: flex;
+    justify-content: center;
+}
+
+.logo {
+    position: absolute;
+    top: 7%;
+    left: 5%;
+}
+
+.home {
+    position: absolute;
+    color: white;
+    top: 9%;
+    left: 50%;
+}
+
+.home:hover {
+    color: black;
+    cursor: pointer;
+}
+
+.support {
+    position: absolute;
+    color: white;
+    top: 9%;
+    left: 60%;
+
+}
+
+.support:hover {
+    color: black;
+    cursor: pointer;
+}
+
+.products {
+    position: absolute;
+    color: white;
+    top: 9%;
+    left: 70%;
+}
+
+.products:hover {
+    color: black;
+    /*text-shadow: 2px 2px black;*/
+    cursor: pointer;
+}
+
+.upload-button {
+    position: absolute;
+    color: white;
+
+}
+
+.text-on-image {
+    font-size: 55px;
+    position: absolute;
+    text-align: left;
+    top: 25%;
+    bottom: 20px;
+    left: 12%;
+    color: white;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+

@@ -1,0 +1,25 @@
+.add-cargo-title {
+    color: black;
+    font-weight: bold;
+    font-size: 18px;
+    /*margin-top: 80px;*/
+    margin-left: 8%;
+    display: flex;
+    margin-bottom: 70px;
+}
+
+.add-cargo-background {
+    padding-top: 25px;
+    padding-bottom: 20px;
+    background-color: #a2c5d6;
+    margin-top: 70px;
+    margin-bottom: 70px;
+}
+
+.cargo-text-filed {
+    margin-bottom: 100px;
+    display: flex;
+    margin-left: 8%;
+    justify-content: space-evenly;
+    width: 80%;
+}
