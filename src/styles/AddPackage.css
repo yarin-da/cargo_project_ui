@@ -1,9 +1,23 @@
 .add-package-background {
     background-color: #D3D3D3;
-    padding-bottom: 15px;
-    padding-top: 15px;
+    padding-bottom: 20px;
+    padding-top: 25px;
     margin-bottom: 70px;
     /*margin-top: 70px;*/
+}
+
+.row1 {
+    justify-content: space-evenly;
+    display: flex;
+    margin-left: 8%;
+    width: 80%;
+}
+
+.row2 {
+    justify-content: space-evenly;
+    display: flex;
+    width: 51%;
+    margin-left: 8%;
 }
 
 .add-package-title {
@@ -12,19 +26,23 @@
     font-size: 18px;
     margin-left: 8%;
     display: flex;
-    margin-bottom: 70px;
+    margin-bottom: 20px;
 }
 
 .package-text-filed {
-    justify-content: space-evenly;
-    width: 80%;
-    margin-bottom: 50px;
+    margin-bottom: 55px;
 }
 
 .toggles-package {
     display: flex;
     justify-content: space-evenly;
     width: 40%;
-    margin-left: 8%;
+    margin-left: 7%;
     margin-bottom: 30px;
+}
+
+.cancel-button {
+    alignment: right;
+    margin-bottom: 20px;
+    margin-left: 87%;
 }

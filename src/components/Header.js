@@ -1,7 +1,6 @@
 import background from './images/background.jpeg'
 import logo from './images/logo.png'
 import '../styles/Header.css'
-import Button from '@mui/material/Button';
 import UploadFileButton from "./UploadFileButton";
 
 
@@ -14,7 +13,7 @@ const Header = () => {
             <div className="products">products</div>
             <img className="logo" src={logo} width="25%" height="8%"/>
             <div className="text">
-                <img src={background}  width="100%" height="100%"/>
+                <img src={background}  className="image" width="100%" height="auto"/>
                 <h1 className="text-on-image">
                     LET YOUR SUCCESS <br/>
                     RIDE WITH US.<br/>

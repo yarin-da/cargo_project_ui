@@ -3,6 +3,8 @@ import Header from './components/Header';
 import UnitsOfMeasurement from "./components/UnitsOfMeasurement";
 import AddCargo from "./components/AddCargo";
 import AddPackage from "./components/AddPackage";
+import ConfirmButton from "./components/ConfirmButton";
+import PackagesList from "./components/PackagesList";
 
 function App() {
   return (
@@ -10,7 +12,10 @@ function App() {
       <Header/>
         <UnitsOfMeasurement/>
         <AddCargo/>
-      <AddPackage/>
+
+      {/*<AddPackage/>*/}
+        <PackagesList/>
+        <ConfirmButton/>
     </div>
 
   );

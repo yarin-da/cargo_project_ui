@@ -1,3 +1,11 @@
+.image {
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background: no-repeat center center fixed;
+}
+
 .rectangle {
     width: 96%;
     height: 10%;
