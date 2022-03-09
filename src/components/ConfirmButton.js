@@ -10,7 +10,11 @@ const buttonStyle = {
 }
 
 function sendData() {
+    let amount = document.getElementById('package-amount').toString();
+    console.log(amount)
+    if (amount.indexOf('.') > -1) {
 
+    }
 }
 
 const ConfirmButton = () => {
@@ -27,8 +31,6 @@ const ConfirmButton = () => {
             </Button>
         </div>
     )
-
-
 };
 
 export default ConfirmButton;

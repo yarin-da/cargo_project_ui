@@ -23,24 +23,28 @@ const AddCargo = () => {
                     className="cargo-width"
                     id="cargo-width"
                     label="Width"
+                    type="number"
                     style={textFieldStyle}
                     variant="standard" />
                 <TextField
                     className="cargo-depth"
                     id="cargo-depth"
                     label="Depth"
+                    type="number"
                     style={textFieldStyle}
                     variant="standard" />
                 <TextField
                     className="cargo-weight"
                     id="cargo-weight"
                     label="Max weight"
+                    type="number"
                     style={textFieldStyle}
                     variant="standard" />
                 <TextField
                     className="cargo-cost"
                     id="cargo-cost"
                     label="Cost"
+                    type="number"
                     style={textFieldStyle}
                     variant="standard" />
             </div>

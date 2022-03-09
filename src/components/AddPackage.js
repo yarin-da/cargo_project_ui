@@ -9,6 +9,10 @@ const textFieldStyle = {
     width: 120
 }
 
+const toggleStyle = {
+    textTransform: 'none'
+}
+
 const AddPackage = ({addButton, onAdd, onDelete}) => {
     const [canRotate, setRotate] = useState(false)
     const [canStackAbove, setCanStackAbove] = useState(false)
@@ -23,7 +27,7 @@ const AddPackage = ({addButton, onAdd, onDelete}) => {
                     false
                     :
                     <Fab aria-label="delete" size="large" onClick={onDelete}>
-                        <DeleteIcon />
+                        <DeleteIcon/>
                     </Fab>
                 }
 
@@ -39,23 +43,27 @@ const AddPackage = ({addButton, onAdd, onDelete}) => {
                     <TextField
                         id="package-width"
                         label="Width"
+                        type="number"
                         style={textFieldStyle}
-                        variant="standard" />
+                        variant="standard"/>
                     <TextField
                         id="package-depth"
                         label="Depth"
+                        type="number"
                         style={textFieldStyle}
-                        variant="standard" />
+                        variant="standard"/>
                     <TextField
                         id="package-weight"
                         label="Weight"
+                        type="number"
                         style={textFieldStyle}
-                        variant="standard" />
+                        variant="standard"/>
                     <TextField
                         id="package-amount"
                         label="Amount"
+                        type="number"
                         style={textFieldStyle}
-                        variant="standard" />
+                        variant="standard"/>
                 </div>
 
                 <br/>
@@ -63,18 +71,21 @@ const AddPackage = ({addButton, onAdd, onDelete}) => {
                     <TextField
                         id="package-priority"
                         label="Priority"
+                        type="number"
                         style={textFieldStyle}
-                        variant="standard" />
+                        variant="standard"/>
                     <TextField
                         id="package-profit"
                         label="Profit"
+                        type="number"
                         style={textFieldStyle}
-                        variant="standard" />
+                        variant="standard"/>
                     <TextField
                         id="package-type"
                         label="Type"
+                        type="text"
                         style={textFieldStyle}
-                        variant="standard" />
+                        variant="standard"/>
                 </div>
             </div>
             <div className="toggles-package">
@@ -84,6 +95,7 @@ const AddPackage = ({addButton, onAdd, onDelete}) => {
                     onChange={() => {
                         setRotate(!canRotate);
                     }}
+                    style={toggleStyle}
                 >
                     Can Rotate
                 </ToggleButton>
@@ -93,13 +105,14 @@ const AddPackage = ({addButton, onAdd, onDelete}) => {
                     onChange={() => {
                         setCanStackAbove(!canStackAbove);
                     }}
+                    style={toggleStyle}
                 >
                     Can Stack Above
                 </ToggleButton>
             </div>
             {addButton ?
                 <Fab aria-label="add" onClick={onAdd}>
-                    <AddIcon />
+                    <AddIcon/>
                 </Fab>
                 :
                 false
