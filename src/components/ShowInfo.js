@@ -3,7 +3,6 @@ import InfoSharpIcon from "@mui/icons-material/InfoSharp";
 
 const iconStyle = {
     marginLeft: 20,
-    cursor: "pointer"
 }
 
 const information = "You can set up only one container. " +
