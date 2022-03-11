@@ -3,6 +3,7 @@ import AddIcon from '@material-ui/icons/Add';
 import '../styles/AddPackage.css'
 import ToggleButton from "@mui/material/ToggleButton";
 import DeleteIcon from '@mui/icons-material/Delete';
+import {Tooltip} from "@mui/material";
 import {useState} from "react";
 
 const textFieldStyle = {
@@ -26,9 +27,11 @@ const AddPackage = ({addButton, onAdd, onDelete}) => {
                 {addButton ?
                     false
                     :
-                    <Fab aria-label="delete" size="large" onClick={onDelete}>
-                        <DeleteIcon/>
-                    </Fab>
+                    <Tooltip title="Delete Packages">
+                        <Fab aria-label="delete" size="large" onClick={onDelete}>
+                            <DeleteIcon/>
+                        </Fab>
+                    </Tooltip>
                 }
 
             </div>
@@ -111,9 +114,11 @@ const AddPackage = ({addButton, onAdd, onDelete}) => {
                 </ToggleButton>
             </div>
             {addButton ?
-                <Fab aria-label="add" onClick={onAdd}>
-                    <AddIcon/>
-                </Fab>
+                <Tooltip title="Add Packages">
+                    <Fab aria-label="add" onClick={onAdd}>
+                        <AddIcon/>
+                    </Fab>
+                </Tooltip>
                 :
                 false
             }
