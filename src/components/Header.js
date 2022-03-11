@@ -3,6 +3,7 @@ import logo from './images/logo.png'
 import '../styles/Header.css'
 import UploadFileButton from "./UploadFileButton";
 import ExampleInputFileButton from "./ExampleInputFileButton";
+import ShowInfo from "./ShowInfo";
 
 
 const Header = () => {
@@ -20,6 +21,7 @@ const Header = () => {
                     RIDE WITH US.<br/>
                     <UploadFileButton/>
                     <ExampleInputFileButton/>
+                    <ShowInfo/>
                 </h1>
             </div>
         </div>

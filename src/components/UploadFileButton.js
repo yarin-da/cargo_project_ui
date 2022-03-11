@@ -27,7 +27,7 @@ const UploadFileButton = () => {
                     textTransform: 'none',
                     color: "black",
                     borderColor: "white",
-                    marginTop: 25,
+                    marginTop: 13,
                     background: "white"
                 }}
                 variant="outlined">

@@ -22,14 +22,13 @@ const ExampleInputFileButton = () => {
                     textTransform: 'none',
                     color: "white",
                     borderColor: "white",
-                    marginTop: 25,
+                    marginTop: 13,
                     marginLeft: 40
                 }}
                 variant="outlined">
-                Download Example File
+                Download example file
             </Button>
         </Tooltip>
-
     )
 };
 
