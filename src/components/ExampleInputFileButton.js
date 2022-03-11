@@ -1,12 +1,12 @@
 import Button from "@mui/material/Button";
 import { saveAs } from "file-saver";
-import logo from './images/logo.png'
+import demo from '../demo.csv'
 import {Tooltip} from "@mui/material";
 
 function downloadFile(){
     saveAs(
-        logo,
-        "example.png"
+        demo,
+        "input_example.csv"
     );
 }
 
