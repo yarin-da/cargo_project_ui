@@ -14,7 +14,10 @@ const UploadFileButton = () => {
     return (
 
         <label htmlFor="contained-button-file">
-            <Input accept="image/*" id="contained-button-file" multiple type="file" />
+            <Input
+                accept=".csv, application/vnd.openmosix-officiated.spreadsheet.sheet, application/vnd.ms-excel"
+                id="contained-button-file"
+                multiple type="file" />
             <Button
                 className="upload-button"
                 onClick={clickFileButton}
