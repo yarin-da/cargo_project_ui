@@ -22,9 +22,10 @@ const UploadFileButton = () => {
                 multiple type="file"
                 style={{
                     textTransform: 'none',
-                    color: "white",
+                    color: "black",
                     borderColor: "white",
-                    marginTop: 25
+                    marginTop: 25,
+                    background: "white"
                 }}
                 variant="outlined">
                 Upload file
