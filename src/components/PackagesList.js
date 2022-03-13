@@ -28,6 +28,7 @@ const PackagesList = () => {
                             addButton={i === packages.length - 1}
                             onAdd={addPackage}
                             onDelete={() => deletePackage(i)}
+                            id = {itemID}
                         />
                     </div>
 

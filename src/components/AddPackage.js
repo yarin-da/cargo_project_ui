@@ -14,12 +14,18 @@ const toggleStyle = {
     textTransform: 'none'
 }
 
-const AddPackage = ({addButton, onAdd, onDelete}) => {
+function printVal(id) {
+    console.log(document.getElementById(id).value)
+}
+
+
+const AddPackage = ({addButton, onAdd, onDelete, id}) => {
     const [canRotate, setRotate] = useState(false)
     const [canStackAbove, setCanStackAbove] = useState(false)
 
+
     return (
-        <div className="add-package-background">
+        <div className={'add-package-background'} >
             <div className="add-package-title">
                 Package Details
             </div>
@@ -42,6 +48,7 @@ const AddPackage = ({addButton, onAdd, onDelete}) => {
                         label="Height"
                         type="number"
                         style={textFieldStyle}
+                        onChange={function (){printVal("package-height")}}
                         variant="standard"/>
                     <TextField
                         id="package-width"
