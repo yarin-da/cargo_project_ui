@@ -14,18 +14,17 @@ const toggleStyle = {
     textTransform: 'none'
 }
 
-function printVal(id) {
-    console.log(document.getElementById(id).value)
-}
-
 
 const AddPackage = ({addButton, onAdd, onDelete, id}) => {
     const [canRotate, setRotate] = useState(false)
     const [canStackAbove, setCanStackAbove] = useState(false)
 
+    function printVal(event) {
+        console.log(event.target.id)
+    }
 
     return (
-        <div className={'add-package-background'} >
+        <div className={"add-package-background"}  >
             <div className="add-package-title">
                 Package Details
             </div>
@@ -44,32 +43,32 @@ const AddPackage = ({addButton, onAdd, onDelete, id}) => {
             <div className="package-text-filed">
                 <div className="row1">
                     <TextField
-                        id="package-height"
+                        id={"package-height"  + id}
                         label="Height"
                         type="number"
                         style={textFieldStyle}
-                        onChange={function (){printVal("package-height")}}
+                        onChange={printVal}
                         variant="standard"/>
                     <TextField
-                        id="package-width"
+                        id={"package-width"  + id}
                         label="Width"
                         type="number"
                         style={textFieldStyle}
                         variant="standard"/>
                     <TextField
-                        id="package-depth"
+                        id={"package-depth"  + id}
                         label="Depth"
                         type="number"
                         style={textFieldStyle}
                         variant="standard"/>
                     <TextField
-                        id="package-weight"
+                        id={"package-weight"  + id}
                         label="Weight"
                         type="number"
                         style={textFieldStyle}
                         variant="standard"/>
                     <TextField
-                        id="package-amount"
+                        id={"package-amount"  + id}
                         label="Amount"
                         type="number"
                         style={textFieldStyle}
@@ -79,19 +78,19 @@ const AddPackage = ({addButton, onAdd, onDelete, id}) => {
                 <br/>
                 <div className="row2">
                     <TextField
-                        id="package-priority"
+                        id={"package-priority"  + id}
                         label="Priority"
                         type="number"
                         style={textFieldStyle}
                         variant="standard"/>
                     <TextField
-                        id="package-profit"
+                        id={"package-profit"  + id}
                         label="Profit"
                         type="number"
                         style={textFieldStyle}
                         variant="standard"/>
                     <TextField
-                        id="package-type"
+                        id={"package-type"  + id}
                         label="Type"
                         type="text"
                         style={textFieldStyle}

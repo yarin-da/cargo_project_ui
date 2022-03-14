@@ -15,8 +15,12 @@ const PackagesList = () => {
     }
 
     function deletePackage(index) {
-        console.log(index)
-        setPackages(prev => prev.filter((x, i) => i !== index));
+        setPackages(prev =>  prev.filter(function (x, i) {
+            console.log(i)
+            console.log(x)
+            return index !== i
+        }))
+        setItemID(prev => prev - 1);
     }
 
 
@@ -28,7 +32,7 @@ const PackagesList = () => {
                             addButton={i === packages.length - 1}
                             onAdd={addPackage}
                             onDelete={() => deletePackage(i)}
-                            id = {itemID}
+                            id = {i}
                         />
                     </div>
 

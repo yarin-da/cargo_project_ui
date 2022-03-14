@@ -21,7 +21,7 @@ function headerToIndexMap(firstRow) {
     for (let i = 0; i < firstRow.length; i++) {
         if (headers.includes(firstRow[i])) {
             if (!map.has(firstRow[i])) {
-                map.set(firstRow[i], i);
+                map.set(firstRow[i], i + 1);
             } else {
                 unexpectedFileFormat('two col same')
             }
@@ -32,12 +32,18 @@ function headerToIndexMap(firstRow) {
     return map
 }
 
+function containerFields(containerRow, map) {
+
+}
+
 function parseCSV(file) {
     let rows = file.split(/\r?\n/)
     let firstRow = rows.shift()
     let dataRows = splitRowsToArrays(rows)
 
-    let headerToIndex = headerToIndexMap(firstRow.split(','));
+    let newFirstRow = firstRow.split(',')
+    newFirstRow.shift()
+    let headerToIndex = headerToIndexMap(newFirstRow);
     console.log(headerToIndex)
 
     let isContainer = false;
@@ -59,8 +65,8 @@ function parseCSV(file) {
         }
     }
 
-    // console.log(containerRow)
-    // console.log(packagesRows)
+    console.log(containerRow)
+    console.log(packagesRows)
 
 }
 
