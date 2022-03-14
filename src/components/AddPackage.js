@@ -99,6 +99,7 @@ const AddPackage = ({addButton, onAdd, onDelete, id}) => {
             </div>
             <div className="toggles-package">
                 <ToggleButton
+                    id="canRotate"
                     value="check"
                     selected={canRotate}
                     onChange={() => {
@@ -109,6 +110,7 @@ const AddPackage = ({addButton, onAdd, onDelete, id}) => {
                     Can Rotate
                 </ToggleButton>
                 <ToggleButton
+                    id="canStackAbove"
                     value="check"
                     selected={canStackAbove}
                     onChange={() => {

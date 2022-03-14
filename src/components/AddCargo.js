@@ -34,8 +34,8 @@ const AddCargo = () => {
                     style={textFieldStyle}
                     variant="standard" />
                 <TextField
-                    className="cargo-weight"
-                    id="cargo-weight"
+                    className="cargo-maxWeight"
+                    id="cargo-maxWeight"
                     label="Max weight"
                     type="number"
                     style={textFieldStyle}

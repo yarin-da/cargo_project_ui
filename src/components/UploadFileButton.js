@@ -1,7 +1,9 @@
 import Button from "@mui/material/Button";
 import styled from "@emotion/styled";
 
-const headers = "width,height,length,cost,maxWeight,type,amount,priority,weight,profit,canRotate,canStackAbove".split(',');
+const headers = "width,height,depth,cost,maxWeight,type,amount,priority,weight,profit,canRotate,canStackAbove".split(',');
+const cargoHeaders = "width,height,depth,cost,maxWeight".split(',')
+const packageHeaders = "width,height,depth,type,amount,priority,weight,profit".split(',')
 
 function unexpectedFileFormat(error) {
     console.log(error)
@@ -33,7 +35,41 @@ function headerToIndexMap(firstRow) {
 }
 
 function containerFields(containerRow, map) {
+    for (const [col, index] of map) {
+        if (cargoHeaders.includes(col)) {
+            const textFieldId = 'cargo-' + col
+            document.getElementById(textFieldId).value = containerRow[index]
+            //document.getElementById(textFieldId).style = ? ;
+        }
+    }
+}
 
+function trueOrFalse(str) {
+    if (str === 'TRUE') {
+        return true
+    }
+    if (str === 'FALSE') {
+        return false
+    }
+    unexpectedFileFormat('true/false')
+}
+
+function packagesFields(packagesRows, map) {
+    for (let i = 0; i < packagesRows.length; i++) {
+        for (const [col, index] of map) {
+            if (packageHeaders.includes(col)) {
+                const textFieldId = 'package-' + col + (i).toString()
+                console.log(textFieldId)
+                document.getElementById(textFieldId).value = packagesRows[i][index];
+            }
+            if (col === 'canRotate') {
+                document.getElementById("canRotate").checked = trueOrFalse(packagesRows[i][index])
+            }
+            if (col === 'canStackAbove') {
+                document.getElementById("canStackAbove").checked = trueOrFalse(packagesRows[i][index])
+            }
+        }
+    }
 }
 
 function parseCSV(file) {
@@ -65,8 +101,11 @@ function parseCSV(file) {
         }
     }
 
-    console.log(containerRow)
-    console.log(packagesRows)
+    containerFields(containerRow, headerToIndex)
+    packagesFields(packagesRows, headerToIndex)
+
+    // console.log(containerRow)
+    // console.log(packagesRows)
 
 }
 
