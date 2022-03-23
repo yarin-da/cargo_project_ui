@@ -5,13 +5,15 @@ const iconStyle = {
     marginLeft: 20,
 }
 
-const information = "You can set up only one container. " +
-    "For fields that are not relevant to the container and packages, " +
-    "check '-' (as in the sample file)."
-
 const ShowInfo = () => {
     return (
-        <Tooltip title={information}>
+        <Tooltip title={
+            <div>
+                You can set up only one container.<br/>
+                For fields that are not relevant to the container and packages,
+                check '-' (as in the sample file).
+            </div>
+        }>
             <Icon style={iconStyle}>
                 <InfoSharpIcon/>
             </Icon>

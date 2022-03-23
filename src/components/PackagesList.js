@@ -23,7 +23,6 @@ const PackagesList = () => {
         setItemID(prev => prev - 1);
     }
 
-
     return (
         <div>
                 {packages.map((menuItemData, i) =>

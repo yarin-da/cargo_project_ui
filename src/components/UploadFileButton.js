@@ -73,6 +73,8 @@ function packagesFields(packagesRows, map) {
 }
 
 function parseCSV(file) {
+
+    return;
     let rows = file.split(/\r?\n/)
     let firstRow = rows.shift()
     let dataRows = splitRowsToArrays(rows)
