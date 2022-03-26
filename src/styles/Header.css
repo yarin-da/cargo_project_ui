@@ -4,18 +4,21 @@
     -o-background-size: cover;
     background-size: cover;
     background: no-repeat center center fixed;
+    width: 100%;
+    height: auto;
 }
 
-.rectangle {
-    width: 96%;
-    height: 10%;
-    background: dimgrey;
-    position: absolute;
-    top: 6%;
-    border-radius: 20px;
-    opacity: 0.45;
+.header-nav {
     display: flex;
-
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 20px;
+    width: 95%;
+    height: max(10%, 65px);
+    background: rgba(105, 105, 105, 0.45);
+    position: absolute;
+    top: 5%;
+    border-radius: 20px;
 }
 
 .head {
@@ -23,47 +26,18 @@
     justify-content: center;
 }
 
-.logo {
-    position: absolute;
-    top: 7%;
-    left: 5%;
+.header-nav-links {
+    display: flex;
+    justify-content: space-evenly;
+    width: min(100%, 900px);
 }
 
-.home {
-    position: absolute;
+.nav-link {
     color: white;
-    top: 9%;
-    left: 50%;
 }
 
-.home:hover {
+.nav-link:hover {
     color: black;
-    cursor: pointer;
-}
-
-.support {
-    position: absolute;
-    color: white;
-    top: 9%;
-    left: 60%;
-
-}
-
-.support:hover {
-    color: black;
-    cursor: pointer;
-}
-
-.products {
-    position: absolute;
-    color: white;
-    top: 9%;
-    left: 70%;
-}
-
-.products:hover {
-    color: black;
-    /*text-shadow: 2px 2px black;*/
     cursor: pointer;
 }
 
@@ -73,15 +47,13 @@
 
 }
 
-.text-on-image {
+.header-title {
     font-size: 55px;
+    color: white;
     position: absolute;
     text-align: left;
     top: 25%;
-    bottom: 20px;
     left: 12%;
-    color: white;
-    padding-left: 20px;
-    padding-right: 20px;
+    bottom: 20px;
 }
 

@@ -1,48 +1,36 @@
-.add-package-background {
+.add-package {
     background-color: #D3D3D3;
-    padding-bottom: 20px;
     padding-top: 25px;
-    margin-bottom: 70px;
+    /* margin-bottom: 70px; */
     /*margin-top: 70px;*/
 }
 
-.row1 {
-    justify-content: space-evenly;
-    display: flex;
-    margin-left: 8%;
-    width: 80%;
-}
-
-.row2 {
-    justify-content: space-evenly;
-    display: flex;
-    width: 51%;
-    margin-left: 8%;
+.package-fields {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    padding: 40px;
 }
 
 .add-package-title {
+    position: relative;
+    top: 0px;
+    padding-left: 8%;
     color: black;
     font-weight: bold;
     font-size: 18px;
-    margin-left: 8%;
     display: flex;
-    margin-bottom: 20px;
 }
 
-.package-text-filed {
+.package-text-field {
+    display: flex;
+    justify-content: center;
+    width: 100%;
     margin-bottom: 55px;
 }
 
-.toggles-package {
-    display: flex;
-    justify-content: space-evenly;
-    width: 40%;
-    margin-left: 6%;
-    margin-bottom: 30px;
-}
-
-.cancel-button {
-    alignment: right;
-    margin-bottom: 20px;
-    margin-left: 87%;
+.package-button {
+    position: relative;
+    top: 0px;
+    right: 0px;
+    margin: 10px;
 }

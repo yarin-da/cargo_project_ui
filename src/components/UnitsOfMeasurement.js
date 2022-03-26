@@ -1,22 +1,10 @@
 import '../styles/UnitsOfMeasurement.css'
-import {useState} from "react";
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
 
-const UnitsOfMeasurement = () => {
-    const [weight, setWeight] = useState('kg');
-    const handleChangeWeight = (event, newAlignment) => {
-        setWeight(newAlignment);
-    }
-
-    const [meters, setMeters] = useState('m');
-    const handleChangeMeters = (event, newAlignment) => {
-        setMeters(newAlignment);
-    }
-
+const UnitsOfMeasurement = ({ units, setUnits }) => {
     const textStyle = {textTransform: 'none'}
-
     return (
         <div className="units-of-measurement-background">
             <div className="units-of-measurement-title">
@@ -25,9 +13,9 @@ const UnitsOfMeasurement = () => {
             <div className="toggle-buttons">
                 <ToggleButtonGroup
                     color="primary"
-                    value={weight}
+                    value={units['weight']}
                     exclusive
-                    onChange={handleChangeWeight}
+                    onChange={(e, weight) => setUnits({ ...units, weight })}
                 >
                     <ToggleButton value="g" style={textStyle}>g</ToggleButton>
                     <ToggleButton value="kg" style={textStyle}>kg</ToggleButton>
@@ -35,17 +23,14 @@ const UnitsOfMeasurement = () => {
                 </ToggleButtonGroup>
                 <ToggleButtonGroup
                     color="primary"
-                    value={meters}
+                    value={units['length']}
                     exclusive
-                    onChange={handleChangeMeters}
+                    onChange={(e, length) => setUnits({ ...units, length })}
                 >
                     <ToggleButton value="cm" style={textStyle}>cm</ToggleButton>
                     <ToggleButton value="m" style={textStyle}>m</ToggleButton>
                     <ToggleButton value="inch" style={textStyle}>inch</ToggleButton>
                 </ToggleButtonGroup>
-            </div>
-            <div>
-
             </div>
         </div>
     )

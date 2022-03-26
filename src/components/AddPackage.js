@@ -3,134 +3,82 @@ import AddIcon from '@material-ui/icons/Add';
 import '../styles/AddPackage.css'
 import ToggleButton from "@mui/material/ToggleButton";
 import DeleteIcon from '@mui/icons-material/Delete';
-import {Tooltip} from "@mui/material";
+import {Tooltip, Divider} from "@mui/material";
 import {useState} from "react";
 
 const textFieldStyle = {
-    width: 120
-}
+    width: 120,
+};
 
 const toggleStyle = {
     textTransform: 'none'
-}
+};
 
+const Field = ({ name, type, onChange, value }) =>
+    <TextField
+        label={name}
+        type={type}
+        onChange={onChange}
+        value={value}
+        style={textFieldStyle}
+        variant="standard"
+    />;
 
-const AddPackage = ({addButton, onAdd, onDelete, id}) => {
-    const [canRotate, setRotate] = useState(false)
-    const [canStackAbove, setCanStackAbove] = useState(false)
-
-    function printVal(event) {
-        console.log(event.target.id)
-    }
-
+const AddPackage = ({ values, addButton, onAdd, onDelete, onChange }) => {
+    const onFieldChange = (name) => 
+        (e) => onChange({ ...values, [name]: e.target.value });
+    console.log('stuff', values);
     return (
-        <div className={"add-package-background"}  >
+        <div className="add-package">
             <div className="add-package-title">
                 Package Details
             </div>
-            <div className="cancel-button">
-                {addButton ?
-                    false
-                    :
-                    <Tooltip title="Delete Packages">
-                        <Fab aria-label="delete" size="large" onClick={onDelete}>
-                            <DeleteIcon/>
-                        </Fab>
-                    </Tooltip>
-                }
-
-            </div>
-            <div className="package-text-filed">
-                <div className="row1">
-                    <TextField
-                        id={"package-height"  + id}
-                        label="Height"
-                        type="number"
-                        style={textFieldStyle}
-                        onChange={printVal}
-                        variant="standard"/>
-                    <TextField
-                        id={"package-width"  + id}
-                        label="Width"
-                        type="number"
-                        style={textFieldStyle}
-                        variant="standard"/>
-                    <TextField
-                        id={"package-depth"  + id}
-                        label="Depth"
-                        type="number"
-                        style={textFieldStyle}
-                        variant="standard"/>
-                    <TextField
-                        id={"package-weight"  + id}
-                        label="Weight"
-                        type="number"
-                        style={textFieldStyle}
-                        variant="standard"/>
-                    <TextField
-                        id={"package-amount"  + id}
-                        label="Amount"
-                        type="number"
-                        style={textFieldStyle}
-                        variant="standard"/>
-                </div>
-
-                <br/>
-                <div className="row2">
-                    <TextField
-                        id={"package-priority"  + id}
-                        label="Priority"
-                        type="number"
-                        style={textFieldStyle}
-                        variant="standard"/>
-                    <TextField
-                        id={"package-profit"  + id}
-                        label="Profit"
-                        type="number"
-                        style={textFieldStyle}
-                        variant="standard"/>
-                    <TextField
-                        id={"package-type"  + id}
-                        label="Type"
-                        type="text"
-                        style={textFieldStyle}
-                        variant="standard"/>
-                </div>
-            </div>
-            <div className="toggles-package">
+            <div className="package-fields">
+                <Field type="text"   onFieldChange={onFieldChange("type")} name="type" value={values['type']} />
+                <Field type="number" onFieldChange={onFieldChange("height")} name="height" value={values['height']} />
+                <Field type="number" onFieldChange={onFieldChange("width")} name="width" value={values['width']} />
+                <Field type="number" onFieldChange={onFieldChange("depth")} name="depth" value={values['depth']} />
+                <Field type="number" onFieldChange={onFieldChange("weight")} name="weight" value={values['weight']} />
+                <Field type="number" onFieldChange={onFieldChange("amount")} name="amount" value={values['amount']} />
+                <Field type="number" onFieldChange={onFieldChange("priority")} name="priority" value={values['priority']} />
+                <Field type="number" onFieldChange={onFieldChange("profit")} name="profit" value={values['profit']} />
                 <ToggleButton
-                    id="canRotate"
                     value="check"
-                    selected={canRotate}
-                    onChange={() => {
-                        setRotate(!canRotate);
-                    }}
+                    selected={values['canRotate']}
+                    onChange={() => onChange({ ...values, canRotate: !values['canRotate'] })}
                     style={toggleStyle}
                 >
                     Can Rotate
                 </ToggleButton>
                 <ToggleButton
-                    id="canStackAbove"
                     value="check"
-                    selected={canStackAbove}
-                    onChange={() => {
-                        setCanStackAbove(!canStackAbove);
-                    }}
+                    selected={values['canStackAbove']}
+                    onChange={() => onChange({ ...values, canStackAbove: !values['canStackAbove'] })}
                     style={toggleStyle}
                 >
                     Can Stack Above
                 </ToggleButton>
             </div>
-            {addButton ?
-                <Tooltip title="Add Packages">
-                    <Fab aria-label="add" onClick={onAdd}>
-                        <AddIcon/>
-                    </Fab>
-                </Tooltip>
-                :
-                false
-            }
-
+            <div className="package-button">
+                {
+                    // should add button be displayed?
+                    addButton ?
+                    // then display the add button
+                    <Tooltip title="Add Packages">
+                        <Fab aria-label="add" onClick={onAdd}>
+                            <AddIcon/>
+                        </Fab>
+                    </Tooltip>
+                    :
+                    // otherwise display the delete button
+                    <Tooltip title="Delete Packages">
+                        <Fab aria-label="delete" size="large" onClick={() => onDelete(values['id'])}>
+                            <DeleteIcon/>
+                        </Fab>
+                    </Tooltip>
+                }
+            </div>
+            <Divider />
         </div>
     )
 };

@@ -1,41 +1,34 @@
-import { useState } from "react";
 import AddPackage from "./AddPackage";
+import Package from "./Package";
 
-const PackagesList = () => {
-    const [itemID, setItemID] = useState(1);
-    const [packages, setPackages] = useState([
-        {
-            id: 0
-        },
-    ]);
+const PackagesList = ({ packages, setPackages }) => {
+    const addPackage = () =>
+        setPackages(prev => [...prev, new Package()]);
 
-    function addPackage() {
-        setPackages(prev => [...prev, { id: itemID }]);
-        setItemID(prev => prev + 1);
-    }
+    const deletePackage = (id) => {
+        const newPackages = packages.filter(p => p.id !== id);
+        console.log('packages', packages);
+        console.log('newPackages', newPackages)
+        setPackages(newPackages);
+    };
 
-    function deletePackage(index) {
-        setPackages(prev =>  prev.filter(function (x, i) {
-            console.log(i)
-            console.log(x)
-            return index !== i
-        }))
-        setItemID(prev => prev - 1);
-    }
+    const onChange = (values) => {
+        const newPackages = packages.map(p => p.id === values.id ? values : p);
+        setPackages(newPackages);
+    };
 
     return (
         <div>
-                {packages.map((menuItemData, i) =>
-                    <div>
-                        <AddPackage
-                            addButton={i === packages.length - 1}
-                            onAdd={addPackage}
-                            onDelete={() => deletePackage(i)}
-                            id = {i}
-                        />
-                    </div>
-
-                )}
+            {packages.map((values, index) =>
+                <AddPackage
+                    key={index}
+                    values={values}
+                    addButton={index === packages.length - 1}
+                    onAdd={addPackage}
+                    onDelete={deletePackage}
+                    onChange={onChange}
+                />
+            )}
         </div>
     );
 };

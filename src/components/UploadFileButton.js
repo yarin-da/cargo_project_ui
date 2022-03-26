@@ -1,19 +1,33 @@
+import Package from "./Package";
 import Button from "@mui/material/Button";
 import styled from "@emotion/styled";
 
 const headers = "width,height,depth,cost,maxWeight,type,amount,priority,weight,profit,canRotate,canStackAbove".split(',');
-const cargoHeaders = "width,height,depth,cost,maxWeight".split(',')
-const packageHeaders = "width,height,depth,type,amount,priority,weight,profit".split(',')
+const cargoHeaders = "width,height,depth,cost,maxWeight".split(',');
+const packageHeaders = "width,height,depth,type,amount,priority,weight,profit,canRotate,canStackAbove".split(',');
+
+const types = {
+    width: 'number',
+    height: 'number',
+    depth: 'number',
+    weight: 'number',
+    maxWeight: 'number',
+    amount: 'number',
+    cost: 'number',
+    profit: 'number',
+    priority: 'number',
+    type: 'type',
+    canRotate: 'boolean',
+    canStackAbove: 'boolean',
+};
 
 function unexpectedFileFormat(error) {
-    console.log(error)
-    console.log("oof")
+    console.log(error);
 }
-
 
 function splitRowsToArrays(rows) {
     for (let i = 0; i < rows.length; i++) {
-        rows[i] = rows[i].split(',')
+        rows[i] = rows[i].split(',');
     }
     return rows
 }
@@ -25,107 +39,105 @@ function headerToIndexMap(firstRow) {
             if (!map.has(firstRow[i])) {
                 map.set(firstRow[i], i + 1);
             } else {
-                unexpectedFileFormat('two col same')
+                unexpectedFileFormat(`column ${firstRow[i]} appears more than once`);
             }
         } else {
-            unexpectedFileFormat('invalid col')
+            unexpectedFileFormat(`invalid column ${firstRow[i]}`);
         }
     }
     return map
 }
 
+function parseValue(field, value) {
+    const type = types[field];
+    switch(type) {
+        case 'boolean':
+            return trueOrFalse(value);
+        case 'number':
+            return parseFloat(value);
+        default:
+            return value;
+    }
+}
+
 function containerFields(containerRow, map) {
+    const container = {};
     for (const [col, index] of map) {
         if (cargoHeaders.includes(col)) {
-            const textFieldId = 'cargo-' + col
-            document.getElementById(textFieldId).value = containerRow[index]
-            //document.getElementById(textFieldId).style = ? ;
+            container[col] = parseValue(col, containerRow[index]);
         }
     }
+    return container;
 }
 
 function trueOrFalse(str) {
-    if (str === 'TRUE') {
-        return true
-    }
-    if (str === 'FALSE') {
-        return false
-    }
-    unexpectedFileFormat('true/false')
+    if (str === 'TRUE') return true;
+    if (str === 'FALSE') return false;
+    unexpectedFileFormat('true/false');
 }
 
 function packagesFields(packagesRows, map) {
+    const packages = [];
     for (let i = 0; i < packagesRows.length; i++) {
+        const p = new Package();
         for (const [col, index] of map) {
             if (packageHeaders.includes(col)) {
-                const textFieldId = 'package-' + col + (i).toString()
-                console.log(textFieldId)
-                document.getElementById(textFieldId).value = packagesRows[i][index];
-            }
-            if (col === 'canRotate') {
-                document.getElementById("canRotate").checked = trueOrFalse(packagesRows[i][index])
-            }
-            if (col === 'canStackAbove') {
-                document.getElementById("canStackAbove").checked = trueOrFalse(packagesRows[i][index])
+                p[col] = parseValue(col, packagesRows[i][index]);
             }
         }
+        packages.push(p);
     }
-}
-
-function parseCSV(file) {
-
-    return;
-    let rows = file.split(/\r?\n/)
-    let firstRow = rows.shift()
-    let dataRows = splitRowsToArrays(rows)
-
-    let newFirstRow = firstRow.split(',')
-    newFirstRow.shift()
-    let headerToIndex = headerToIndexMap(newFirstRow);
-    console.log(headerToIndex)
-
-    let isContainer = false;
-    let containerRow = [];
-    let packagesRows = [];
-    for (let i = 0; i < dataRows.length; i++) {
-        if (dataRows[i][0] === 'container' && isContainer) {
-            unexpectedFileFormat('more than 1 container')
-            containerRow.length = 0;
-            packagesRows.length = 0;
-            break;
-        }
-        if (dataRows[i][0] === 'container' && !isContainer) {
-            isContainer = true
-            containerRow = dataRows[i]
-        }
-        if (dataRows[i][0] === 'package') {
-            packagesRows.push(dataRows[i])
-        }
-    }
-
-    containerFields(containerRow, headerToIndex)
-    packagesFields(packagesRows, headerToIndex)
-
-    // console.log(containerRow)
-    // console.log(packagesRows)
-
-}
-
-function clickFileButton() {
-    let file = document.getElementById("contained-button-file").files[0]
-    let reader = new FileReader()
-    reader.readAsText(file)
-    reader.onload = function () {
-        //console.log(reader.result)
-        parseCSV(reader.result)
-    }
+    return packages;
 }
 
 const Input = styled('input')({
     display: 'none',
 });
 
-const UploadFileButton = () => {
+const UploadFileButton = ({ setContainer, setPackages }) => {
+    function parseCSV(file) {
+        // split file text to rows (take into account possible carriage return in windows)
+        let rows = file.split(/\r?\n/);
+        // delete titles
+        let firstRow = rows.shift();
+        let dataRows = splitRowsToArrays(rows);
+    
+        let newFirstRow = firstRow.split(',');
+        newFirstRow.shift();
+        let headerToIndex = headerToIndexMap(newFirstRow);
+    
+        let isContainer = false;
+        let containerRow = [];
+        let packagesRows = [];
+        for (let i = 0; i < dataRows.length; i++) {
+            if (dataRows[i][0] === 'container' && isContainer) {
+                unexpectedFileFormat('more than 1 container')
+                containerRow.length = 0;
+                packagesRows.length = 0;
+                break;
+            }
+            if (dataRows[i][0] === 'container' && !isContainer) {
+                isContainer = true;
+                containerRow = dataRows[i];
+            }
+            if (dataRows[i][0] === 'package') {
+                packagesRows.push(dataRows[i]);
+            }
+        }
+    
+        const container = containerFields(containerRow, headerToIndex);
+        const packages = packagesFields(packagesRows, headerToIndex);
+        setContainer(container);
+        setPackages(packages);
+    }
+
+    function clickFileButton() {
+        let file = document.getElementById("contained-button-file").files[0]
+        let reader = new FileReader()
+        reader.readAsText(file)
+        reader.onload = () => parseCSV(reader.result);
+    }
+
     return (
 
         <label htmlFor="contained-button-file">

@@ -19,17 +19,15 @@ function sendData() {
 
 const ConfirmButton = () => {
     return (
-        <div>
-            <Button
-                className="confirm-button"
-                onClick={sendData}
-                component="span"
-                multiple type="file"
-                style={buttonStyle}
-                variant="outlined">
-                Confirm
-            </Button>
-        </div>
+        <Button
+            className="confirm-button"
+            onClick={sendData}
+            component="span"
+            multiple type="file"
+            style={buttonStyle}
+            variant="outlined">
+            Confirm
+        </Button>
     )
 };
 

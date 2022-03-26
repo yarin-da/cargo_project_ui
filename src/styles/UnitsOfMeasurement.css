@@ -2,17 +2,19 @@
     padding-top: 25px;
     padding-bottom: 25px;
     background-color: #FBCEB1;
-    margin-top: 70px;
-    margin-bottom: 70px;
+    /* margin-top: 70px;
+    margin-bottom: 70px; */
 }
 
 .units-of-measurement-title {
+    position: relative;
+    top: 0px;
+    padding-left: 8%;
     margin-bottom: 70px;
+    display: flex;
     color: black;
     font-weight: bold;
     font-size: 18px;
-    margin-left: 8%;
-    display: flex;
 }
 
 .toggle-buttons {

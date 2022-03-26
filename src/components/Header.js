@@ -1,25 +1,28 @@
-import background from './images/background.jpeg'
-import logo from './images/logo.png'
-import '../styles/Header.css'
+import background from "./images/background.jpeg";
+import logo from "./images/logo.png";
 import UploadFileButton from "./UploadFileButton";
 import ExampleInputFileButton from "./ExampleInputFileButton";
 import ShowInfo from "./ShowInfo";
+import "../styles/Header.css";
 
 
-const Header = () => {
+const Header = ({ setContainer, setPackages }) => {
     return (
         <div className="head">
-            <div className="rectangle" />
-            <div className="home" role="button">home</div>
-            <div className="support">support</div>
-            <div className="products">products</div>
-            <img className="logo" src={logo} width="25%" height="8%"/>
+            <div className="header-nav">
+                <img src={logo} />
+                <div className="header-nav-links">
+                    <div className="nav-link">Home</div>
+                    <div className="nav-link">Support</div>
+                    <div className="nav-link">Products</div>
+                </div>
+            </div>
             <div className="text">
-                <img src={background}  className="image" width="100%" height="auto"/>
-                <h1 className="text-on-image">
+                <img src={background} className="image" />
+                <h1 className="header-title">
                     LET YOUR SUCCESS <br/>
                     RIDE WITH US.<br/>
-                    <UploadFileButton/>
+                    <UploadFileButton setContainer={setContainer} setPackages={setPackages} />
                     <ExampleInputFileButton/>
                     <ShowInfo/>
                 </h1>
