@@ -27,21 +27,20 @@ const Field = ({ name, type, onChange, value }) =>
 const AddPackage = ({ values, addButton, onAdd, onDelete, onChange }) => {
     const onFieldChange = (name) => 
         (e) => onChange({ ...values, [name]: e.target.value });
-    console.log('stuff', values);
     return (
         <div className="add-package">
             <div className="add-package-title">
                 Package Details
             </div>
             <div className="package-fields">
-                <Field type="text"   onFieldChange={onFieldChange("type")} name="type" value={values['type']} />
-                <Field type="number" onFieldChange={onFieldChange("height")} name="height" value={values['height']} />
-                <Field type="number" onFieldChange={onFieldChange("width")} name="width" value={values['width']} />
-                <Field type="number" onFieldChange={onFieldChange("depth")} name="depth" value={values['depth']} />
-                <Field type="number" onFieldChange={onFieldChange("weight")} name="weight" value={values['weight']} />
-                <Field type="number" onFieldChange={onFieldChange("amount")} name="amount" value={values['amount']} />
-                <Field type="number" onFieldChange={onFieldChange("priority")} name="priority" value={values['priority']} />
-                <Field type="number" onFieldChange={onFieldChange("profit")} name="profit" value={values['profit']} />
+                <Field type="text"   onChange={onFieldChange("type")} name="type" value={values["type"]} />
+                <Field type="number" onChange={onFieldChange("height")} name="height" value={values["height"]} />
+                <Field type="number" onChange={onFieldChange("width")} name="width" value={values["width"]} />
+                <Field type="number" onChange={onFieldChange("depth")} name="depth" value={values["depth"]} />
+                <Field type="number" onChange={onFieldChange("weight")} name="weight" value={values["weight"]} />
+                <Field type="number" onChange={onFieldChange("amount")} name="amount" value={values["amount"]} />
+                <Field type="number" onChange={onFieldChange("priority")} name="priority" value={values["priority"]} />
+                <Field type="number" onChange={onFieldChange("profit")} name="profit" value={values["profit"]} />
                 <ToggleButton
                     value="check"
                     selected={values['canRotate']}
@@ -72,7 +71,7 @@ const AddPackage = ({ values, addButton, onAdd, onDelete, onChange }) => {
                     :
                     // otherwise display the delete button
                     <Tooltip title="Delete Packages">
-                        <Fab aria-label="delete" size="large" onClick={() => onDelete(values['id'])}>
+                        <Fab aria-label="delete" size="large" onClick={() => onDelete(values)}>
                             <DeleteIcon/>
                         </Fab>
                     </Tooltip>

@@ -71,8 +71,8 @@ function containerFields(containerRow, map) {
 }
 
 function trueOrFalse(str) {
-    if (str === 'TRUE') return true;
-    if (str === 'FALSE') return false;
+    if (str.toUpperCase() === 'TRUE') return true;
+    if (str.toUpperCase() === 'FALSE') return false;
     unexpectedFileFormat('true/false');
 }
 

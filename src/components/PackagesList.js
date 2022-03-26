@@ -5,15 +5,13 @@ const PackagesList = ({ packages, setPackages }) => {
     const addPackage = () =>
         setPackages(prev => [...prev, new Package()]);
 
-    const deletePackage = (id) => {
-        const newPackages = packages.filter(p => p.id !== id);
-        console.log('packages', packages);
-        console.log('newPackages', newPackages)
+    const deletePackage = (values) => {
+        const newPackages = packages.filter(p => p['id'] !== values['id']);
         setPackages(newPackages);
     };
 
     const onChange = (values) => {
-        const newPackages = packages.map(p => p.id === values.id ? values : p);
+        const newPackages = packages.map(p => p['id'] === values['id'] ? values : p);
         setPackages(newPackages);
     };
 
