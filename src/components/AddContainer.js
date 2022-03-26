@@ -1,7 +1,7 @@
 import React from "react";
 import {TextField} from "@mui/material";
 import translate from "./translations/Translate";
-import "../styles/ContainerForm.css";
+import "../styles/AddContainer.css";
 
 const textFieldStyle = {
     width: 120

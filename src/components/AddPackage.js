@@ -1,10 +1,10 @@
-import {Fab, IconButton, TextField} from "@mui/material";
-import AddIcon from '@material-ui/icons/Add';
-import '../styles/AddPackage.css'
+import {Fab, TextField} from "@mui/material";
+import AddIcon from "@material-ui/icons/Add";
 import ToggleButton from "@mui/material/ToggleButton";
-import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteIcon from "@mui/icons-material/Delete";
 import {Tooltip, Divider} from "@mui/material";
 import translate from "./translations/Translate";
+import "../styles/AddPackage.css";
 
 const textFieldStyle = {
     width: 120,

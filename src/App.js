@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import Header from './components/Header';
 import UnitsOfMeasurement from "./components/UnitsOfMeasurement";
-import ContainerForm from "./components/ContainerForm";
+import AddContainer from "./components/AddContainer";
 import ConfirmButton from "./components/ConfirmButton";
 import PackagesList from "./components/PackagesList";
 import "./App.css";
@@ -27,7 +27,7 @@ function App() {
     <div className="App">
       <Header setContainer={setContainer} setPackages={setPackages} />
       <UnitsOfMeasurement units={units} setUnits={setUnits} />
-      <ContainerForm container={container} setContainer={setContainer} />
+      <AddContainer container={container} setContainer={setContainer} />
       <PackagesList packages={packages} setPackages={setPackages} />
       <ConfirmButton units={units} container={container} packages={packages} />
     </div>

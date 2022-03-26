@@ -1,5 +1,5 @@
-import '../styles/ConfirmButton.css'
 import Button from "@mui/material/Button";
+import "../styles/ConfirmButton.css";
 
 const buttonStyle = {
     textTransform: 'none',

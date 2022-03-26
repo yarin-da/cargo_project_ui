@@ -1,6 +1,6 @@
-import '../styles/UnitsOfMeasurement.css'
-import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import "../styles/UnitsOfMeasurement.css";
 
 
 const UnitsOfMeasurement = ({ units, setUnits }) => {
