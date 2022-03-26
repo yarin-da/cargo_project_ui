@@ -20,6 +20,7 @@ const PackagesList = ({ packages, setPackages }) => {
             {packages.map((values, index) =>
                 <AddPackage
                     key={index}
+                    index={index}
                     values={values}
                     addButton={index === packages.length - 1}
                     onAdd={addPackage}

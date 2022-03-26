@@ -9,6 +9,8 @@
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     padding: 40px;
+    padding-left: 8%;
+    padding-right: 8%;
 }
 
 .add-package-title {

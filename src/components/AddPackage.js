@@ -24,13 +24,13 @@ const Field = ({ name, type, onChange, value }) =>
         variant="standard"
     />;
 
-const AddPackage = ({ values, addButton, onAdd, onDelete, onChange }) => {
+const AddPackage = ({ values, addButton, onAdd, onDelete, onChange, index }) => {
     const onFieldChange = (name) => 
         (e) => onChange({ ...values, [name]: e.target.value });
     return (
         <div className="add-package">
             <div className="add-package-title">
-                Package Details
+                Package {index + 1}
             </div>
             <div className="package-fields">
                 <Field type="text"   onChange={onFieldChange("type")} name="type" value={values["type"]} />
