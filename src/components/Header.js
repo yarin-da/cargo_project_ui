@@ -5,7 +5,6 @@ import ExampleInputFileButton from "./ExampleInputFileButton";
 import ShowInfo from "./ShowInfo";
 import "../styles/Header.css";
 
-
 const Header = ({ setContainer, setPackages }) => {
     return (
         <div className="head">
@@ -29,8 +28,6 @@ const Header = ({ setContainer, setPackages }) => {
             </div>
         </div>
     )
-
-
 };
 
 export default Header;

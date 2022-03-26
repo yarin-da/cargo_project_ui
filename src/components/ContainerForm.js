@@ -1,15 +1,15 @@
-import React, {useState} from "react";
+import React from "react";
 import {TextField} from "@mui/material";
+import translate from "./translations/Translate";
 import "../styles/ContainerForm.css";
 
 const textFieldStyle = {
     width: 120
 };
 
-const NonNegativeNumberField = ({ name, label, value, onChange }) =>
+const NonNegativeNumberField = ({ name, value, onChange }) =>
     <TextField
-        id={`cargo-${name}`}
-        label={label}
+        label={translate(name)}
         type="number"
         style={textFieldStyle}
         value={value}
@@ -37,7 +37,6 @@ const ContainerForm = ({ container, setContainer }) => {
                     <NonNegativeNumberField
                         key={index}
                         name={field}
-                        label={field}
                         value={container[field]}
                         onChange={onChangeHandler(field)}
                     />

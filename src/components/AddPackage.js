@@ -4,7 +4,7 @@ import '../styles/AddPackage.css'
 import ToggleButton from "@mui/material/ToggleButton";
 import DeleteIcon from '@mui/icons-material/Delete';
 import {Tooltip, Divider} from "@mui/material";
-import {useState} from "react";
+import translate from "./translations/Translate";
 
 const textFieldStyle = {
     width: 120,
@@ -16,7 +16,7 @@ const toggleStyle = {
 
 const Field = ({ name, type, onChange, value }) =>
     <TextField
-        label={name}
+        label={translate(name)}
         type={type}
         onChange={onChange}
         value={value}

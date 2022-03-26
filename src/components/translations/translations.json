@@ -1,0 +1,12 @@
+{
+    "type": "Type",
+    "height": "Height",
+    "width": "Width",
+    "depth": "Depth",
+    "weight": "Weight",
+    "amount": "Amount",
+    "priority": "Priority",
+    "profit": "Profit",
+    "maxWeight": "Max Weight",
+    "cost": "Cost"
+}
