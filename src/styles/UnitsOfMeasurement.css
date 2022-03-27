@@ -1,4 +1,6 @@
 .units-of-measurement-background {
+    display: flex;
+    flex-direction: column;
     padding-top: 25px;
     padding-bottom: 25px;
     background-color: #FBCEB1;
@@ -9,16 +11,15 @@
 .units-of-measurement-title {
     position: relative;
     top: 0px;
-    padding-left: 8%;
     margin-bottom: 70px;
     display: flex;
     color: black;
     font-weight: bold;
     font-size: 18px;
+    align-self: center;
 }
 
 .toggle-buttons {
     display: flex;
     justify-content: space-evenly;
-    width: 65%;
 }

@@ -21,7 +21,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-left: 20px;
+    padding-left: 30px;
     width: 95%;
     height: max(5%, 65px);
     background: rgba(105, 105, 105, 0.45);

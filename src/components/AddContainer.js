@@ -28,7 +28,7 @@ const ContainerForm = ({ container, setContainer }) => {
         });
 
     return (
-        <div className="add-cargo-background">
+        <div className="add-cargo">
             <div className="add-cargo-title">
                 Cargo Details
             </div>

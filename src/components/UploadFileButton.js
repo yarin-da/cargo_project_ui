@@ -16,7 +16,7 @@ const types = {
     cost: 'number',
     profit: 'number',
     priority: 'number',
-    type: 'type',
+    type: 'string',
     canRotate: 'boolean',
     canStackAbove: 'boolean',
 };
@@ -71,8 +71,9 @@ function containerFields(containerRow, map) {
 }
 
 function trueOrFalse(str) {
-    if (str.toUpperCase() === 'TRUE') return true;
-    if (str.toUpperCase() === 'FALSE') return false;
+    const upperCaseStr = str.toUpperCase();
+    if (upperCaseStr === 'TRUE') return true;
+    if (upperCaseStr === 'FALSE') return false;
     unexpectedFileFormat('true/false');
 }
 

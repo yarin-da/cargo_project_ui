@@ -56,6 +56,7 @@ const AddPackage = ({ values, addButton, onAdd, onDelete, onChange, index }) => 
                     selected={values['canStackAbove']}
                     onChange={() => onChange({ ...values, canStackAbove: !values['canStackAbove'] })}
                     style={toggleStyle}
+                    color='standard'
                 >
                     Can Stack Above
                 </ToggleButton>

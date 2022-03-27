@@ -4,11 +4,13 @@
     font-weight: bold;
     font-size: 18px;
     /*margin-top: 80px;*/
-    margin-left: 8%;
     margin-bottom: 70px;
+    align-self: center;
 }
 
-.add-cargo-background {
+.add-cargo {
+    display: flex;
+    flex-direction: column;
     padding-top: 25px;
     padding-bottom: 20px;
     background-color: #a2c5d6;
@@ -19,7 +21,5 @@
 .cargo-text-field {
     margin-bottom: 100px;
     display: flex;
-    margin-left: 8%;
     justify-content: space-evenly;
-    width: 80%;
 }
