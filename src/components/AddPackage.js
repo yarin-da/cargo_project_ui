@@ -41,6 +41,8 @@ const AddPackage = ({ values, addButton, onAdd, onDelete, onChange, index }) => 
                 <Field type="number" onChange={onFieldChange("amount")} name="amount" value={values["amount"]} />
                 <Field type="number" onChange={onFieldChange("priority")} name="priority" value={values["priority"]} />
                 <Field type="number" onChange={onFieldChange("profit")} name="profit" value={values["profit"]} />
+            </div>
+            <div className="toggle-boolean-buttons">
                 <ToggleButton
                     value="check"
                     selected={values['canRotate']}
