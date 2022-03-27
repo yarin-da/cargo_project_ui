@@ -13,6 +13,11 @@
   }
 }
 
+.side-by-side {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;

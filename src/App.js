@@ -26,8 +26,10 @@ function App() {
   return (
     <div className="App">
       <Header setContainer={setContainer} setPackages={setPackages} />
-      <UnitsOfMeasurement units={units} setUnits={setUnits} />
-      <AddContainer container={container} setContainer={setContainer} />
+      <div className="side-by-side">
+        <UnitsOfMeasurement units={units} setUnits={setUnits} />
+        <AddContainer container={container} setContainer={setContainer} />
+      </div>
       <PackagesList packages={packages} setPackages={setPackages} />
       <ConfirmButton units={units} container={container} packages={packages} />
     </div>

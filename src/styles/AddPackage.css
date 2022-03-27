@@ -1,16 +1,36 @@
+.package-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    /* display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center; */
+    padding: 10px;
+    background-color: #dddddd;
+}
+
 .add-package {
+    background-image: url('/src/images/notebook.png');
+    background-size:100% 100%;
+    background-repeat: no-repeat;
+    
     display: flex;
     flex-direction: column;
-    background-color: #D3D3D3;
-    padding-top: 25px;
+    padding-top: 45px;
+    margin: 10px;
+
+    /* background-color: #AADDDD; */
+    /* border: 1px solid black; */
+    /* border-radius: 15px; */
     /* margin-bottom: 70px; */
     /*margin-top: 70px;*/
 }
 
 .package-fields {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     row-gap: 15px;
+    column-gap: 15px;
     justify-items: center;
     padding: 40px;
 }

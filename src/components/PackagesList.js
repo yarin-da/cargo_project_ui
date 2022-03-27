@@ -16,7 +16,7 @@ const PackagesList = ({ packages, setPackages }) => {
     };
 
     return (
-        <div>
+        <div className="package-list">
             {packages.map((values, index) =>
                 <AddPackage
                     key={index}
