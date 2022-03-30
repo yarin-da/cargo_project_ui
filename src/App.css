@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  background: #ddb;
 }
 
 .App-logo {
@@ -14,8 +15,9 @@
 }
 
 .side-by-side {
-  display: grid;
-  grid-template-columns: 1fr 3fr;
+  /* display: grid;
+  grid-template-columns: 1fr 3fr; */
+  display: flex;
 }
 
 .App-header {

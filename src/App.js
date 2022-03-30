@@ -7,6 +7,12 @@ import PackagesList from "./components/PackagesList";
 import "./App.css";
 import Package from "./components/Package";
 
+// TODO: test
+import Ticket from "./components/Ticket";
+import DraftsIcon from '@mui/icons-material/Drafts';
+import SquareFootIcon from '@mui/icons-material/SquareFoot';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+
 function App() {
   const [container, setContainer] = useState({
     width: 0,
@@ -27,8 +33,12 @@ function App() {
     <div className="App">
       <Header setContainer={setContainer} setPackages={setPackages} />
       <div className="side-by-side">
-        <UnitsOfMeasurement units={units} setUnits={setUnits} />
-        <AddContainer container={container} setContainer={setContainer} />
+        <Ticket Icon={SquareFootIcon}>
+          <UnitsOfMeasurement units={units} setUnits={setUnits} />
+        </Ticket>
+        <Ticket Icon={LocalShippingIcon}>
+          <AddContainer container={container} setContainer={setContainer} />
+        </Ticket>
       </div>
       <PackagesList packages={packages} setPackages={setPackages} />
       <ConfirmButton units={units} container={container} packages={packages} />

@@ -1,5 +1,4 @@
 import {Fab, TextField} from "@mui/material";
-import AddIcon from "@material-ui/icons/Add";
 import ToggleButton from "@mui/material/ToggleButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {Tooltip, Divider} from "@mui/material";
@@ -24,7 +23,7 @@ const Field = ({ name, type, onChange, value }) =>
         variant="standard"
     />;
 
-const AddPackage = ({ values, addButton, onAdd, onDelete, onChange, index }) => {
+const AddPackage = ({ values, onDelete, onChange, index }) => {
     const onFieldChange = (name) => 
         (e) => onChange({ ...values, [name]: e.target.value });
     return (
@@ -62,25 +61,12 @@ const AddPackage = ({ values, addButton, onAdd, onDelete, onChange, index }) => 
                 </ToggleButton>
             </div>
             <div className="package-button">
-                {
-                    // should add button be displayed?
-                    addButton ?
-                    // then display the add button
-                    <Tooltip title="Add Packages">
-                        <Fab aria-label="add" onClick={onAdd}>
-                            <AddIcon/>
-                        </Fab>
-                    </Tooltip>
-                    :
-                    // otherwise display the delete button
-                    <Tooltip title="Delete Packages">
-                        <Fab aria-label="delete" size="large" onClick={() => onDelete(values)}>
-                            <DeleteIcon/>
-                        </Fab>
-                    </Tooltip>
-                }
+                <Tooltip title="Delete Packages">
+                    <Fab aria-label="delete" size="large" onClick={() => onDelete(values)}>
+                        <DeleteIcon/>
+                    </Fab>
+                </Tooltip>
             </div>
-            <Divider />
         </div>
     )
 };

@@ -1,5 +1,10 @@
 import AddPackage from "./AddPackage";
 import Package from "./Package";
+import {Fab} from "@mui/material";
+import AddIcon from "@material-ui/icons/Add";
+import {Tooltip} from "@mui/material";
+import DraftsIcon from '@mui/icons-material/Drafts';
+import Ticket from "./Ticket";
 
 const PackagesList = ({ packages, setPackages }) => {
     const addPackage = () =>
@@ -16,18 +21,30 @@ const PackagesList = ({ packages, setPackages }) => {
     };
 
     return (
-        <div className="package-list">
-            {packages.map((values, index) =>
-                <AddPackage
-                    key={index}
-                    index={index}
-                    values={values}
-                    addButton={index === packages.length - 1}
-                    onAdd={addPackage}
-                    onDelete={deletePackage}
-                    onChange={onChange}
-                />
-            )}
+        <div className="package-list-container">
+            <div className="package-list">
+                {packages.map((values, index) =>
+                    <Ticket Icon={DraftsIcon}>
+                        <AddPackage
+                            key={index}
+                            index={index}
+                            values={values}
+                            addButton={index === packages.length - 1}
+                            onAdd={addPackage}
+                            onDelete={deletePackage}
+                            onChange={onChange}
+                        />
+                    </Ticket>
+                    
+                )}
+            </div>
+            <div className="add-button">
+                <Tooltip title="Add Packages">
+                    <Fab color="primary" aria-label="add" onClick={addPackage}>
+                        <AddIcon />
+                    </Fab>
+                </Tooltip>
+            </div>
         </div>
     );
 };
