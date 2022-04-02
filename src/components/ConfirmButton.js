@@ -9,15 +9,13 @@ const buttonStyle = {
     marginBottom: 25
 }
 
-function sendData() {
-    let amount = document.getElementById('package-amount').toString();
-    console.log(amount)
-    if (amount.indexOf('.') > -1) {
+const ConfirmButton = ({ units, container, packages }) => {
+    const sendData = () => {
+        if (packages.length > 0) {
 
+        }
     }
-}
-
-const ConfirmButton = () => {
+    
     return (
         <Button
             className="confirm-button"
@@ -25,6 +23,7 @@ const ConfirmButton = () => {
             component="span"
             multiple type="file"
             style={buttonStyle}
+            size="large"
             variant="outlined">
             Confirm
         </Button>
