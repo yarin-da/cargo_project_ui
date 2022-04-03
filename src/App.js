@@ -11,9 +11,7 @@ import SquareFootIcon from '@mui/icons-material/SquareFoot';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import SummaryModal from "./components/SummaryModal";
 import Button from '@mui/material/Button';
-
-// TODO: environment variable?
-const SERVER_URL = 'http://localhost:10789';
+import { getSolution } from "./components/ServerHandler";
 
 const buttonStyle = {
   textTransform: 'none',
@@ -45,23 +43,14 @@ function App() {
     weight: 'kg',
   });
 
-  const sendData = async () => {
+  const uploadDataToServer = async () => {
     const data = {
       container,
       packages,
     };
-    const request = `${SERVER_URL}/solve`;
-    const options = {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    };
-    const response = await fetch(request, options);
-    const solution = await response.json();
-    console.log('solution', solution);
+    // TODO: if data is valid?
+    const response = await getSolution(data);
+    console.log('response', response);
   };
 
   return (
@@ -93,9 +82,8 @@ function App() {
       />
       <Button
         className="confirm-button"
-        onClick={sendData}
+        onClick={uploadDataToServer}
         component="span"
-        multiple type="file"
         style={buttonStyle}
         size="large"
         variant="outlined">

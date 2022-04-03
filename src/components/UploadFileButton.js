@@ -146,11 +146,11 @@ const UploadFileButton = ({ setContainer, setPackages }) => {
                 accept=".csv, application/vnd.openmosix-officiated.spreadsheet.sheet, application/vnd.ms-excel"
                 id="contained-button-file"
                 onChange={clickFileButton}
-                multiple type="file"/>
+                type="file"/>
             <Button
                 className="upload-button"
                 component="span"
-                multiple type="file"
+                type="file"
                 style={{
                     textTransform: 'none',
                     color: "black",
