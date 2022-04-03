@@ -40,6 +40,7 @@ const AddPackage = ({ values, onChange }) => {
                 <ToggleButton
                     value="check"
                     selected={values['canRotate']}
+                    color="primary"
                     onChange={() => onChange({ ...values, canRotate: !values['canRotate'] })}
                     style={toggleStyle}
                 >
@@ -48,9 +49,9 @@ const AddPackage = ({ values, onChange }) => {
                 <ToggleButton
                     value="check"
                     selected={values['canStackAbove']}
+                    color="primary"
                     onChange={() => onChange({ ...values, canStackAbove: !values['canStackAbove'] })}
                     style={toggleStyle}
-                    color='standard'
                 >
                     Can Stack Above
                 </ToggleButton>

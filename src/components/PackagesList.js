@@ -119,6 +119,7 @@ const PackagesList = ({ packages, setPackages, currentPackage, setCurrentPackage
                             count={packages.length} 
                             onChange={(_, pageNumber) => setCurrentPackage(pageNumber)}
                             size="large"
+                            color="primary"
                             variant="outlined"
                             shape="rounded"
                             renderItem={CustomPaginationItem}
