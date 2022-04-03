@@ -4,11 +4,8 @@ import Package from "./Package";
 import AddIcon from "@material-ui/icons/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import RefreshIcon from "@mui/icons-material/Refresh";
-import DraftsIcon from "@mui/icons-material/Drafts";
-import Ticket from "./Ticket";
-import {CardMedia, Button, Fab, Tooltip, Pagination, PaginationItem} from '@mui/material';
+import {Button, Tooltip, Pagination, PaginationItem} from '@mui/material';
 import ManageSearchIcon from '@mui/icons-material/ManageSearch';
-import PackageBoxIcon from "../images/package-box-icon.png";
 
 const PackagesList = ({ packages, setPackages, currentPackage, setCurrentPackage, setShowPackageView }) => {
     const [, forceUpdate] = useReducer(x => x + 1, 0);
@@ -64,73 +61,67 @@ const PackagesList = ({ packages, setPackages, currentPackage, setCurrentPackage
     };
 
     return (
-        <div className="package-list-container">
-            <Ticket Icon={PackageBoxIcon} title="Package Details" isCustom={true}>
-            {
-                packages.length > 0 &&
-                <>
-                    <div className="package-list">
-                        <AddPackage
-                            index={currentPackage - 1}
-                            values={packages[currentPackage - 1]}
-                            onDelete={deletePackage}
-                            onChange={onChange}
-                        />
-                        <div className="package-buttons">
-                            <Tooltip title="Delete Package">
-                                <Button 
-                                    aria-label="delete" 
-                                    size="small" 
-                                    onClick={() => deletePackage(packages[currentPackage - 1])}
-                                >
-                                    <DeleteIcon/>
-                                </Button>
-                            </Tooltip>
-                            <Tooltip title="Reset Package">
-                                <Button 
-                                    aria-label="reset" 
-                                    size="small" 
-                                    onClick={() => resetPackage(packages[currentPackage - 1])}
-                                >
-                                    <RefreshIcon />
-                                </Button>
-                            </Tooltip>
-                        </div>
-                        <div className="general-buttons">
-                            <Tooltip title="View All Packages">
-                                <Button 
-                                    aria-label="view" 
-                                    size="small" 
-                                    onClick={() => setShowPackageView(true)}
-                                >
-                                    <ManageSearchIcon />
-                                </Button>
-                            </Tooltip>
-                            <Tooltip title="Add Packages">
-                                <Button aria-label="add" onClick={addPackage}>
-                                    <AddIcon />
-                                </Button>
-                            </Tooltip>
-                        </div>
-                    </div>
-                    <div className="pagination">
-                        <Pagination 
-                            page={currentPackage}
-                            count={packages.length} 
-                            onChange={(_, pageNumber) => setCurrentPackage(pageNumber)}
-                            size="large"
-                            color="primary"
-                            variant="outlined"
-                            shape="rounded"
-                            renderItem={CustomPaginationItem}
-                            showFirstButton
-                            showLastButton
-                        />
-                    </div>
-                </>
-            }
-            </Ticket>
-        </div>
+        packages.length <= 0 ? <></> :
+        <>
+            <div className="package-list">
+                <AddPackage
+                    index={currentPackage - 1}
+                    values={packages[currentPackage - 1]}
+                    onDelete={deletePackage}
+                    onChange={onChange}
+                />
+                <div className="package-buttons">
+                    <Tooltip title="Delete Package">
+                        <Button 
+                            aria-label="delete" 
+                            size="small" 
+                            onClick={() => deletePackage(packages[currentPackage - 1])}
+                        >
+                            <DeleteIcon/>
+                        </Button>
+                    </Tooltip>
+                    <Tooltip title="Reset Package">
+                        <Button 
+                            aria-label="reset" 
+                            size="small" 
+                            onClick={() => resetPackage(packages[currentPackage - 1])}
+                        >
+                            <RefreshIcon />
+                        </Button>
+                    </Tooltip>
+                </div>
+                <div className="general-buttons">
+                    <Tooltip title="View All Packages">
+                        <Button 
+                            aria-label="view" 
+                            size="small" 
+                            onClick={() => setShowPackageView(true)}
+                        >
+                            <ManageSearchIcon />
+                        </Button>
+                    </Tooltip>
+                    <Tooltip title="Add Packages">
+                        <Button aria-label="add" onClick={addPackage}>
+                            <AddIcon />
+                        </Button>
+                    </Tooltip>
+                </div>
+            </div>
+            <div className="pagination">
+                <Pagination 
+                    page={currentPackage}
+                    count={packages.length} 
+                    onChange={(_, pageNumber) => setCurrentPackage(pageNumber)}
+                    size="large"
+                    color="primary"
+                    variant="outlined"
+                    shape="rounded"
+                    renderItem={CustomPaginationItem}
+                    showFirstButton
+                    showLastButton
+                />
+            </div>
+        </>
     );
 };
 

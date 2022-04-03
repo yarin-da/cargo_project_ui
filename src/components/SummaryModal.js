@@ -123,7 +123,7 @@ const PackageRow = ({ units, values: p, onClick }) => {
     );
 };
 
-const SummaryModal = ({ units, container, packages, setCurrentPackage, showPackageView, setShowPackageView }) => {
+const SummaryModal = ({ units, packages, setCurrentPackage, showPackageView, setShowPackageView }) => {
   return (
     <div>
       <Modal
@@ -159,7 +159,6 @@ const SummaryModal = ({ units, container, packages, setCurrentPackage, showPacka
                   Review Your Packages
               </Typography>
               <MyList 
-                container={container} 
                 packages={packages} 
                 units={units} 
                 setCurrentPackage={setCurrentPackage}
