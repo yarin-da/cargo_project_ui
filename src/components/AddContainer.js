@@ -29,9 +29,6 @@ const ContainerForm = ({ container, setContainer }) => {
 
     return (
         <div className="add-cargo">
-            <div className="add-cargo-title">
-                Cargo Details
-            </div>
             <div className="cargo-text-field">
                 {Object.keys(container).map((field, index) =>
                     <NonNegativeNumberField

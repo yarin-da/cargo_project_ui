@@ -1,4 +1,4 @@
-.package-list-container {
+/* .package-list-container {
     position: relative;
     border: 2px solid black;
     border-radius: 20px;
@@ -6,19 +6,24 @@
     margin: 10px;
     background: #cfcfaf;
     min-height: 600px;
+} */
+
+.package-list-container {
+    position: relative;
 }
 
 .package-list {
+    position: relative;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     padding: 10px;
 }
 
-.add-button {
+.general-buttons {
     position: absolute;
-    top: 10px;
-    left: 10px;
+    top: 0;
+    right: 0;
 }
 
 .add-package {
@@ -57,12 +62,14 @@
     justify-content: space-evenly;
 }
 
-.package-button {
-    position: relative;
-    margin: 10px;
+.package-buttons {
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 .pagination {
     display: flex;
     justify-content: center;
+    width: 100%;
 }

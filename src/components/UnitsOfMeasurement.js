@@ -6,14 +6,14 @@ import "../styles/UnitsOfMeasurement.css";
 const UnitsOfMeasurement = ({ units, setUnits }) => {
     const textStyle = {textTransform: 'none'}
     return (
-        <div className="units-of-measurement-background">
-            <div className="units-of-measurement-title">
-                Units Of Measurement
-            </div>
+        <div className="units-of-measurement">
             <div className="toggle-buttons">
+                <div style={{fontWeight: 'bold'}}>Weight</div>
                 <ToggleButtonGroup
                     color="primary"
                     value={units['weight']}
+                    orientation="horizontal"
+                    fullWidth
                     exclusive
                     onChange={(e, weight) => setUnits({ ...units, weight })}
                 >
@@ -21,9 +21,12 @@ const UnitsOfMeasurement = ({ units, setUnits }) => {
                     <ToggleButton value="kg" style={textStyle}>kg</ToggleButton>
                     <ToggleButton value="lb" style={textStyle}>lb</ToggleButton>
                 </ToggleButtonGroup>
+                <div style={{fontWeight: 'bold'}}>Length</div>
                 <ToggleButtonGroup
                     color="primary"
                     value={units['length']}
+                    orientation="horizontal"
+                    fullWidth
                     exclusive
                     onChange={(e, length) => setUnits({ ...units, length })}
                 >

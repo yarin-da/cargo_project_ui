@@ -1,7 +1,5 @@
-import {Fab, TextField} from "@mui/material";
+import {TextField} from "@mui/material";
 import ToggleButton from "@mui/material/ToggleButton";
-import DeleteIcon from "@mui/icons-material/Delete";
-import {Tooltip, Divider} from "@mui/material";
 import translate from "./translations/Translate";
 import "../styles/AddPackage.css";
 
@@ -23,14 +21,11 @@ const Field = ({ name, type, onChange, value }) =>
         variant="standard"
     />;
 
-const AddPackage = ({ values, onDelete, onChange, index }) => {
+const AddPackage = ({ values, onChange }) => {
     const onFieldChange = (name) => 
         (e) => onChange({ ...values, [name]: e.target.value });
     return (
         <div className="add-package">
-            <div className="add-package-title">
-                Package {index + 1}
-            </div>
             <div className="package-fields">
                 <Field type="text"   onChange={onFieldChange("type")} name="type" value={values["type"]} />
                 <Field type="number" onChange={onFieldChange("height")} name="height" value={values["height"]} />
@@ -59,13 +54,6 @@ const AddPackage = ({ values, onDelete, onChange, index }) => {
                 >
                     Can Stack Above
                 </ToggleButton>
-            </div>
-            <div className="package-button">
-                <Tooltip title="Delete Packages">
-                    <Fab aria-label="delete" size="large" onClick={() => onDelete(values)}>
-                        <DeleteIcon/>
-                    </Fab>
-                </Tooltip>
             </div>
         </div>
     )

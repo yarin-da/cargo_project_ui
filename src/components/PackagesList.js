@@ -1,16 +1,20 @@
-import {useState} from "react";
+import {useReducer} from "react";
 import AddPackage from "./AddPackage";
 import Package from "./Package";
 import AddIcon from "@material-ui/icons/Add";
-import DraftsIcon from '@mui/icons-material/Drafts';
+import DeleteIcon from "@mui/icons-material/Delete";
+import RefreshIcon from "@mui/icons-material/Refresh";
+import DraftsIcon from "@mui/icons-material/Drafts";
 import Ticket from "./Ticket";
-import {Fab, Tooltip, Pagination, PaginationItem} from '@mui/material';
+import {CardMedia, Button, Fab, Tooltip, Pagination, PaginationItem} from '@mui/material';
+import ManageSearchIcon from '@mui/icons-material/ManageSearch';
+import PackageBoxIcon from "../images/package-box-icon.png";
 
-const PackagesList = ({ packages, setPackages }) => {
-    const [currentPackage, setCurrentPackage] = useState(1);
+const PackagesList = ({ packages, setPackages, currentPackage, setCurrentPackage, setShowPackageView }) => {
+    const [, forceUpdate] = useReducer(x => x + 1, 0);
 
     const addPackage = () => {
-        if (currentPackage == packages.length) {
+        if (currentPackage === packages.length) {
             setCurrentPackage(packages.length + 1);
         }
         setPackages(prev => [...prev, new Package()]);
@@ -23,6 +27,20 @@ const PackagesList = ({ packages, setPackages }) => {
         }
         setPackages(newPackages);
     };
+
+    const resetPackage = (values) => {
+        values['type'] = '';
+        values['canRotate'] = false;
+        values['canStackAbove'] = false;
+        values['height'] = 0;
+        values['width'] = 0;
+        values['depth'] = 0;
+        values['amount'] = 0;
+        values['weight'] = 0;
+        values['priority'] = 0;
+        values['profit'] = 0;
+        forceUpdate();
+    }
 
     const onChange = (values) => {
         const newPackages = packages.map(p => p['id'] === values['id'] ? values : p);
@@ -44,21 +62,56 @@ const PackagesList = ({ packages, setPackages }) => {
             </Tooltip>
         );
     };
-    
+
     return (
         <div className="package-list-container">
+            <Ticket Icon={PackageBoxIcon} title="Package Details" isCustom={true}>
             {
                 packages.length > 0 &&
                 <>
                     <div className="package-list">
-                        <Ticket Icon={DraftsIcon}>
-                            <AddPackage
-                                index={currentPackage - 1}
-                                values={packages[currentPackage - 1]}
-                                onDelete={deletePackage}
-                                onChange={onChange}
-                            />
-                        </Ticket>
+                        <AddPackage
+                            index={currentPackage - 1}
+                            values={packages[currentPackage - 1]}
+                            onDelete={deletePackage}
+                            onChange={onChange}
+                        />
+                        <div className="package-buttons">
+                            <Tooltip title="Delete Package">
+                                <Button 
+                                    aria-label="delete" 
+                                    size="small" 
+                                    onClick={() => deletePackage(packages[currentPackage - 1])}
+                                >
+                                    <DeleteIcon/>
+                                </Button>
+                            </Tooltip>
+                            <Tooltip title="Reset Package">
+                                <Button 
+                                    aria-label="reset" 
+                                    size="small" 
+                                    onClick={() => resetPackage(packages[currentPackage - 1])}
+                                >
+                                    <RefreshIcon />
+                                </Button>
+                            </Tooltip>
+                        </div>
+                        <div className="general-buttons">
+                            <Tooltip title="View All Packages">
+                                <Button 
+                                    aria-label="view" 
+                                    size="small" 
+                                    onClick={() => setShowPackageView(true)}
+                                >
+                                    <ManageSearchIcon />
+                                </Button>
+                            </Tooltip>
+                            <Tooltip title="Add Packages">
+                                <Button aria-label="add" onClick={addPackage}>
+                                    <AddIcon />
+                                </Button>
+                            </Tooltip>
+                        </div>
                     </div>
                     <div className="pagination">
                         <Pagination 
@@ -75,13 +128,7 @@ const PackagesList = ({ packages, setPackages }) => {
                     </div>
                 </>
             }
-            <div className="add-button">
-                <Tooltip title="Add Packages">
-                    <Fab color="primary" aria-label="add" onClick={addPackage}>
-                        <AddIcon />
-                    </Fab>
-                </Tooltip>
-            </div>
+            </Ticket>
         </div>
     );
 };
