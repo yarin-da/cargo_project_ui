@@ -46,6 +46,9 @@
   },
   "devDependencies": {
     "@material-ui/icons": "^4.11.2",
-    "@mui/material": "^5.4.4"
+    "@mui/material": "^5.4.4",
+    "i18next": "^21.6.16",
+    "i18next-http-backend": "^1.4.0",
+    "i18next-xhr-backend": "^3.2.2"
   }
 }
