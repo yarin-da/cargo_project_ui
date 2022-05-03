@@ -13,6 +13,8 @@ import { getSolution } from "./components/ServerHandler";
 import PackageBoxIcon from "./images/package-box-icon.png";
 import View3D from "./components/View3D";
 import CircularProgress from '@mui/material/CircularProgress';
+import SwitchLanguageButton from "./languages/SwitchLanguageButton";
+import { useTranslation } from 'react-i18next';
 import "./App.css";
 
 import {
@@ -92,6 +94,7 @@ const Home = ({
   showPackageView, setShowPackageView 
 }) => {
 
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const uploadDataToServer = async () => {
@@ -142,7 +145,7 @@ const Home = ({
         />
         {loading ? 
           <CircularProgress size={25} /> 
-          : 
+          :
           <Button
             onClick={uploadDataToServer}
             component="span"
@@ -150,9 +153,10 @@ const Home = ({
             size="large"
             variant="outlined"
           >
-            Confirm
+            {t('confirm')}
           </Button>
         }
+        <SwitchLanguageButton/>
       </div>
     </div>
   );
