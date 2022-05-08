@@ -3,12 +3,16 @@ import Header from './components/Header';
 import UnitsOfMeasurement from "./components/UnitsOfMeasurement";
 import AddContainer from "./components/AddContainer";
 import PackagesList from "./components/PackagesList";
+import Dropzone from "./components/Dropzone";
 import Package from "./components/Package";
 import Ticket from "./components/Ticket";
+import LanguagesButtons from "./components/LanguagesButtons";
 import SquareFootIcon from '@mui/icons-material/SquareFoot';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import SummaryModal from "./components/SummaryModal";
+import ToggleButton from "@mui/material/ToggleButton";
 import Button from '@mui/material/Button';
+import CheckIcon from '@mui/icons-material/Check';
 import { getSolution } from "./components/ServerHandler";
 import PackageBoxIcon from "./images/package-box-icon.png";
 import View3D from "./components/View3D";
@@ -86,14 +90,14 @@ function App() {
   );
 };
 
-const Home = ({ 
+const Home = ({
   container, setContainer, 
   packages, setPackages, 
   units, setUnits, 
   currentPackage, setCurrentPackage, 
   showPackageView, setShowPackageView 
 }) => {
-
+  const [isPackages, setIsPackages] = useState(false);
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -123,18 +127,33 @@ const Home = ({
           <Ticket Icon={SquareFootIcon} title="Units of Measurement">
             <UnitsOfMeasurement units={units} setUnits={setUnits} />
           </Ticket>
-          <Ticket Icon={LocalShippingIcon} title="Container Details">
-            <AddContainer container={container} setContainer={setContainer} />
-          </Ticket>
-          <Ticket Icon={PackageBoxIcon} title="Package Details" isCustom={true}>
-            <PackagesList 
-              packages={packages} 
-              setPackages={setPackages} 
-              currentPackage={currentPackage} 
-              setCurrentPackage={setCurrentPackage} 
-              setShowPackageView={setShowPackageView}
-            />
-          </Ticket>
+          <div>
+            <ToggleButton
+                value="check"
+                selected={isPackages}
+                onChange={() => {
+                  setIsPackages(!isPackages);
+                }}
+            >
+              <CheckIcon/>
+            </ToggleButton>
+          </div>
+
+          {isPackages ?
+              <Ticket Icon={PackageBoxIcon} title="Package Details" isCustom={true}>
+                <PackagesList
+                    packages={packages}
+                    setPackages={setPackages}
+                    currentPackage={currentPackage}
+                    setCurrentPackage={setCurrentPackage}
+                    setShowPackageView={setShowPackageView}
+                />
+              </Ticket>
+              :
+              <Ticket Icon={LocalShippingIcon} title="Container Details">
+                <AddContainer container={container} setContainer={setContainer} />
+              </Ticket>
+          }
         </div>
         <SummaryModal 
           units={units} 
@@ -157,6 +176,7 @@ const Home = ({
           </Button>
         }
         <SwitchLanguageButton/>
+        <LanguagesButtons/>
       </div>
     </div>
   );
