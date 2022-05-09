@@ -1,14 +1,39 @@
 import Box from '@mui/material/Box';
+import israelFlag from '../images/israel_flag.png'
+import americanFlag from '../images/american_flag.png'
+
+const buttonsStyle = {
+    display: "flex",
+}
+
+const boxStyle = {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+}
 
 const LanguagesButtons = () => {
     return (
-        <div>
-            <Box component="span" sx={{ p: 8, border: 1, borderRadius: 3}}>
-                Hebrew
+        <div style={buttonsStyle}>
+            <Box component="span" sx={{p: 8, border: 1, borderRadius: 3, background: "white", width: 2, height: 2}}>
+                <div style={boxStyle}>
+                    <img src={israelFlag}
+                         alt={"israel flag"}
+                         width="90"
+                         height="60"/><br/>
+                    Hebrew
+                </div>
             </Box>
-            <Box component="span" sx={{ p: 8, border: 1, borderRadius: 3}}>
-                English
-            </Box>
+
+            <div style={{display: "flex", marginLeft: 30}}>
+                <Box component="span"
+                     sx={{p: 8, border: 1, borderRadius: 3, background: "white", width: 2, height: 2}}>
+                    <div style={boxStyle}>
+                        <img src={americanFlag} alt={"american flag"} width="90" height="60"/><br/>
+                        English
+                    </div>
+                </Box>
+            </div>
         </div>
     )
 };

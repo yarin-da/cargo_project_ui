@@ -4,6 +4,7 @@ import UnitsOfMeasurement from "./components/UnitsOfMeasurement";
 import AddContainer from "./components/AddContainer";
 import PackagesList from "./components/PackagesList";
 import Dropzone from "./components/Dropzone";
+import LeftMenu from "./components/LeftMenu";
 import Package from "./components/Package";
 import Ticket from "./components/Ticket";
 import LanguagesButtons from "./components/LanguagesButtons";
@@ -175,8 +176,7 @@ const Home = ({
             {t('confirm')}
           </Button>
         }
-        <SwitchLanguageButton/>
-        <LanguagesButtons/>
+        <LeftMenu/>
       </div>
     </div>
   );
