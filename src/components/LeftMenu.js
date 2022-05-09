@@ -3,26 +3,14 @@ import Box from "@mui/material/Box";
 import {AppBar, Divider, Drawer, ListItem, ListItemIcon, ListItemText, Toolbar} from "@material-ui/core";
 import Typography from "@mui/material/Typography";
 import List from "@mui/material/List";
-import AddIcon from "@material-ui/icons/Add";
-import {LocalShipping, Settings} from "@material-ui/icons";
-import {Upload} from "@mui/icons-material";
 
 const drawerWidth = 240;
 
-const LeftMenu = () => {
+const LeftMenu = ({ buttons, notifyButtonClicked }) => {
+    
     return (
         <Box sx={{display: 'flex'}}>
             <CssBaseline/>
-            <AppBar
-                position="fixed"
-                sx={{width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px`}}
-            >
-                <Toolbar>
-                    <Typography variant="h6" noWrap component="div">
-                        Permanent drawer
-                    </Typography>
-                </Toolbar>
-            </AppBar>
             <Drawer
                 sx={{
                     width: drawerWidth,
@@ -38,13 +26,12 @@ const LeftMenu = () => {
                 <Toolbar/>
                 <Divider/>
                 <List>
-                    {['Settings', 'Upload file (optional)', 'Container', 'Packages'].map((text, index) => (
-                        <ListItem button key={text}>
+                    {buttons.map((b, index) => (
+                        <ListItem button key={b.title} onClick={() => notifyButtonClicked(index)}>
                             <ListItemIcon>
-                                {index === 0 ? <Settings/> : index === 1 ? <Upload/> : index === 2 ? <LocalShipping/> :
-                                    <Settings/>}
+                                {b.icon}
                             </ListItemIcon>
-                            <ListItemText primary={text}/>
+                            <ListItemText primary={b.title}/>
                         </ListItem>
                     ))}
                 </List>

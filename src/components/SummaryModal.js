@@ -63,7 +63,6 @@ const PackageRow = ({ units, values: p, onClick }) => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-evenly',
-
     };
     const detailsStyle = {
         display: 'grid',
@@ -119,7 +118,6 @@ const PackageRow = ({ units, values: p, onClick }) => {
                 </div>
             </div>
         </span>
-        
     );
 };
 

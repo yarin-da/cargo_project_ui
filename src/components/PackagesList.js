@@ -1,4 +1,4 @@
-import {useReducer} from "react";
+import {useReducer, useState} from "react";
 import AddPackage from "./AddPackage";
 import Package from "./Package";
 import AddIcon from "@material-ui/icons/Add";
@@ -6,9 +6,11 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import {Button, Tooltip, Pagination, PaginationItem} from '@mui/material';
 import ManageSearchIcon from '@mui/icons-material/ManageSearch';
+import SummaryModal from "./SummaryModal";
 
-const PackagesList = ({ packages, setPackages, currentPackage, setCurrentPackage, setShowPackageView }) => {
+const PackagesList = ({ units, packages, setPackages, currentPackage, setCurrentPackage }) => {
     const [, forceUpdate] = useReducer(x => x + 1, 0);
+    const [showPackageView, setShowPackageView] = useState(false);
 
     const addPackage = () => {
         if (currentPackage === packages.length) {
@@ -121,6 +123,13 @@ const PackagesList = ({ packages, setPackages, currentPackage, setCurrentPackage
                     showLastButton
                 />
             </div>
+            <SummaryModal 
+                units={units} 
+                packages={packages} 
+                setCurrentPackage={setCurrentPackage} 
+                showPackageView={showPackageView}
+                setShowPackageView={setShowPackageView}
+            />
         </>
     );
 };

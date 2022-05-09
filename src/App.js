@@ -3,22 +3,19 @@ import Header from './components/Header';
 import UnitsOfMeasurement from "./components/UnitsOfMeasurement";
 import AddContainer from "./components/AddContainer";
 import PackagesList from "./components/PackagesList";
-import Dropzone from "./components/Dropzone";
-import LeftMenu from "./components/LeftMenu";
 import Package from "./components/Package";
 import Ticket from "./components/Ticket";
-import LanguagesButtons from "./components/LanguagesButtons";
 import SquareFootIcon from '@mui/icons-material/SquareFoot';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import SummaryModal from "./components/SummaryModal";
 import ToggleButton from "@mui/material/ToggleButton";
 import Button from '@mui/material/Button';
+import Config from "./components/Config";
 import CheckIcon from '@mui/icons-material/Check';
 import { getSolution } from "./components/ServerHandler";
 import PackageBoxIcon from "./images/package-box-icon.png";
 import View3D from "./components/View3D";
 import CircularProgress from '@mui/material/CircularProgress';
-import SwitchLanguageButton from "./languages/SwitchLanguageButton";
 import { useTranslation } from 'react-i18next';
 import "./App.css";
 
@@ -38,8 +35,6 @@ const buttonStyle = {
 }
 
 function App() {
-  const [showPackageView, setShowPackageView] = useState(false);
-
   const [currentPackage, setCurrentPackage] = useState(1);
   
   const [container, setContainer] = useState({
@@ -75,8 +70,21 @@ function App() {
               setUnits={setUnits} 
               currentPackage={currentPackage} 
               setCurrentPackage={setCurrentPackage} 
-              showPackageView={showPackageView} 
-              setShowPackageView={setShowPackageView}
+            />
+          }
+        >
+        </Route>
+        <Route 
+          path="/config"
+          element={
+            <Config 
+              units={units}
+              packages={packages}
+              setPackages={setPackages}
+              currentPackage={currentPackage}
+              setCurrentPackage={setCurrentPackage}
+              container={container} 
+              setContainer={setContainer}
             />
           }
         >
@@ -96,7 +104,6 @@ const Home = ({
   packages, setPackages, 
   units, setUnits, 
   currentPackage, setCurrentPackage, 
-  showPackageView, setShowPackageView 
 }) => {
   const [isPackages, setIsPackages] = useState(false);
   const { t } = useTranslation();
@@ -147,7 +154,6 @@ const Home = ({
                     setPackages={setPackages}
                     currentPackage={currentPackage}
                     setCurrentPackage={setCurrentPackage}
-                    setShowPackageView={setShowPackageView}
                 />
               </Ticket>
               :
@@ -156,13 +162,6 @@ const Home = ({
               </Ticket>
           }
         </div>
-        <SummaryModal 
-          units={units} 
-          packages={packages} 
-          setCurrentPackage={setCurrentPackage} 
-          showPackageView={showPackageView}
-          setShowPackageView={setShowPackageView}
-        />
         {loading ? 
           <CircularProgress size={25} /> 
           :
@@ -176,7 +175,6 @@ const Home = ({
             {t('confirm')}
           </Button>
         }
-        <LeftMenu/>
       </div>
     </div>
   );
