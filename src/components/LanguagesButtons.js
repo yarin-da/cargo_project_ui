@@ -4,8 +4,6 @@ import americanFlag from '../images/american_flag.png'
 
 const buttonsStyle = {
     display: "flex",
-    marginLeft: "30%",
-    marginBottom: "30px"
 }
 
 const boxStyle = {
@@ -14,7 +12,7 @@ const boxStyle = {
     justifyContent: "center",
     flexDirection: "column",
     alignItems: "center",
-    marginBottom: 20
+    marginBottom: 20,
 }
 
 const LanguagesButtons = () => {

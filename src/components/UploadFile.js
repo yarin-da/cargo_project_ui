@@ -11,7 +11,7 @@ const textStyle = {
     marginLeft: "25%"
 }
 
-const UploadFile = () => {
+const UploadFile = ({ setContainer, setPackages }) => {
     return (
         <div>
             <Typography variant="h6" noWrap component="div" style={titleStyle}>
@@ -24,7 +24,7 @@ const UploadFile = () => {
                 You can download a sample file.<br/>
             </Typography>
             <ExampleInputFileButton/>
-            <Dropzone/>
+            <Dropzone setContainer={setContainer} setPackages={setPackages} />
         </div>
 
     )

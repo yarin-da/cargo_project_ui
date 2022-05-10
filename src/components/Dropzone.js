@@ -1,14 +1,5 @@
-import {createStyles, makeStyles} from '@material-ui/core/styles';
 import {DropzoneArea} from "material-ui-dropzone";
-
-const useStyles = makeStyles(theme => createStyles({
-    previewChip: {
-        minWidth: 160,
-        maxWidth: 210
-    },
-}));
-
-//const classes = useStyles();
+import parseCSV from "./CSVParser";
 
 const dropStyle = {
     width: "70%",
@@ -16,18 +7,26 @@ const dropStyle = {
     marginRight: "3%"
 }
 
-const Dropzone = () => {
+const Dropzone = ({ setContainer, setPackages }) => {
     return (
         <div style={dropStyle}>
             <DropzoneArea
                 showPreviews={true}
-                // ADD TYPE FILE
+                acceptedFiles={[".csv, text/csv, application/vnd.ms-excel, application/csv, text/x-csv, application/x-csv, text/comma-separated-values, text/x-comma-separated-values"]}
                 showPreviewsInDropzone={false}
                 showFileNames={true}
-                useChipsForPreview
                 previewGridProps={{container: {spacing: 1, direction: 'row'}}}
-                // previewChipProps={{classes: { root: classes.previewChip } }}
                 previewText="Selected files"
+                onDropRejected={() => alert('You can only upload csv files')}
+                onDrop={(droppedFiles) => {
+                    parseCSV(
+                        droppedFiles[0], 
+                        ({ container, packages }) => {
+                            setContainer(container);
+                            setPackages(packages);
+                        }
+                    );
+                }}
             />
         </div>
     )

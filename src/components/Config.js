@@ -41,12 +41,12 @@ const Config = ({
 
     return (
         <div style={{marginTop: "8%"}}>
-            <LeftMenu buttons={pages} notifyButtonClicked={setCurrentPage}/>
+            <LeftMenu buttons={pages} selected={currentPage} notifyButtonClicked={setCurrentPage}/>
             {
                 currentPage === 0 && <SettingsPage units={units} setUnits={setUnits}/>
             }
             {
-                currentPage === 1 && <UploadFile/>
+                currentPage === 1 && <UploadFile setContainer={setContainer} setPackages={setPackages} />
             }
             {
                 currentPage === 2 && <AddContainer
