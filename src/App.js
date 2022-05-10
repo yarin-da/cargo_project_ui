@@ -79,6 +79,7 @@ function App() {
           element={
             <Config 
               units={units}
+              setUnits={setUnits}
               packages={packages}
               setPackages={setPackages}
               currentPackage={currentPackage}
@@ -150,6 +151,7 @@ const Home = ({
           {isPackages ?
               <Ticket Icon={PackageBoxIcon} title="Package Details" isCustom={true}>
                 <PackagesList
+                    units={units}
                     packages={packages}
                     setPackages={setPackages}
                     currentPackage={currentPackage}

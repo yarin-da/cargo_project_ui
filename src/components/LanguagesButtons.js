@@ -4,12 +4,17 @@ import americanFlag from '../images/american_flag.png'
 
 const buttonsStyle = {
     display: "flex",
+    marginLeft: "30%",
+    marginBottom: "30px"
 }
 
 const boxStyle = {
     display: "flex",
+    align: "center",
+    justifyContent: "center",
     flexDirection: "column",
     alignItems: "center",
+    marginBottom: 20
 }
 
 const LanguagesButtons = () => {
@@ -29,7 +34,7 @@ const LanguagesButtons = () => {
                 <Box component="span"
                      sx={{p: 8, border: 1, borderRadius: 3, background: "white", width: 2, height: 2}}>
                     <div style={boxStyle}>
-                        <img src={americanFlag} alt={"american flag"} width="90" height="60"/><br/>
+                        <img src={americanFlag} alt={"american flag"} width="90" height="60"/>
                         English
                     </div>
                 </Box>

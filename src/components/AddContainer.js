@@ -2,6 +2,7 @@ import React from "react";
 import {TextField} from "@mui/material";
 import translate from "./translations/Translate";
 import "../styles/AddContainer.css";
+import Typography from "@mui/material/Typography";
 
 const textFieldStyle = {
     width: 120
@@ -28,7 +29,13 @@ const ContainerForm = ({ container, setContainer }) => {
         });
 
     return (
+
         <div className="add-cargo">
+            <div className="container-title">
+                <Typography variant="h6">
+                    Container details
+                </Typography>
+            </div>
             <div className="cargo-text-field">
                 {Object.keys(container).map((field, index) =>
                     <NonNegativeNumberField

@@ -1,4 +1,4 @@
-import {TextField} from "@mui/material";
+import {TextField, Typography} from "@mui/material";
 import ToggleButton from "@mui/material/ToggleButton";
 import translate from "./translations/Translate";
 import "../styles/AddPackage.css";
@@ -26,6 +26,9 @@ const AddPackage = ({ values, onChange }) => {
         (e) => onChange({ ...values, [name]: e.target.value });
     return (
         <div className="add-package">
+            <Typography className="package-title" noWrap component="div" variant="h6">
+                Packages details
+            </Typography>
             <div className="package-fields">
                 <Field type="text"   onChange={onFieldChange("type")} name="type" value={values["type"]} />
                 <Field type="number" onChange={onFieldChange("height")} name="height" value={values["height"]} />

@@ -1,10 +1,8 @@
 .units-of-measurement {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding-top: 25px;
+    /*flex-direction: column;*/
+    margin-left: 30%;
     padding-bottom: 25px;
-    height: 100%;
 }
 
 .units-of-measurement-title {
@@ -18,12 +16,12 @@
 }
 
 .toggle-buttons {
-    /* display: grid;
-    column-gap: 5px;
-    grid-template-columns: repeat(3, 1fr); */
+    /*display: grid;*/
+    /*column-gap: 5px;*/
+    /*grid-template-columns: repeat(3, 1fr); */
+    align-items: center;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    row-gap: 10px;
     justify-content: space-evenly;
-    height: 100%;
 }

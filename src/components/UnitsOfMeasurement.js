@@ -8,12 +8,11 @@ const UnitsOfMeasurement = ({ units, setUnits }) => {
     return (
         <div className="units-of-measurement">
             <div className="toggle-buttons">
-                <div style={{fontWeight: 'bold'}}>Weight</div>
+                <div style={{fontSize: 14}}>Weight</div>
                 <ToggleButtonGroup
                     color="primary"
                     value={units['weight']}
                     orientation="horizontal"
-                    fullWidth
                     exclusive
                     onChange={(e, weight) => setUnits({ ...units, weight })}
                 >
@@ -21,12 +20,11 @@ const UnitsOfMeasurement = ({ units, setUnits }) => {
                     <ToggleButton value="kg" style={textStyle}>kg</ToggleButton>
                     <ToggleButton value="lb" style={textStyle}>lb</ToggleButton>
                 </ToggleButtonGroup>
-                <div style={{fontWeight: 'bold'}}>Length</div>
+                <div style={{fontSize: 14}}>Length</div>
                 <ToggleButtonGroup
                     color="primary"
                     value={units['length']}
                     orientation="horizontal"
-                    fullWidth
                     exclusive
                     onChange={(e, length) => setUnits({ ...units, length })}
                 >
@@ -37,7 +35,6 @@ const UnitsOfMeasurement = ({ units, setUnits }) => {
             </div>
         </div>
     )
-
 };
 
 export default UnitsOfMeasurement;

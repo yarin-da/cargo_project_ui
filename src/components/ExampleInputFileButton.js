@@ -12,23 +12,23 @@ function downloadFile(){
 
 const ExampleInputFileButton = () => {
     return (
-        <Tooltip title="Click here if you want to see the file format">
-            <Button
-                className="upload-button"
-                onClick={downloadFile}
-                component="span"
-                multiple type="file"
-                style={{
-                    textTransform: 'none',
-                    color: "white",
-                    borderColor: "white",
-                    marginTop: 13,
-                    marginLeft: 40
-                }}
-                variant="outlined">
-                Download example file
-            </Button>
-        </Tooltip>
+        <Button
+            className="upload-button"
+            onClick={downloadFile}
+            component="span"
+            multiple type="file"
+            style={{
+                textTransform: 'none',
+                background: "black",
+                color: "white",
+                borderColor: "black",
+                marginTop: 15,
+                marginBottom: 20,
+                marginLeft: "50%"
+            }}
+            variant="outlined">
+            Download example file
+        </Button>
     )
 };
 

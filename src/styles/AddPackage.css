@@ -10,6 +10,8 @@
 
 .package-list-container {
     position: relative;
+    width: 80%;
+    margin-left: 25%;
 }
 
 .package-list {
@@ -17,7 +19,8 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    padding: 10px;
+    width: 80%;
+    margin-left: 20%;
 }
 
 .general-buttons {
@@ -29,25 +32,28 @@
 .add-package {
     display: flex;
     flex-direction: column;
-    padding-top: 45px;
-    margin: 10px;
+
 }
 
 .package-fields {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    row-gap: 15px;
-    column-gap: 15px;
+    row-gap: 30px;
+    column-gap: 30px;
     justify-items: center;
     padding: 40px;
 }
 
-.add-package-title {
-    position: relative;
-    color: black;
-    font-weight: bold;
-    font-size: 18px;
-    align-self: center;
+/*.add-package-title {*/
+/*    position: relative;*/
+/*    color: black;*/
+/*    font-weight: bold;*/
+/*    font-size: 18px;*/
+/*    align-self: center;*/
+/*}*/
+
+.package-title {
+    margin-left: 25%;
 }
 
 .package-text-field {
