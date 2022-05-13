@@ -31,10 +31,15 @@ const buttonStyle = {
 }
 
 function App() {
+  const [solution, setSolution] = useState({});
+  const [colorMap, setColorMap] = useState({
+    jewelry: 0xFF0000,
+    clothing: 0x44AA44,
+    electronics: 0x775577,
+    glass: 0x005500
+  });
   const [showPackageView, setShowPackageView] = useState(false);
-
   const [currentPackage, setCurrentPackage] = useState(1);
-  
   const [container, setContainer] = useState({
     width: 0,
     height: 0,
@@ -43,9 +48,7 @@ function App() {
     cost: 0,
   });
 
-  const [packages, setPackages] = useState([
-    new Package()
-  ]);
+  const [packages, setPackages] = useState([ new Package() ]);
   
   const [units, setUnits] = useState({
     length: 'm',
@@ -70,13 +73,19 @@ function App() {
               setCurrentPackage={setCurrentPackage} 
               showPackageView={showPackageView} 
               setShowPackageView={setShowPackageView}
+              setSolution={setSolution}
             />
           }
         >
         </Route>
         <Route 
           path="/view" 
-          element={<View3D />}
+          element={
+            <View3D 
+              solution={solution}
+              colorMap={colorMap}
+            />
+          }
         >
         </Route>
       </Routes>
@@ -89,7 +98,8 @@ const Home = ({
   packages, setPackages, 
   units, setUnits, 
   currentPackage, setCurrentPackage, 
-  showPackageView, setShowPackageView 
+  showPackageView, setShowPackageView,
+  setSolution
 }) => {
 
   const navigate = useNavigate();
@@ -103,13 +113,13 @@ const Home = ({
     try {
       setLoading(true);
       const response = await getSolution(data);
-      console.log('response', response);
+      setSolution(response);
+      navigate("/view");
     } catch (e) {
       console.log(e);
     } finally {
       setLoading(false);
     }
-    navigate("/view");
   };
 
   return (

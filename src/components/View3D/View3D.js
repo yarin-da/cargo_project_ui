@@ -273,7 +273,7 @@ const ColorMap = ({ colorMap }) => {
     );
 };
 
-const View3D = () => {
+const View3D = ({ solution, colorMap }) => {
     const canvasStyle = {
         width: '100vw',
         height: '100vh',
@@ -293,11 +293,10 @@ const View3D = () => {
                 }}
             >
                 <Suspense fallback={null}>
-                    <OrbitControls />
+                    <OrbitControls enableDamping dampingFactor={0.5} rotateSpeed={0.5} />
                     <Container scale={[solution['container']['width'], solution['container']['height'], solution['container']['depth']]} />
                     <Packages {...solution} />
-                    <pointLight position={[10, 10, 5]} />
-                    <pointLight position={[-10, -10, -5]} />
+                    <pointLight position={[0, 20, -5]} />
                     <ambientLight intensity={0.4} />
                     <Environment preset="warehouse" />
                 </Suspense>

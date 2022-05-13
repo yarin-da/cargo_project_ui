@@ -1,8 +1,8 @@
 // TODO: environment variable?
-const SERVER_URL = 'http://localhost:10789';
+const SERVER_URL = 'http://localhost:8080';
 
 const getSolution = async (data) => {
-    const request = `${SERVER_URL}/solve`;
+    const request = `${SERVER_URL}`;
     const options = {
       method: 'POST',
       headers: {
@@ -13,6 +13,7 @@ const getSolution = async (data) => {
     };
     const response = await fetch(request, options);
     const solution = await response.json();
+    return solution;
 };
 
 export {
