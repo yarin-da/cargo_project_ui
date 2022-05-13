@@ -8,7 +8,7 @@ const EDGE_COLOR = 0x334444;
 const EDGE_WIDTH = 0.5;
 const TEXT_SIZE = 0.3;
 const VISIBILITY_DIST = 7;
-const VISIBILITY_DIST2 = VISIBILITY_DIST*VISIBILITY_DIST;
+const VISIBILITY_DIST2 = VISIBILITY_DIST * VISIBILITY_DIST;
 const CONTAINER_COLOR = 0x777777;
 const CONTAINER_THICKNESS = 0.1;
 
@@ -125,16 +125,33 @@ const CustomBox = ({ color=0xFF0000, scale=[1, 1, 1], position=[0, 0, 0], rotati
         }
     });
 
-    const translatedPos = parsePosition({ scale: parseByScale ?? scale, position });
+    const rotate = ({scale, rotation}) => {
+        const newScale = [...scale];
+        rotation.forEach((r, i) => {
+            const [a, b] = [0, 1, 2].filter(a => a !== i);
+            let angle = 0;
+            const rot = r % 360;
+            while (angle < rot) {
+                angle += 90;
+                const temp = newScale[a];
+                newScale[a] = newScale[b];
+                newScale[b] = temp;
+            }
+        });
+        return newScale;
+    };
+
+    const translatedScale = rotate({ scale, rotation });
+    const translatedPos = parsePosition({ scale: parseByScale ?? translatedScale, position });
     return (
         <>{
             visible &&
             <group>
-                <Box scale={scale} position={translatedPos} rotateX={Math.PI/2}>
+                <Box scale={translatedScale} position={translatedPos}>
                     <meshStandardMaterial color={color} />
                 </Box>
-                <BoxText position={translatedPos} scale={scale} text={text} rotation={rotation} />
-                <BoxEdges position={position} scale={scale} rotation={rotation} />
+                <BoxText position={translatedPos} scale={translatedScale} text={text} />
+                <BoxEdges position={position} scale={translatedScale} />
             </group>
         }</>
     );
@@ -151,10 +168,9 @@ const Packages = ({ packages, solution }) => {
                     text={pkg['type']}
                     color={typeColors[pkg['type']]} 
                     scale={[pkg['width'], pkg['height'], pkg['depth']]}
-                    rotation={[pkg['rotation-x'], pkg['rotation-y'], pkg['rotation-z']].map(r => degreesToRadians(r))}
+                    rotation={[sol['rotation-x'], sol['rotation-y'], sol['rotation-z']]}
                     position={[sol['x'], sol['y'], sol['z']]} 
                 />
-
             })
         }
         </group>
@@ -203,15 +219,13 @@ const Container = ({ scale }) => {
         },
     ]);
 
-    const dot = (a, b) => a.map((x, i) => a[i] * b[i]).reduce((m, n) => m + n);
-
     useFrame(({ camera }) => {
         const [x, y, z] = camera.position;
         const wallsCopy = [...walls];
         let shouldUpdate = false;
         wallsCopy.forEach(w => {
-            const dotProduct = dot([x, y, z], w.position);
-            if (w.visible !== (dotProduct <= 0)) {
+            const dot = dotProduct([x, y, z], w.position);
+            if (w.visible !== (dot <= 0)) {
                 w.visible = !w.visible;
                 shouldUpdate = true;
             }
@@ -295,7 +309,7 @@ const View3D = () => {
 
 export default View3D;
 
-const degreesToRadians = (degrees) => Math.PI * degrees / 180;
+const dotProduct = (a, b) => a.map((_, i) => a[i] * b[i]).reduce((m, n) => m + n);
 
 const parsePosition = ({ scale, position }) => {
     return position.map((p, i) => p + scale[i]/2);
@@ -319,7 +333,7 @@ const solution = {
             "type": "jewelry",
             "width": 2,
             "height": 3,
-            "depth": 2
+            "depth": 2,
         },
         {
             "type": "clothing",
@@ -345,142 +359,139 @@ const solution = {
             "type": "jewelry",
             "x": 0,
             "y": 0,
-            "z": 0,
-            "rotation-x": 0,
-            "rotation-y": 0,
-            "rotation-z": 0,
+            "z": 0
         },
-        // {
-        //     "type": "jewelry",
-        //     "x": 3,
-        //     "y": 0,
-        //     "z": 0
-        // },
-        // {
-        //     "type": "clothing",
-        //     "x": 0,
-        //     "y": 3,
-        //     "z": 0
-        // },
-        // {
-        //     "type": "clothing",
-        //     "x": 0,
-        //     "y": 0,
-        //     "z": 6
-        // },
-        // {
-        //     "type": "clothing",
-        //     "x": 5,
-        //     "y": 0,
-        //     "z": 0
-        // },
-        // {
-        //     "type": "clothing",
-        //     "x": 0,
-        //     "y": 0,
-        //     "z": 27
-        // },
-        // {
-        //     "type": "clothing",
-        //     "x": 3,
-        //     "y": 0,
-        //     "z": 27
-        // },
-        // {
-        //     "type": "clothing",
-        //     "x": 6,
-        //     "y": 0,
-        //     "z": 27
-        // },
-        // {
-        //     "type": "jewelry",
-        //     "x": 3,
-        //     "y": 0,
-        //     "z": 9
-        // },
-        // {
-        //     "type": "jewelry",
-        //     "x": 0,
-        //     "y": 2,
-        //     "z": 27
-        // },
-        // {
-        //     "type": "jewelry",
-        //     "x": 2,
-        //     "y": 2,
-        //     "z": 27
-        // },
-        // {
-        //     "type": "jewelry",
-        //     "x": 4,
-        //     "y": 0,
-        //     "z": 21
-        // },
-        // {
-        //     "type": "jewelry",
-        //     "x": 6,
-        //     "y": 0,
-        //     "z": 24
-        // },
-        // {
-        //     "type": "jewelry",
-        //     "x": 8,
-        //     "y": 2,
-        //     "z": 27
-        // },
-        // {
-        //     "type": "electronics",
-        //     "x": 3,
-        //     "y": 3,
-        //     "z": 9
-        // },
-        // {
-        //     "type": "electronics",
-        //     "x": 0,
-        //     "y": 0,
-        //     "z": 11
-        // },
-        // {
-        //     "type": "electronics",
-        //     "x": 0,
-        //     "y": 2,
-        //     "z": 7
-        // },
-        // {
-        //     "type": "glass",
-        //     "x": 4,
-        //     "y": 0,
-        //     "z": 7
-        // },
-        // {
-        //     "type": "glass",
-        //     "x": 3,
-        //     "y": 0,
-        //     "z": 6
-        // },
-        // {
-        //     "type": "glass",
-        //     "x": 4,
-        //     "y": 3,
-        //     "z": 0
-        // },
-        // {
-        //     "type": "glass",
-        //     "x": 9,
-        //     "y": 0,
-        //     "z": 28
-        // },
-        // {
-        //     "type": "glass",
-        //     "x": 9,
-        //     "y": 0,
-        //     "z": 29
-        // },
-        // {
-        //     "type": "glass",
-        //     "x": 9,
-        //     "y": 0,
-        //     "z": 27
-        // },
+        {
+            "type": "jewelry",
+            "x": 3,
+            "y": 0,
+            "z": 0
+        },
+        {
+            "type": "clothing",
+            "x": 0,
+            "y": 3,
+            "z": 0
+        },
+        {
+            "type": "clothing",
+            "x": 0,
+            "y": 0,
+            "z": 6
+        },
+        {
+            "type": "clothing",
+            "x": 5,
+            "y": 0,
+            "z": 0
+        },
+        {
+            "type": "clothing",
+            "x": 0,
+            "y": 0,
+            "z": 27
+        },
+        {
+            "type": "clothing",
+            "x": 3,
+            "y": 0,
+            "z": 27
+        },
+        {
+            "type": "clothing",
+            "x": 6,
+            "y": 0,
+            "z": 27
+        },
+        {
+            "type": "jewelry",
+            "x": 3,
+            "y": 0,
+            "z": 9
+        },
+        {
+            "type": "jewelry",
+            "x": 0,
+            "y": 2,
+            "z": 27
+        },
+        {
+            "type": "jewelry",
+            "x": 2,
+            "y": 2,
+            "z": 27
+        },
+        {
+            "type": "jewelry",
+            "x": 4,
+            "y": 0,
+            "z": 21
+        },
+        {
+            "type": "jewelry",
+            "x": 6,
+            "y": 0,
+            "z": 24
+        },
+        {
+            "type": "jewelry",
+            "x": 8,
+            "y": 2,
+            "z": 27
+        },
+        {
+            "type": "electronics",
+            "x": 3,
+            "y": 3,
+            "z": 9
+        },
+        {
+            "type": "electronics",
+            "x": 0,
+            "y": 0,
+            "z": 11
+        },
+        {
+            "type": "electronics",
+            "x": 0,
+            "y": 2,
+            "z": 7
+        },
+        {
+            "type": "glass",
+            "x": 4,
+            "y": 0,
+            "z": 7
+        },
+        {
+            "type": "glass",
+            "x": 3,
+            "y": 0,
+            "z": 6
+        },
+        {
+            "type": "glass",
+            "x": 4,
+            "y": 3,
+            "z": 0
+        },
+        {
+            "type": "glass",
+            "x": 9,
+            "y": 0,
+            "z": 28
+        },
+        {
+            "type": "glass",
+            "x": 9,
+            "y": 0,
+            "z": 29
+        },
+        {
+            "type": "glass",
+            "x": 9,
+            "y": 0,
+            "z": 27
+        },
     ]
 };
