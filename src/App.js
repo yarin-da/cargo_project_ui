@@ -11,7 +11,7 @@ import SummaryModal from "./components/SummaryModal";
 import Button from '@mui/material/Button';
 import { getSolution } from "./components/ServerHandler";
 import PackageBoxIcon from "./images/package-box-icon.png";
-import View3D from "./components/View3D";
+import View3D from "./components/View3D/View3D";
 import CircularProgress from '@mui/material/CircularProgress';
 import "./App.css";
 
