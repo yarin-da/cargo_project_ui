@@ -112,8 +112,21 @@ const Home = ({
     // TODO: check if data is valid?
     try {
       setLoading(true);
-      const response = await getSolution(data);
-      setSolution(response);
+      const solution = await getSolution(data);
+
+      // TODO: figure out why the algorithm flips dimensions (inner rotation??)
+      // TODO: handle rotations
+      solution['packages'].forEach(pkg => {
+        const temp = pkg['depth'];
+        pkg['depth'] = pkg['height'];
+        pkg['height'] = temp;
+      });
+      const temp = solution['container']['width'];
+      solution['container']['width'] = solution['container']['depth'];
+      solution['container']['depth'] = temp;
+      console.log(solution);
+
+      setSolution(solution);
       navigate("/view");
     } catch (e) {
       console.log(e);

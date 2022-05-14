@@ -293,7 +293,7 @@ const View3D = ({ solution, colorMap }) => {
                 }}
             >
                 <Suspense fallback={null}>
-                    <OrbitControls enableDamping dampingFactor={0.5} rotateSpeed={0.5} />
+                    <OrbitControls enableDamping dampingFactor={0.1} rotateSpeed={0.5} />
                     <Container scale={[solution['container']['width'], solution['container']['height'], solution['container']['depth']]} />
                     <Packages {...solution} />
                     <pointLight position={[0, 20, -5]} />
