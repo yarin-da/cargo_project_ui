@@ -2,7 +2,6 @@ import React, { Suspense, useState } from 'react'
 import { extend, Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls, Environment, Box, Line } from '@react-three/drei'
 import { Text } from "troika-three-text";
-import { Vector3 } from 'three';
 import '../../styles/ColorMap.css';
 
 const EDGE_COLOR = 0x334444;
@@ -183,7 +182,6 @@ const Packages = ({ packages, solution, colorMap }) => {
     );
 };
 
-const targetVector = new Vector3();
 const Container = ({ scale }) => {
     const [width, height, depth] = scale.map(s => s + CONTAINER_THICKNESS);
     const [walls, setWalls] = useState([

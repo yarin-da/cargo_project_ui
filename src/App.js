@@ -7,7 +7,7 @@ import Package from "./components/Package";
 import Ticket from "./components/Ticket";
 import SquareFootIcon from '@mui/icons-material/SquareFoot';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
-import ToggleButton from "@mui/material/ToggleButton";
+import {ToggleButton, Alert} from "@mui/material";
 import Button from '@mui/material/Button';
 import Config from "./components/Config";
 import CheckIcon from '@mui/icons-material/Check';
@@ -24,6 +24,7 @@ import {
   Route,
   useNavigate
 } from "react-router-dom";
+import { Snackbar } from "@material-ui/core";
 
 const buttonStyle = {
   textTransform: 'none',
@@ -58,6 +59,7 @@ function App() {
     weight: 'kg',
   });
 
+  // https://joaoforja.com/blog/how-to-persist-state-after-a-page-refresh-in-react-using-local-storage
   // useEffect(() => {
   //   localStorage.setItem('__p');
   // }, [solution, colorMap, showPackageView, currentPackage, container, packages, units]);
@@ -126,7 +128,25 @@ const Home = ({
   const [isPackages, setIsPackages] = useState(false);
   const { t } = useTranslation();
   const navigate = useNavigate();
+  
   const [loading, setLoading] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarTitle, setSnackbarTitle] = useState(false);
+  const [snackbarSeverity, setSnackbarSeverity] = useState(false);
+
+  const notifyLoading = async () => {
+    await setLoading(true);
+    await setSnackbarSeverity("info");
+    await setSnackbarTitle("Organizing your packages...");
+    await setSnackbarOpen(true);
+  };
+
+  const notifyError = async () => {
+    await setSnackbarSeverity("error");
+    await setSnackbarTitle("Failed to organize your packages.");
+    await setSnackbarOpen(true);
+  };
+
   const uploadDataToServer = async () => {
     const data = {
       container,
@@ -134,7 +154,7 @@ const Home = ({
     };
     // TODO: check if data is valid?
     try {
-      setLoading(true);
+      await notifyLoading();
       const solution = await getSolution(data);
 
       // TODO: figure out why the algorithm flips dimensions (inner rotation??)
@@ -153,6 +173,7 @@ const Home = ({
       navigate("/view");
     } catch (e) {
       console.log(e);
+      await notifyError();
     } finally {
       setLoading(false);
     }
@@ -208,6 +229,11 @@ const Home = ({
           </Button>
         }
       </div>
+      <Snackbar open={snackbarOpen} autoHideDuration={5000} onClose={() => setSnackbarOpen(false)}>
+        <Alert onClose={() => setSnackbarOpen(false)} severity={snackbarSeverity} sx={{ width: '100%' }}>
+          {snackbarTitle}
+        </Alert>
+      </Snackbar>
     </div>
   );
 }

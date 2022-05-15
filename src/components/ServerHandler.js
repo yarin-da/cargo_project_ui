@@ -12,8 +12,7 @@ const getSolution = async (data) => {
       body: JSON.stringify(data),
     };
     const response = await fetch(request, options);
-    const solution = await response.json();
-    return solution;
+    return await response.json();
 };
 
 export {

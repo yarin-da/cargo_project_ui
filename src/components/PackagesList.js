@@ -4,7 +4,7 @@ import Package from "./Package";
 import AddIcon from "@material-ui/icons/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import RefreshIcon from "@mui/icons-material/Refresh";
-import {Button, Tooltip, Pagination, PaginationItem, Typography} from '@mui/material';
+import {Button, Tooltip, Pagination, PaginationItem} from '@mui/material';
 import ManageSearchIcon from '@mui/icons-material/ManageSearch';
 import SummaryModal from "./SummaryModal";
 

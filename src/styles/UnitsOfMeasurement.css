@@ -1,8 +1,5 @@
 .units-of-measurement {
     display: flex;
-    /*flex-direction: column;*/
-    margin-left: 30%;
-    padding-bottom: 25px;
 }
 
 .units-of-measurement-title {

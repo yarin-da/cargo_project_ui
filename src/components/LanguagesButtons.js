@@ -12,31 +12,27 @@ const boxStyle = {
     justifyContent: "center",
     flexDirection: "column",
     alignItems: "center",
-    marginBottom: 20,
 }
+
+const LanguageButton = ({ image, title, alt }) => {
+    return (
+        <Box component="span" sx={{p: 8, border: 1, borderRadius: 3, background: "white", width: 2, height: 2}}>
+            <div style={boxStyle}>
+                <img src={image}
+                    alt={alt}
+                    width="90"
+                    height="60"/><br/>
+                {title}
+            </div>
+        </Box>        
+    );
+};
 
 const LanguagesButtons = () => {
     return (
         <div style={buttonsStyle}>
-            <Box component="span" sx={{p: 8, border: 1, borderRadius: 3, background: "white", width: 2, height: 2}}>
-                <div style={boxStyle}>
-                    <img src={israelFlag}
-                         alt={"israel flag"}
-                         width="90"
-                         height="60"/><br/>
-                    Hebrew
-                </div>
-            </Box>
-
-            <div style={{display: "flex", marginLeft: 30}}>
-                <Box component="span"
-                     sx={{p: 8, border: 1, borderRadius: 3, background: "white", width: 2, height: 2}}>
-                    <div style={boxStyle}>
-                        <img src={americanFlag} alt={"american flag"} width="90" height="60"/>
-                        English
-                    </div>
-                </Box>
-            </div>
+            <LanguageButton image={israelFlag} alt={"Israel Flag"} title={"Hebrew"} />
+            <LanguageButton image={americanFlag} alt={"American Flag"} title={"English"} />
         </div>
     )
 };

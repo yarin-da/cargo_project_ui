@@ -8,7 +8,7 @@ const UnitsOfMeasurement = ({ units, setUnits }) => {
     return (
         <div className="units-of-measurement">
             <div className="toggle-buttons">
-                <div style={{fontSize: 14}}>Weight</div>
+                <div style={{fontSize: 14}}><b>Weight</b></div>
                 <ToggleButtonGroup
                     color="primary"
                     value={units['weight']}
@@ -20,7 +20,7 @@ const UnitsOfMeasurement = ({ units, setUnits }) => {
                     <ToggleButton value="kg" style={textStyle}>kg</ToggleButton>
                     <ToggleButton value="lb" style={textStyle}>lb</ToggleButton>
                 </ToggleButtonGroup>
-                <div style={{fontSize: 14}}>Length</div>
+                <div style={{fontSize: 14}}><b>Length</b></div>
                 <ToggleButtonGroup
                     color="primary"
                     value={units['length']}
