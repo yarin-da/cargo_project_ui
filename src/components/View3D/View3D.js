@@ -2,6 +2,7 @@ import React, { Suspense, useState } from 'react'
 import { extend, Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls, Environment, Box, Line } from '@react-three/drei'
 import { Text } from "troika-three-text";
+import { Vector3 } from 'three';
 import '../../styles/ColorMap.css';
 
 const EDGE_COLOR = 0x334444;
@@ -14,22 +15,28 @@ const CONTAINER_THICKNESS = 0.1;
 
 extend({ Text });
 
-const BoxEdges = ({ position, scale, rotation }) => {
+const dotProduct = (a, b) => a.map((_, i) => a[i] * b[i]).reduce((m, n) => m + n);
+
+const parsePosition = ({ scale, position }) => {
+    return position.map((p, i) => p + scale[i]/2);
+};
+
+const BoxEdges = ({ position, scale }) => {
     const [x, y, z] = position;
     const [w, h, d] = scale;
     const lines = [
-        [[x, y, z], [x + w, y, z]],
-        [[x, y, z], [x, y + h, z]],
-        [[x, y, z], [x, y, z + d]],
-        [[x, y, z + d], [x + w, y, z + d]],
-        [[x, y, z + d], [x, y + h, z + d]],
-        [[x, y + h, z], [x + w, y + h, z]],
-        [[x, y + h, z], [x, y + h, z + d]],
-        [[x + w, y, z], [x + w, y + h, z]],
-        [[x + w, y, z], [x + w, y, z + d]],
+        [[x,     y,     z],     [x + w, y,     z]],
+        [[x,     y,     z],     [x,     y + h, z]],
+        [[x,     y + h, z],     [x + w, y + h, z]],
+        [[x + w, y,     z],     [x + w, y + h, z]],
+        [[x,     y,     z],     [x,     y,     z + d]],
+        [[x,     y + h, z],     [x,     y + h, z + d]],
+        [[x + w, y,     z],     [x + w, y,     z + d]],
+        [[x,     y,     z + d], [x + w, y,     z + d]],
+        [[x,     y,     z + d], [x, y + h,     z + d]],
+        [[x + w, y + h, z + d], [x + w, y,     z + d]],
+        [[x + w, y + h, z + d], [x, y + h,     z + d]],
         [[x + w, y + h, z + d], [x + w, y + h, z]],
-        [[x + w, y + h, z + d], [x + w, y, z + d]],
-        [[x + w, y + h, z + d], [x, y + h, z + d]],
     ];
 
     return (
@@ -38,7 +45,6 @@ const BoxEdges = ({ position, scale, rotation }) => {
             lines.map((line, i) => 
                 <Line 
                     key={`box-edge-${i}`}
-                    rotateX={Math.PI/2}
                     points={line}
                     lineWidth={EDGE_WIDTH}
                     color={EDGE_COLOR} 
@@ -68,7 +74,7 @@ const CustomText = ({ position, rotation, text }) => {
     );
 };
 
-const BoxText = ({ position, scale, text, rotation }) => {
+const BoxText = ({ position, scale, text }) => {
     const offset = 0.01
     const dist = scale.map(s => s / 2);
     const texts = [
@@ -157,7 +163,7 @@ const CustomBox = ({ color=0xFF0000, scale=[1, 1, 1], position=[0, 0, 0], rotati
     );
 };
 
-const Packages = ({ packages, solution }) => {
+const Packages = ({ packages, solution, colorMap }) => {
     return (
         <group>
         {
@@ -166,7 +172,7 @@ const Packages = ({ packages, solution }) => {
                 return <CustomBox 
                     key={`package-${i}`}
                     text={pkg['type']}
-                    color={typeColors[pkg['type']]} 
+                    color={colorMap[pkg['type']]} 
                     scale={[pkg['width'], pkg['height'], pkg['depth']]}
                     rotation={[sol['rotation-x'], sol['rotation-y'], sol['rotation-z']]}
                     position={[sol['x'], sol['y'], sol['z']]} 
@@ -177,6 +183,7 @@ const Packages = ({ packages, solution }) => {
     );
 };
 
+const targetVector = new Vector3();
 const Container = ({ scale }) => {
     const [width, height, depth] = scale.map(s => s + CONTAINER_THICKNESS);
     const [walls, setWalls] = useState([
@@ -220,7 +227,10 @@ const Container = ({ scale }) => {
     ]);
 
     useFrame(({ camera }) => {
-        const [x, y, z] = camera.position;
+        // TODO:
+        // const direction = camera.getWorldDirection(targetVector);
+        const direction = camera.position;
+        const [x, y, z] = direction;
         const wallsCopy = [...walls];
         let shouldUpdate = false;
         wallsCopy.forEach(w => {
@@ -273,7 +283,7 @@ const ColorMap = ({ colorMap }) => {
     );
 };
 
-const View3D = ({ solution, colorMap }) => {
+const View3D = ({ colorMap }) => {
     const canvasStyle = {
         width: '100vw',
         height: '100vh',
@@ -295,31 +305,18 @@ const View3D = ({ solution, colorMap }) => {
                 <Suspense fallback={null}>
                     <OrbitControls enableDamping dampingFactor={0.1} rotateSpeed={0.5} />
                     <Container scale={[solution['container']['width'], solution['container']['height'], solution['container']['depth']]} />
-                    <Packages {...solution} />
+                    <Packages {...solution} colorMap={colorMap} />
                     <pointLight position={[0, 20, -5]} />
                     <ambientLight intensity={0.4} />
                     <Environment preset="warehouse" />
                 </Suspense>
             </Canvas>
-            <ColorMap colorMap={typeColors} />
+            <ColorMap colorMap={colorMap} />
         </div>
     )
 }
 
 export default View3D;
-
-const dotProduct = (a, b) => a.map((_, i) => a[i] * b[i]).reduce((m, n) => m + n);
-
-const parsePosition = ({ scale, position }) => {
-    return position.map((p, i) => p + scale[i]/2);
-};
-
-const typeColors = {
-    jewelry: 0xFF0000,
-    clothing: 0x44AA44,
-    electronics: 0x775577,
-    glass: 0x005500
-}
 
 const solution = {
     "container": {
@@ -332,7 +329,7 @@ const solution = {
             "type": "jewelry",
             "width": 2,
             "height": 3,
-            "depth": 2,
+            "depth": 2
         },
         {
             "type": "clothing",

@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import Header from './components/Header';
 import UnitsOfMeasurement from "./components/UnitsOfMeasurement";
 import AddContainer from "./components/AddContainer";
@@ -54,6 +54,10 @@ function App() {
     length: 'm',
     weight: 'kg',
   });
+
+  // useEffect(() => {
+  //   localStorage.setItem('__p');
+  // }, [solution, colorMap, showPackageView, currentPackage, container, packages, units]);
 
   return (
     <Router>
@@ -116,15 +120,15 @@ const Home = ({
 
       // TODO: figure out why the algorithm flips dimensions (inner rotation??)
       // TODO: handle rotations
-      solution['packages'].forEach(pkg => {
-        const temp = pkg['depth'];
-        pkg['depth'] = pkg['height'];
-        pkg['height'] = temp;
-      });
-      const temp = solution['container']['width'];
-      solution['container']['width'] = solution['container']['depth'];
-      solution['container']['depth'] = temp;
-      console.log(solution);
+      // solution['packages'].forEach(pkg => {
+      //   const temp = pkg['width'];
+      //   pkg['width'] = pkg['height'];
+      //   pkg['height'] = temp;
+      // });
+      // const temp = solution['container']['width'];
+      // solution['container']['width'] = solution['container']['depth'];
+      // solution['container']['depth'] = temp;
+      // console.log(solution);
 
       setSolution(solution);
       navigate("/view");
