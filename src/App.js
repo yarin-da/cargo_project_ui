@@ -7,14 +7,13 @@ import Package from "./components/Package";
 import Ticket from "./components/Ticket";
 import SquareFootIcon from '@mui/icons-material/SquareFoot';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
-import SummaryModal from "./components/SummaryModal";
 import ToggleButton from "@mui/material/ToggleButton";
 import Button from '@mui/material/Button';
 import Config from "./components/Config";
 import CheckIcon from '@mui/icons-material/Check';
 import { getSolution } from "./components/ServerHandler";
 import PackageBoxIcon from "./images/package-box-icon.png";
-import View3D from "./components/View3D";
+import View3D from "./components/View3D/View3D";
 import CircularProgress from '@mui/material/CircularProgress';
 import { useTranslation } from 'react-i18next';
 import "./App.css";
@@ -35,8 +34,15 @@ const buttonStyle = {
 }
 
 function App() {
+  const [solution, setSolution] = useState({});
+  const [colorMap, setColorMap] = useState({
+    jewelry: 0xFF0000,
+    clothing: 0x44AA44,
+    electronics: 0x775577,
+    glass: 0x005500
+  });
+  const [showPackageView, setShowPackageView] = useState(false);
   const [currentPackage, setCurrentPackage] = useState(1);
-  
   const [container, setContainer] = useState({
     width: 0,
     height: 0,
@@ -45,14 +51,16 @@ function App() {
     cost: 0,
   });
 
-  const [packages, setPackages] = useState([
-    new Package()
-  ]);
+  const [packages, setPackages] = useState([ new Package() ]);
   
   const [units, setUnits] = useState({
     length: 'm',
     weight: 'kg',
   });
+
+  // useEffect(() => {
+  //   localStorage.setItem('__p');
+  // }, [solution, colorMap, showPackageView, currentPackage, container, packages, units]);
 
   return (
     <Router>
@@ -86,13 +94,21 @@ function App() {
               setCurrentPackage={setCurrentPackage}
               container={container} 
               setContainer={setContainer}
+              showPackageView={showPackageView} 
+              setShowPackageView={setShowPackageView}
+              setSolution={setSolution}
             />
           }
         >
         </Route>
         <Route 
           path="/view" 
-          element={<View3D />}
+          element={
+            <View3D 
+              solution={solution}
+              colorMap={colorMap}
+            />
+          }
         >
         </Route>
       </Routes>
@@ -105,6 +121,7 @@ const Home = ({
   packages, setPackages, 
   units, setUnits, 
   currentPackage, setCurrentPackage, 
+  setSolution
 }) => {
   const [isPackages, setIsPackages] = useState(false);
   const { t } = useTranslation();
@@ -118,14 +135,27 @@ const Home = ({
     // TODO: check if data is valid?
     try {
       setLoading(true);
-      const response = await getSolution(data);
-      console.log('response', response);
+      const solution = await getSolution(data);
+
+      // TODO: figure out why the algorithm flips dimensions (inner rotation??)
+      // TODO: handle rotations
+      // solution['packages'].forEach(pkg => {
+      //   const temp = pkg['width'];
+      //   pkg['width'] = pkg['height'];
+      //   pkg['height'] = temp;
+      // });
+      // const temp = solution['container']['width'];
+      // solution['container']['width'] = solution['container']['depth'];
+      // solution['container']['depth'] = temp;
+      // console.log(solution);
+
+      setSolution(solution);
+      navigate("/view");
     } catch (e) {
       console.log(e);
     } finally {
       setLoading(false);
     }
-    navigate("/view");
   };
 
   return (
