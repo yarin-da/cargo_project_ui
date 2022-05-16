@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {LocalShipping, Settings} from "@material-ui/icons";
-import {AppBar, Toolbar, Box, Button, Modal} from "@mui/material";
+import {AppBar, Toolbar, Box, Button, Modal, Fab} from "@mui/material";
 import {Upload} from "@mui/icons-material";
 import SettingsIcon from '@mui/icons-material/Settings';
 import SettingsPage from './SettingsPage';
@@ -9,6 +9,7 @@ import LeftMenu from './LeftMenu';
 import UploadFile from './UploadFile';
 import AddContainer from './AddContainer';
 import PackagesList from './PackagesList';
+import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
 import '../styles/Config.css';
 
 const SettingsButton = ({ onClick }) => {
@@ -51,23 +52,25 @@ const Config = ({
                     setContainer
                 }) => {
     const [currentPage, setCurrentPage] = useState(0);
-
     const pages = [
-        {
-            title: 'Settings',
-            icon: <Settings/>,
-        },
+        // {
+        //     title: 'Settings',
+        //     icon: <Settings/>,
+        // },
         {
             title: 'Upload file (optional)',
             icon: <Upload/>,
+            url: '/config/upload_file'
         },
         {
             title: 'Container',
             icon: <LocalShipping/>,
+            url: '/config/add_container'
         },
         {
             title: 'Packages',
             icon: <Settings/>,
+            url: '/config/add_packages'
         }
     ];
 
@@ -80,27 +83,32 @@ const Config = ({
             <div style={{ display: 'flex', width: '100%', height: '100%' }}>
                 <LeftMenu buttons={pages} selected={currentPage} notifyButtonClicked={setCurrentPage}/>
                 <div style={{ display: 'flex', width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
-                {
-                    currentPage === 0 && <SettingsPage units={units} setUnits={setUnits}/>
-                }
-                {
-                    currentPage === 1 && <UploadFile setContainer={setContainer} setPackages={setPackages} />
-                }
-                {
-                    currentPage === 2 && <AddContainer
-                        container={container}
-                        setContainer={setContainer}
-                    />
-                }
-                {
-                    currentPage === 3 && <PackagesList
-                        units={units}
-                        packages={packages}
-                        setPackages={setPackages}
-                        currentPackage={currentPackage}
-                        setCurrentPackage={setCurrentPackage}
-                    />
-                }
+                    {
+                        currentPage === 0 && <UploadFile setContainer={setContainer} setPackages={setPackages} />
+                    }
+                    {
+                        currentPage === 1 && <AddContainer container={container} setContainer={setContainer} />
+                    }
+                    {
+                        currentPage === 2 &&
+                        <PackagesList
+                            units={units}
+                            packages={packages}
+                            setPackages={setPackages}
+                            currentPackage={currentPackage}
+                            setCurrentPackage={setCurrentPackage}
+                        />
+                    }
+                    <Fab 
+                        color="primary"
+                        size="large"
+                        variant="extended"
+                        style={{ position: 'absolute', right: 50, bottom: 50 }}
+                        onClick={() => setCurrentPage((currentPage + 1) % pages.length)}
+                    >
+                        NEXT
+                        <ArrowForwardRoundedIcon fontSize="large" />
+                    </Fab>
                 </div>
             </div>
 

@@ -1,6 +1,5 @@
-import {Divider, ListItem, ListItemIcon, ListItemText, Button, Icon} from "@material-ui/core";
+import {Divider, ListItem, ListItemIcon, ListItemText} from "@material-ui/core";
 import List from "@mui/material/List";
-import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
 
 const drawerWidth = 240;
 
@@ -30,13 +29,6 @@ const LeftMenu = ({ buttons, selected, notifyButtonClicked }) => {
                     </div>
                 ))}
             </List>
-            <Button onClick={() => notifyButtonClicked((selected + 1) % buttons.length)}>
-                <span>Next</span>
-                <Icon>
-                    <ArrowForwardRoundedIcon />
-                </Icon>
-            </Button>
-            <Divider/>
         </div>
     )
 };
