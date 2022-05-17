@@ -26,6 +26,7 @@
     height: max(5%, 65px);
     background: rgba(105, 105, 105, 0.45);
     top: 5%;
+    margin-left: 4%;
     border-radius: 20px;
 }
 .logo {
@@ -47,9 +48,15 @@
     cursor: pointer;
 }
 
-.upload-button {
+.start-button {
+    display: flex;
     position: absolute;
+    alignment: left;
     color: white;
+    text-align: left;
+    top: 65%;
+    right: 1040px;
+    bottom: 20px;
 
 }
 

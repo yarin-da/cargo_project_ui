@@ -45,7 +45,7 @@ const SettingsPage = ({units, setUnits}) => {
             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                 <h3>Units of measurement</h3>
                 <UnitsOfMeasurement units={units} setUnits={setUnits}/>
-            </div>            
+            </div>
         </div>
 
     )

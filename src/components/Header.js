@@ -1,14 +1,13 @@
 import logo from "../images/logo.png";
-import UploadFileButton from "./UploadFileButton";
-import ExampleInputFileButton from "./ExampleInputFileButton";
-import ShowInfo from "./ShowInfo";
 import "../styles/Header.css";
+import Button from "@mui/material/Button";
+import React from "react";
 
-const Header = ({ setContainer, setPackages }) => {
+const Header = () => {
     return (
         <div className="head">
             <div className="header-nav">
-                <img src={logo} className="logo" />
+                <img src={logo} className="logo"/>
                 <div className="header-nav-links">
                     <div className="nav-link">Home</div>
                     <div className="nav-link">Support</div>
@@ -19,10 +18,20 @@ const Header = ({ setContainer, setPackages }) => {
                 <h1 className="header-title">
                     LET YOUR SUCCESS <br/>
                     RIDE WITH US.<br/>
-                    <UploadFileButton setContainer={setContainer} setPackages={setPackages} />
-                    <ExampleInputFileButton/>
-                    <ShowInfo/>
                 </h1>
+                <Button
+                    className="start-button"
+                    component="span"
+                    style={{
+                        textTransform: 'none',
+                        color: "black",
+                        borderColor: "white",
+                        marginTop: 13,
+                        background: "white"
+                    }}
+                    variant="outlined">
+                    Start
+                </Button>
             </div>
         </div>
     )

@@ -181,7 +181,7 @@ const Home = ({
 
   return (
     <div className="App">
-      <Header setContainer={setContainer} setPackages={setPackages} />
+      <Header />
       <div className="below-header">
         <div className="side-by-side">
           <Ticket Icon={SquareFootIcon} title="Units of Measurement">
