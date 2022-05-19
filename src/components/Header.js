@@ -2,8 +2,10 @@ import logo from "../images/logo.png";
 import "../styles/Header.css";
 import Button from "@mui/material/Button";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 const Header = () => {
+    const { t } = useTranslation();
     return (
         <div className="head">
             <div className="header-nav">
@@ -30,7 +32,7 @@ const Header = () => {
                         background: "white"
                     }}
                     variant="outlined">
-                    Start
+                    {t("start")}
                 </Button>
             </div>
         </div>

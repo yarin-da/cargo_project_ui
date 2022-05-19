@@ -1,6 +1,15 @@
 {
   "upload_file": "העלאת קובץ",
   "settings": "הגדרות",
+  "standard_size": "גודל סטנדרטי",
+  "export": "ייצא",
+  "start": "התחל",
+  "language": "שפה",
+  "hebrew": "עברית",
+  "english": "אנגלית",
+  "small": "קטן",
+  "medium": "בינוני",
+  "large": "גדול",
   "download_example_file": "הורדת קובץ לדוגמא",
   "units_of_measurement": "יחידות מידה",
   "container_details": "פרטי מכולה",
@@ -22,9 +31,9 @@
   "priority": "עדיפות",
   "profit": "רווח",
   "can_rotate": "ניתן לסיבוב",
-  "can_stack_above": "Can Stack Above",
+  "can_stack_above": "ניתן להעמיס על",
   "confirm": "אישור",
-  "review_your_packages": "Review Your Packages",
-  "rotate": "rotate",
-  "stack_above": "stackAbove"
+  "review_your_packages": "החבילות שלך",
+  "rotate": "סובב",
+  "stack_above": "העמס על"
 }

@@ -5,6 +5,8 @@ import "../styles/AddContainer.css";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import containerPhoto from '../images/container.png'
+import { useTranslation } from "react-i18next";
+
 
 const textFieldStyle = {
     width: 120
@@ -53,6 +55,7 @@ const StandardContainerSize = ({image, height, width, title, alt, size}) => {
 };
 
 const ContainerForm = ({container, setContainer}) => {
+    const { t } = useTranslation();
     const onChangeHandler = (field) =>
         (event) => setContainer({
             ...container,
@@ -64,19 +67,19 @@ const ContainerForm = ({container, setContainer}) => {
         <div className="add-cargo">
             <div className="container-title">
                 <Typography variant="h6">
-                    Container details
+                    {t("container_details")}
                 </Typography>
             </div>
             <div style={{display: "flex", justifyContent: "space-evenly"}}>
                 <Typography variant="h7">
-                    Standard Size
+                    {t("standard_size")}
                 </Typography>
                 <br/>
-                <StandardContainerSize image={containerPhoto} height={40} width={70} title={"Small"} alt={"Small"}
+                <StandardContainerSize image={containerPhoto} height={40} width={70} title={t("small")} alt={"Small"}
                                        size={"100x200x100"}/>
-                <StandardContainerSize image={containerPhoto} height={60} width={90} title={"Medium"} alt={"Medium"}
+                <StandardContainerSize image={containerPhoto} height={60} width={90} title={t("medium")} alt={"Medium"}
                                        size={"100x300x100"}/>
-                <StandardContainerSize image={containerPhoto} height={80} width={100} title={"Large"} alt={"Large"}
+                <StandardContainerSize image={containerPhoto} height={80} width={100} title={t("large")} alt={"Large"}
                                        size={"100x400x100"}/>
             </div>
             <div className="cargo-text-field">
