@@ -2,6 +2,7 @@ import {TextField, Typography} from "@mui/material";
 import ToggleButton from "@mui/material/ToggleButton";
 import translate from "./translations/Translate";
 import "../styles/AddPackage.css";
+import { useTranslation } from "react-i18next";
 
 const textFieldStyle = {
     width: 120,
@@ -22,12 +23,13 @@ const Field = ({ name, type, onChange, value }) =>
     />;
 
 const AddPackage = ({ values, onChange }) => {
-    const onFieldChange = (name) => 
+    const { t } = useTranslation();
+    const onFieldChange = (name) =>
         (e) => onChange({ ...values, [name]: e.target.value });
     return (
         <div className="add-package">
             <Typography className="package-title" noWrap component="div" variant="h6">
-                Packages details
+                {t("package_details")}
             </Typography>
             <div className="package-fields">
                 <Field type="text"   onChange={onFieldChange("type")} name="type" value={values["type"]} />
@@ -47,7 +49,7 @@ const AddPackage = ({ values, onChange }) => {
                     onChange={() => onChange({ ...values, canRotate: !values['canRotate'] })}
                     style={toggleStyle}
                 >
-                    Can Rotate
+                    {t("can_rotate")}
                 </ToggleButton>
                 <ToggleButton
                     value="check"
@@ -56,7 +58,7 @@ const AddPackage = ({ values, onChange }) => {
                     onChange={() => onChange({ ...values, canStackAbove: !values['canStackAbove'] })}
                     style={toggleStyle}
                 >
-                    Can Stack Above
+                    {t("can_stack_above")}
                 </ToggleButton>
             </div>
         </div>

@@ -2,9 +2,11 @@ import logo from "../images/logo.png";
 import "../styles/Header.css";
 import { useNavigate } from "react-router-dom";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 const Header = () => {
     const navigate = useNavigate();
+    const { t } = useTranslation();
     return (
         <div className="head">
             <div className="header-nav">
@@ -24,7 +26,7 @@ const Header = () => {
                     className="start-button"
                     onClick={() => navigate('/config')}
                 >
-                    Start
+                    {t("start")}
                 </button>
             </div>
         </div>

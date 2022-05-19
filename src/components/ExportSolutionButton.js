@@ -1,5 +1,6 @@
 import Button from "@mui/material/Button";
 import { saveAs } from "file-saver";
+import { useTranslation } from "react-i18next";
 
 function downloadFile(pathToCSV){
     saveAs(
@@ -9,6 +10,7 @@ function downloadFile(pathToCSV){
 }
 
 const ExportSolutionButton = ({pathToCSV}) => {
+    const { t } = useTranslation();
     return (
         <Button
             className="upload-button"
@@ -25,7 +27,7 @@ const ExportSolutionButton = ({pathToCSV}) => {
                 marginLeft: "50%"
             }}
             variant="outlined">
-            Export
+            {t("export")}
         </Button>
     )
 };
