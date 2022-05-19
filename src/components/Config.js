@@ -53,10 +53,6 @@ const Config = ({
                 }) => {
     const [currentPage, setCurrentPage] = useState(0);
     const pages = [
-        // {
-        //     title: 'Settings',
-        //     icon: <Settings/>,
-        // },
         {
             title: 'Upload file (optional)',
             icon: <Upload/>,
@@ -77,7 +73,7 @@ const Config = ({
     const [showSettings, setShowSettings] = useState(false);
     const toggleSettingsModal = () => setShowSettings(curr => !curr);
     return (
-        <div>
+        <div style={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100%' }}>
             <Heading onClickSettings={toggleSettingsModal} />
 
             <div style={{ display: 'flex', width: '100%', height: '100%' }}>

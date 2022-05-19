@@ -6,15 +6,11 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import containerPhoto from '../images/container.png'
 
-const textFieldStyle = {
-    width: 120
-};
-
-const NonNegativeNumberField = ({name, value, onChange}) =>
+const NonNegativeNumberField = ({name, style, value, onChange}) =>
     <TextField
         label={translate(name)}
         type="number"
-        style={textFieldStyle}
+        style={style}
         value={value}
         InputProps={{
             inputProps: {min: 0}
@@ -60,7 +56,6 @@ const ContainerForm = ({container, setContainer}) => {
         });
 
     return (
-
         <div className="add-cargo">
             <div className="container-title">
                 <Typography variant="h6">
@@ -85,6 +80,7 @@ const ContainerForm = ({container, setContainer}) => {
                         key={index}
                         name={field}
                         value={container[field]}
+                        style={{ width: 100, margin: 10 }}
                         onChange={onChangeHandler(field)}
                     />
                 )}
