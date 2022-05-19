@@ -1,9 +1,10 @@
 import logo from "../images/logo.png";
 import "../styles/Header.css";
-import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
 import React from "react";
 
 const Header = () => {
+    const navigate = useNavigate();
     return (
         <div className="head">
             <div className="header-nav">
@@ -14,24 +15,17 @@ const Header = () => {
                     <div className="nav-link">Products</div>
                 </div>
             </div>
-            <div className="text">
-                <h1 className="header-title">
-                    LET YOUR SUCCESS <br/>
-                    RIDE WITH US.<br/>
-                </h1>
-                <Button
+            <div className="header">
+                <div className="header-title">
+                    <div className="header-title-text">LET YOUR SUCCESS</div>
+                    <div className="header-title-text">RIDE WITH US.</div>    
+                </div>
+                <button
                     className="start-button"
-                    component="span"
-                    style={{
-                        textTransform: 'none',
-                        color: "black",
-                        borderColor: "white",
-                        marginTop: 13,
-                        background: "white"
-                    }}
-                    variant="outlined">
+                    onClick={() => navigate('/config')}
+                >
                     Start
-                </Button>
+                </button>
             </div>
         </div>
     )

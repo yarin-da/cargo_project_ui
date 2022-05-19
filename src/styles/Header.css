@@ -10,14 +10,14 @@
 
 .head {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    padding: 40px;
     height: 100vh;
     background-image: url(../images/background.jpeg);
     background-repeat: no-repeat;
 }
 
 .header-nav {
-    position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -26,9 +26,9 @@
     height: max(5%, 65px);
     background: rgba(105, 105, 105, 0.45);
     top: 5%;
-    margin-left: 4%;
     border-radius: 20px;
 }
+
 .logo {
     height: 80%;
 }
@@ -49,24 +49,35 @@
 }
 
 .start-button {
-    display: flex;
-    position: absolute;
-    alignment: left;
-    color: white;
-    text-align: left;
-    top: 65%;
-    right: 1040px;
-    bottom: 20px;
+    font-size: 50px;
+    font-weight: 700px;
+    color: #445;
+    border: 2px solid black;
+    border-radius: 20px;
+    background: #fff;
+    width: 200px;
+    height: 100px;
+    align-self: center;
+    cursor: pointer;
+}
 
+.start-button:hover {
+    background: #eef;
+}
+
+.header-title-text {
+    font-size: 55px;
+    color: white;
+    font-weight: 700;
 }
 
 .header-title {
-    position: absolute;
-    font-size: 55px;
-    color: white;
-    text-align: left;
-    top: 25%;
-    left: 12%;
-    bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
+.header {
+    display: flex;
+    flex-direction: column;
+}

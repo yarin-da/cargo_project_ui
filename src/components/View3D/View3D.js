@@ -24,18 +24,18 @@ const BoxEdges = ({ position, scale }) => {
     const [x, y, z] = position;
     const [w, h, d] = scale;
     const lines = [
-        [[x,     y,     z],     [x + w, y,     z]],
-        [[x,     y,     z],     [x,     y + h, z]],
-        [[x,     y + h, z],     [x + w, y + h, z]],
-        [[x + w, y,     z],     [x + w, y + h, z]],
-        [[x,     y,     z],     [x,     y,     z + d]],
-        [[x,     y + h, z],     [x,     y + h, z + d]],
-        [[x + w, y,     z],     [x + w, y,     z + d]],
+        [[x,     y,     z    ], [x + w, y,     z    ]],
+        [[x,     y,     z    ], [x,     y + h, z    ]],
+        [[x,     y + h, z    ], [x + w, y + h, z    ]],
+        [[x + w, y,     z    ], [x + w, y + h, z    ]],
+        [[x,     y,     z    ], [x,     y,     z + d]],
+        [[x,     y + h, z    ], [x,     y + h, z + d]],
+        [[x + w, y,     z    ], [x + w, y,     z + d]],
         [[x,     y,     z + d], [x + w, y,     z + d]],
         [[x,     y,     z + d], [x, y + h,     z + d]],
         [[x + w, y + h, z + d], [x + w, y,     z + d]],
         [[x + w, y + h, z + d], [x, y + h,     z + d]],
-        [[x + w, y + h, z + d], [x + w, y + h, z]],
+        [[x + w, y + h, z + d], [x + w, y + h, z    ]],
     ];
 
     return (

@@ -23,14 +23,14 @@ const NonNegativeNumberField = ({name, value, onChange}) =>
         variant="standard"
     />;
 
-const boxStyle = {
-    display: "flex",
-    justifyContent: "center",
-    flexDirection: "column",
-    alignItems: "center",
-}
-
 const StandardContainerSize = ({image, height, width, title, alt, size}) => {
+    const boxStyle = {
+        display: "flex",
+        justifyContent: "center",
+        flexDirection: "column",
+        alignItems: "center",
+    };
+
     const buttonStyle = {
         padding: 20,
         margin: 10,

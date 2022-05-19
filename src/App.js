@@ -182,7 +182,7 @@ const Home = ({
   return (
     <div className="App">
       <Header />
-      <div className="below-header">
+      {/* <div className="below-header">
         <div className="side-by-side">
           <Ticket Icon={SquareFootIcon} title="Units of Measurement">
             <UnitsOfMeasurement units={units} setUnits={setUnits} />
@@ -228,7 +228,7 @@ const Home = ({
             {t('confirm')}
           </Button>
         }
-      </div>
+      </div> */}
       <Snackbar open={snackbarOpen} autoHideDuration={5000} onClose={() => setSnackbarOpen(false)}>
         <Alert onClose={() => setSnackbarOpen(false)} severity={snackbarSeverity} sx={{ width: '100%' }}>
           {snackbarTitle}
