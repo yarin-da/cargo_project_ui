@@ -1,6 +1,5 @@
 import React from "react";
 import {TextField} from "@mui/material";
-import translate from "./translations/Translate";
 import "../styles/AddContainer.css";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
@@ -10,7 +9,7 @@ import { useTranslation } from "react-i18next";
 
 const NonNegativeNumberField = ({name, style, value, onChange}) =>
     <TextField
-        label={translate(name)}
+        label={name}
         type="number"
         style={style}
         value={value}
@@ -81,7 +80,7 @@ const ContainerForm = ({container, setContainer}) => {
                 {Object.keys(container).map((field, index) =>
                     <NonNegativeNumberField
                         key={index}
-                        name={field}
+                        name={t(field)}
                         value={container[field]}
                         style={{ width: 100, margin: 10 }}
                         onChange={onChangeHandler(field)}

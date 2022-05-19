@@ -24,7 +24,7 @@
   "height": "Height",
   "depth": "Depth",
   "cost": "Cost",
-  "max_weight": "Max Weight",
+  "maxWeight": "Max Weight",
   "type": "Type",
   "weight": "Weight",
   "amount": "Amount",

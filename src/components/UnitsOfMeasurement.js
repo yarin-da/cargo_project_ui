@@ -1,8 +1,10 @@
-import {ToggleButton, ToggleButtonGroup} from "@mui/material";
+import {ToggleButton, ToggleButtonGroup, Typography} from "@mui/material";
+import { useTranslation } from "react-i18next";
 import "../styles/UnitsOfMeasurement.css";
 
 
 const UnitsOfMeasurement = ({ units, setUnits }) => {
+    const { t } = useTranslation();
     const textStyle = {textTransform: 'none'}
     return (
         <div className="units-of-measurement">
@@ -30,9 +32,15 @@ const UnitsOfMeasurement = ({ units, setUnits }) => {
                         exclusive
                         onChange={(e, length) => setUnits({ ...units, length })}
                     >
-                        <ToggleButton value="cm" style={textStyle}>cm</ToggleButton>
-                        <ToggleButton value="m" style={textStyle}>m</ToggleButton>
-                        <ToggleButton value="inch" style={textStyle}>inch</ToggleButton>
+                        <ToggleButton value="cm" style={textStyle}>
+                            <Typography>{t('cm')}</Typography>
+                        </ToggleButton>
+                        <ToggleButton value="m" style={textStyle}>
+                            <Typography>{t('m')}</Typography>
+                        </ToggleButton>
+                        <ToggleButton value="inch" style={textStyle}>
+                            <Typography>{t('inch')}</Typography>
+                        </ToggleButton>
                     </ToggleButtonGroup>
                 </div>
             </div>

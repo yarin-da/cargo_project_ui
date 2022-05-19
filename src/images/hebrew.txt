@@ -14,7 +14,7 @@
     "height": "גובה",
     "depth": "עומק",
     "cost": "עלות",
-    "max_weight": "משקל מקסימלי",
+    "maxWeight": "משקל מקסימלי",
     "type": "סוג",
     "weight": "משקל",
     "amount": "כמות",

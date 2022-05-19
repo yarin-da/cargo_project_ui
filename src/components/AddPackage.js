@@ -1,26 +1,23 @@
 import {TextField, Typography} from "@mui/material";
 import ToggleButton from "@mui/material/ToggleButton";
-import translate from "./translations/Translate";
 import "../styles/AddPackage.css";
 import { useTranslation } from "react-i18next";
-
-const textFieldStyle = {
-    width: 120,
-};
 
 const toggleStyle = {
     textTransform: 'none'
 };
 
-const Field = ({ name, type, onChange, value }) =>
-    <TextField
-        label={translate(name)}
+const Field = ({ name, type, onChange, value }) => {
+    const { t } = useTranslation();
+    return <TextField
+        label={t(name)}
         type={type}
         onChange={onChange}
         value={value}
-        style={textFieldStyle}
+        style={{ width: 120 }}
         variant="standard"
     />;
+}
 
 const AddPackage = ({ values, onChange }) => {
     const { t } = useTranslation();

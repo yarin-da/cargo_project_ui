@@ -1,5 +1,5 @@
 import UnitsOfMeasurement from "./UnitsOfMeasurement";
-import {Box} from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import israelFlag from '../images/israel_flag.png'
 import americanFlag from '../images/american_flag.png'
 import { useTranslation } from "react-i18next";
@@ -12,25 +12,25 @@ const boxStyle = {
     alignItems: "center",
 }
 
-const LanguageButton = ({ image, title, alt }) => {
-    const { t } = useTranslation();
+const LanguageButton = ({ image, title, alt, onClick }) => {
     const buttonStyle = { 
         padding: 20, 
         margin: 10,
         border: '1px solid black', 
         borderRadius: 10,
-        background: '#f7f7f7'
+        background: '#f7f7f7',
+        'text-transform': 'none'
     };
     return (
-        <Box component="span" style={buttonStyle}>
+        <Button component="span" style={buttonStyle} onClick={onClick}>
             <div style={boxStyle}>
+                <Typography style={{fontWeight: 'bold'}}>{title}</Typography>
                 <img src={image}
                     alt={alt}
                     width="90"
                     height="60"/>
-                <b>{title}</b>
             </div>
-        </Box>        
+        </Button>        
     );
 };
 
@@ -38,24 +38,26 @@ const SettingsPage = ({units, setUnits}) => {
     const { t } = useTranslation();
     return (
         <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-            <h1>{t("settings")}</h1>
+            <Typography variant="h4">{t("settings")}</Typography>
             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-                <h3>{t("language")}</h3>
+                <Typography style={{margin:10}} variant="h5">{t("language")}</Typography>
                 <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
-                    <button onClick={()=> i18next.changeLanguage('he')} >
-                        {t("hebrew")}
-                    </button>
-                    <button onClick={()=> i18next.changeLanguage('en')} >
-                        {t("english")}
-                    </button>
-                    <LanguageButton image={israelFlag} alt={"Israel Flag"} title={t("hebrew")} onClick={()=> i18next.changeLanguage('he')}>
-                    </LanguageButton>
-                    <LanguageButton image={americanFlag} alt={"American Flag"} title={t("english")} onClick={()=> i18next.changeLanguage('en')}>
-                    </LanguageButton>
+                    <LanguageButton 
+                        image={israelFlag} 
+                        alt={"Israel Flag"} 
+                        title={t("hebrew")} 
+                        onClick={()=> i18next.changeLanguage('he')} 
+                    />
+                    <LanguageButton 
+                        image={americanFlag} 
+                        alt={"American Flag"} 
+                        title={t("english")} 
+                        onClick={()=> i18next.changeLanguage('en')} 
+                    />
                 </div>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-                <h3>{t("units_of_measurement")}</h3>
+                <Typography variant="h5">{t("units_of_measurement")}</Typography>
                 <UnitsOfMeasurement units={units} setUnits={setUnits}/>
             </div>
         </div>
