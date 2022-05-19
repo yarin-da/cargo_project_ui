@@ -1,7 +1,8 @@
-import {TextField, Typography} from "@mui/material";
+import { TextField } from "@mui/material";
 import ToggleButton from "@mui/material/ToggleButton";
 import "../styles/AddPackage.css";
 import { useTranslation } from "react-i18next";
+import CustomText from "./CustomText";
 
 const toggleStyle = {
     textTransform: 'none'
@@ -20,23 +21,34 @@ const Field = ({ name, type, onChange, value }) => {
 }
 
 const AddPackage = ({ values, onChange }) => {
-    const { t } = useTranslation();
     const onFieldChange = (name) =>
         (e) => onChange({ ...values, [name]: e.target.value });
+
+    const fieldTypes = {
+        type: 'text',
+        height: 'number',
+        width: 'number',
+        depth: 'number',
+        weight: 'number',
+        amount: 'number',
+        priority: 'number',
+        profit: 'number',
+    }
+
     return (
         <div className="add-package">
-            <Typography className="package-title" noWrap component="div" variant="h6">
-                {t("package_details")}
-            </Typography>
+            <CustomText text="packageDetails" className="package-title" noWrap component="div" variant="h6" />
             <div className="package-fields">
-                <Field type="text"   onChange={onFieldChange("type")} name="type" value={values["type"]} />
-                <Field type="number" onChange={onFieldChange("height")} name="height" value={values["height"]} />
-                <Field type="number" onChange={onFieldChange("width")} name="width" value={values["width"]} />
-                <Field type="number" onChange={onFieldChange("depth")} name="depth" value={values["depth"]} />
-                <Field type="number" onChange={onFieldChange("weight")} name="weight" value={values["weight"]} />
-                <Field type="number" onChange={onFieldChange("amount")} name="amount" value={values["amount"]} />
-                <Field type="number" onChange={onFieldChange("priority")} name="priority" value={values["priority"]} />
-                <Field type="number" onChange={onFieldChange("profit")} name="profit" value={values["profit"]} />
+                {Object.keys(fieldTypes).map(
+                    (field, i) => 
+                        <Field 
+                            key={`add-package-field-${i}`}
+                            type={fieldTypes[field]}
+                            onChange={onFieldChange(field)} 
+                            name={field} 
+                            value={values[field]} 
+                        />
+                )}
             </div>
             <div className="toggle-boolean-buttons">
                 <ToggleButton
@@ -46,7 +58,7 @@ const AddPackage = ({ values, onChange }) => {
                     onChange={() => onChange({ ...values, canRotate: !values['canRotate'] })}
                     style={toggleStyle}
                 >
-                    {t("can_rotate")}
+                    <CustomText text="canRotate" />
                 </ToggleButton>
                 <ToggleButton
                     value="check"
@@ -55,7 +67,7 @@ const AddPackage = ({ values, onChange }) => {
                     onChange={() => onChange({ ...values, canStackAbove: !values['canStackAbove'] })}
                     style={toggleStyle}
                 >
-                    {t("can_stack_above")}
+                    <CustomText text="canStackAbove" />
                 </ToggleButton>
             </div>
         </div>

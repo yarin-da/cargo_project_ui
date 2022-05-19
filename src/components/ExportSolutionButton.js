@@ -1,6 +1,7 @@
 import Button from "@mui/material/Button";
 import { saveAs } from "file-saver";
 import { useTranslation } from "react-i18next";
+import CustomText from "./CustomText";
 
 function downloadFile(pathToCSV){
     saveAs(
@@ -27,7 +28,7 @@ const ExportSolutionButton = ({pathToCSV}) => {
                 marginLeft: "50%"
             }}
             variant="outlined">
-            {t("export")}
+            <CustomText text="export" />
         </Button>
     )
 };

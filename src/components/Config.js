@@ -56,7 +56,7 @@ const Config = ({
         {
             title: 'Upload file (optional)',
             icon: <Upload/>,
-            url: '/config/upload_file'
+            url: '/config/uploadFile'
         },
         {
             title: 'Container',

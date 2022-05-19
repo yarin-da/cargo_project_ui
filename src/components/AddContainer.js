@@ -1,10 +1,9 @@
-import React from "react";
-import {TextField} from "@mui/material";
-import "../styles/AddContainer.css";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
+import React, { useState } from "react";
+import { Button, TextField } from "@mui/material";
 import containerPhoto from '../images/container.png'
 import { useTranslation } from "react-i18next";
+import CustomText from "./CustomText";
+import "../styles/AddContainer.css";
 
 
 const NonNegativeNumberField = ({name, style, value, onChange}) =>
@@ -20,32 +19,82 @@ const NonNegativeNumberField = ({name, style, value, onChange}) =>
         variant="standard"
     />;
 
-const StandardContainerSize = ({image, height, width, title, alt, size}) => {
-    const boxStyle = {
-        display: "flex",
-        justifyContent: "center",
-        flexDirection: "column",
-        alignItems: "center",
-    };
-
+const StandardContainerSize = ({image, imageSize, title, standard, isChosen, onClick}) => {
     const buttonStyle = {
         padding: 20,
         margin: 10,
         border: '1px solid black',
         borderRadius: 10,
-        background: 'white'
+        background: isChosen ? 'lightgrey' : 'white'
     };
+    const { t } = useTranslation();
+    const imageRatio = 1.4;
     return (
-        <Box component="span" style={buttonStyle}>
-            <div style={boxStyle}>
-                <img src={image}
-                     alt={alt}
-                     width={width}
-                     height={height}/>
-                <small>{size}</small>
-                <b>{title}</b>
+        <Button component="span" style={buttonStyle} onClick={onClick}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100%' }}>
+                <small>{standard['width']}&times;{standard['height']}&times;{standard['depth']}</small>
+                <div style={{ flex: 1, display: 'flex', alignItems: 'center' }}>
+                    <img 
+                        src={image}
+                        alt={t(title)}
+                        width={imageRatio * imageSize}
+                        height={imageSize}
+                    />
+                </div>
+                <CustomText text={title} />
             </div>
-        </Box>
+        </Button>
+    );
+};
+
+const StandardContainerButtons = ({ onContainerSizeChosen }) => {
+    const [chosen, setChosen] = useState(-1);
+
+    const standardSizes = {
+        small: {
+            width: 100,
+            height: 100,
+            depth: 200,
+            maxWeight: 50,
+            cost: 500,
+        },
+        medium: {
+            width: 100,
+            height: 100,
+            depth: 300,
+            maxWeight: 60,
+            cost: 600,
+        },
+        large: {
+            width: 100,
+            height: 100,
+            depth: 400,
+            maxWeight: 70,
+            cost: 700,
+        },
+    };
+
+    return (
+        <div style={{display: "flex", flexDirection: 'column', alignItems: 'center'}}>
+            <CustomText text="standardSize" variant="h6" />
+            <div style={{display: "flex", justifyContent: "space-evenly"}}>
+                {Object.keys(standardSizes).map(
+                    (size, i) => 
+                        <StandardContainerSize 
+                            key={`standard-container-size-button-${i}`}
+                            image={containerPhoto} 
+                            imageSize={50 + 10 * i} 
+                            title={size} 
+                            standard={standardSizes[size]}
+                            isChosen={i === chosen}
+                            onClick={() => {
+                                onContainerSizeChosen(standardSizes[size]);
+                                setChosen(i);
+                            }}
+                        />
+                )}
+            </div>
+        </div>
     );
 };
 
@@ -60,22 +109,9 @@ const ContainerForm = ({container, setContainer}) => {
     return (
         <div className="add-cargo">
             <div className="container-title">
-                <Typography variant="h6">
-                    {t("container_details")}
-                </Typography>
+                <CustomText text="containerDetails" variant="h4" />
             </div>
-            <div style={{display: "flex", justifyContent: "space-evenly"}}>
-                <Typography variant="h7">
-                    {t("standard_size")}
-                </Typography>
-                <br/>
-                <StandardContainerSize image={containerPhoto} height={40} width={70} title={t("small")} alt={"Small"}
-                                       size={"100x200x100"}/>
-                <StandardContainerSize image={containerPhoto} height={60} width={90} title={t("medium")} alt={"Medium"}
-                                       size={"100x300x100"}/>
-                <StandardContainerSize image={containerPhoto} height={80} width={100} title={t("large")} alt={"Large"}
-                                       size={"100x400x100"}/>
-            </div>
+            <StandardContainerButtons onContainerSizeChosen={(standard) => setContainer(standard)} />
             <div className="cargo-text-field">
                 {Object.keys(container).map((field, index) =>
                     <NonNegativeNumberField

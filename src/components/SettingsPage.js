@@ -1,8 +1,8 @@
 import UnitsOfMeasurement from "./UnitsOfMeasurement";
-import { Button, Typography } from "@mui/material";
+import { Button } from "@mui/material";
 import israelFlag from '../images/israel_flag.png'
 import americanFlag from '../images/american_flag.png'
-import { useTranslation } from "react-i18next";
+import CustomText from "./CustomText";
 import i18next from "i18next";
 
 const boxStyle = {
@@ -24,7 +24,7 @@ const LanguageButton = ({ image, title, alt, onClick }) => {
     return (
         <Button component="span" style={buttonStyle} onClick={onClick}>
             <div style={boxStyle}>
-                <Typography style={{fontWeight: 'bold'}}>{title}</Typography>
+                <CustomText text={title} style={{fontWeight: 'bold'}} />
                 <img src={image}
                     alt={alt}
                     width="90"
@@ -35,29 +35,28 @@ const LanguageButton = ({ image, title, alt, onClick }) => {
 };
 
 const SettingsPage = ({units, setUnits}) => {
-    const { t } = useTranslation();
     return (
         <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-            <Typography variant="h4">{t("settings")}</Typography>
+            <CustomText text="settings" variant="h4" />
             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-                <Typography style={{margin:10}} variant="h5">{t("language")}</Typography>
+                <CustomText text="language" variant="h5" style={{ margin: 10 }} />
                 <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
                     <LanguageButton 
                         image={israelFlag} 
                         alt={"Israel Flag"} 
-                        title={t("hebrew")} 
+                        title={"hebrew"} 
                         onClick={()=> i18next.changeLanguage('he')} 
                     />
                     <LanguageButton 
                         image={americanFlag} 
                         alt={"American Flag"} 
-                        title={t("english")} 
+                        title={"english"} 
                         onClick={()=> i18next.changeLanguage('en')} 
                     />
                 </div>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-                <Typography variant="h5">{t("units_of_measurement")}</Typography>
+                <CustomText text="unitsOfMeasurement" variant="h5" />
                 <UnitsOfMeasurement units={units} setUnits={setUnits}/>
             </div>
         </div>

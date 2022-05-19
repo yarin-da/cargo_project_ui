@@ -1,18 +1,9 @@
-import {useState} from "react";
+import { useState } from "react";
 import Header from './components/Header';
-import UnitsOfMeasurement from "./components/UnitsOfMeasurement";
-import AddContainer from "./components/AddContainer";
-import PackagesList from "./components/PackagesList";
 import Package from "./components/Package";
-import Ticket from "./components/Ticket";
-import SquareFootIcon from '@mui/icons-material/SquareFoot';
-import LocalShippingIcon from '@mui/icons-material/LocalShipping';
-import {ToggleButton, Alert} from "@mui/material";
-import Button from '@mui/material/Button';
+import { Alert, Button } from "@mui/material";
 import Config from "./components/Config";
-import CheckIcon from '@mui/icons-material/Check';
 import { getSolution } from "./components/ServerHandler";
-import PackageBoxIcon from "./images/package-box-icon.png";
 import View3D from "./components/View3D/View3D";
 import CircularProgress from '@mui/material/CircularProgress';
 import { useTranslation } from 'react-i18next';
@@ -25,14 +16,6 @@ import {
   useNavigate
 } from "react-router-dom";
 import { Snackbar } from "@material-ui/core";
-
-const buttonStyle = {
-  textTransform: 'none',
-  color: "black",
-  borderColor: "black",
-  marginTop: 25,
-  marginBottom: 25,
-}
 
 function App() {
   const [solution, setSolution] = useState({});
@@ -73,13 +56,8 @@ function App() {
           element={
             <Home 
               container={container} 
-              setContainer={setContainer} 
               packages={packages} 
-              setPackages={setPackages} 
-              units={units} 
-              setUnits={setUnits} 
-              currentPackage={currentPackage} 
-              setCurrentPackage={setCurrentPackage} 
+              setSolution={setSolution}
             />
           }
         >
@@ -119,10 +97,8 @@ function App() {
 };
 
 const Home = ({
-  container, setContainer, 
-  packages, setPackages, 
-  units, setUnits, 
-  currentPackage, setCurrentPackage, 
+  container, 
+  packages,  
   setSolution
 }) => {
   const [isPackages, setIsPackages] = useState(false);
@@ -182,53 +158,19 @@ const Home = ({
   return (
     <div className="App">
       <Header />
-      {/* <div className="below-header">
-        <div className="side-by-side">
-          <Ticket Icon={SquareFootIcon} title="Units of Measurement">
-            <UnitsOfMeasurement units={units} setUnits={setUnits} />
-          </Ticket>
-          <div>
-            <ToggleButton
-                value="check"
-                selected={isPackages}
-                onChange={() => {
-                  setIsPackages(!isPackages);
-                }}
-            >
-              <CheckIcon/>
-            </ToggleButton>
-          </div>
-
-          {isPackages ?
-              <Ticket Icon={PackageBoxIcon} title="Package Details" isCustom={true}>
-                <PackagesList
-                    units={units}
-                    packages={packages}
-                    setPackages={setPackages}
-                    currentPackage={currentPackage}
-                    setCurrentPackage={setCurrentPackage}
-                />
-              </Ticket>
-              :
-              <Ticket Icon={LocalShippingIcon} title="Container Details">
-                <AddContainer container={container} setContainer={setContainer} />
-              </Ticket>
-          }
-        </div>
-        {loading ? 
-          <CircularProgress size={25} /> 
-          :
-          <Button
-            onClick={uploadDataToServer}
-            component="span"
-            style={buttonStyle}
-            size="large"
-            variant="outlined"
-          >
-            {t('confirm')}
-          </Button>
-        }
-      </div> */}
+      {/* {loading ? 
+        <CircularProgress size={25} /> 
+        :
+        <Button
+          onClick={uploadDataToServer}
+          component="span"
+          style={buttonStyle}
+          size="large"
+          variant="outlined"
+        >
+          {t('confirm')}
+        </Button>
+      } */}
       <Snackbar open={snackbarOpen} autoHideDuration={5000} onClose={() => setSnackbarOpen(false)}>
         <Alert onClose={() => setSnackbarOpen(false)} severity={snackbarSeverity} sx={{ width: '100%' }}>
           {snackbarTitle}

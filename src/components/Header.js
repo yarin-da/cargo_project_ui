@@ -2,20 +2,14 @@ import logo from "../images/logo.png";
 import "../styles/Header.css";
 import { useNavigate } from "react-router-dom";
 import React from "react";
-import { useTranslation } from "react-i18next";
+import CustomText from "./CustomText";
 
 const Header = () => {
     const navigate = useNavigate();
-    const { t } = useTranslation();
     return (
         <div className="head">
             <div className="header-nav">
                 <img src={logo} className="logo"/>
-                <div className="header-nav-links">
-                    <div className="nav-link">Home</div>
-                    <div className="nav-link">Support</div>
-                    <div className="nav-link">Products</div>
-                </div>
             </div>
             <div className="header">
                 <div className="header-title">
@@ -26,7 +20,7 @@ const Header = () => {
                     className="start-button"
                     onClick={() => navigate('/config')}
                 >
-                    {t("start")}
+                    <CustomText text="start" />
                 </button>
             </div>
         </div>

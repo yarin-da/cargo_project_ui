@@ -1,30 +1,35 @@
-import {ToggleButton, ToggleButtonGroup, Typography} from "@mui/material";
-import { useTranslation } from "react-i18next";
+import { ToggleButton, ToggleButtonGroup } from "@mui/material";
+import CustomText from "./CustomText";
 import "../styles/UnitsOfMeasurement.css";
 
 
 const UnitsOfMeasurement = ({ units, setUnits }) => {
-    const { t } = useTranslation();
     const textStyle = {textTransform: 'none'}
     return (
         <div className="units-of-measurement">
             <div className="toggle-buttons">
                 <div className="button-group">
-                    <h5>Weight</h5>
+                    <CustomText text="Weight" />
                     <ToggleButtonGroup
                         color="primary"
                         value={units['weight']}
                         orientation="horizontal"
                         exclusive
-                        onChange={(e, weight) => weight && setUnits({ ...units, weight })}
+                        onChange={(_, weight) => weight && setUnits({ ...units, weight })}
                     >
-                        <ToggleButton value="g" style={textStyle}>g</ToggleButton>
-                        <ToggleButton value="kg" style={textStyle}>kg</ToggleButton>
-                        <ToggleButton value="lb" style={textStyle}>lb</ToggleButton>
+                        <ToggleButton value="g" style={textStyle}>
+                            <CustomText text="g" />
+                        </ToggleButton>
+                        <ToggleButton value="kg" style={textStyle}>
+                           <CustomText text="kg" />
+                        </ToggleButton>
+                        <ToggleButton value="lb" style={textStyle}>
+                            <CustomText text="lb" />
+                        </ToggleButton>
                     </ToggleButtonGroup>
                 </div>
                 <div className="button-group">
-                    <h5>Length</h5>
+                    <CustomText text="Length" />
                     <ToggleButtonGroup
                         color="primary"
                         value={units['length']}
@@ -33,13 +38,13 @@ const UnitsOfMeasurement = ({ units, setUnits }) => {
                         onChange={(e, length) => setUnits({ ...units, length })}
                     >
                         <ToggleButton value="cm" style={textStyle}>
-                            <Typography>{t('cm')}</Typography>
+                            <CustomText text="cm" />
                         </ToggleButton>
                         <ToggleButton value="m" style={textStyle}>
-                            <Typography>{t('m')}</Typography>
+                            <CustomText text="m" />
                         </ToggleButton>
                         <ToggleButton value="inch" style={textStyle}>
-                            <Typography>{t('inch')}</Typography>
+                            <CustomText text="inch" />
                         </ToggleButton>
                     </ToggleButtonGroup>
                 </div>

@@ -1,7 +1,7 @@
 import Button from "@mui/material/Button";
 import { saveAs } from "file-saver";
 import demo from "../demo.csv";
-import { useTranslation } from "react-i18next";
+import CustomText from "./CustomText";
 
 function downloadFile(){
     saveAs(
@@ -11,7 +11,6 @@ function downloadFile(){
 }
 
 const ExampleInputFileButton = () => {
-    const { t } = useTranslation();
     return (
         <Button
             className="upload-button"
@@ -25,7 +24,7 @@ const ExampleInputFileButton = () => {
                 borderColor: "black",
             }}
             variant="outlined">
-            {t("download_example_file")}
+            <CustomText text="downloadExampleFile" />
         </Button>
     )
 };
