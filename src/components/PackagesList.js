@@ -67,7 +67,41 @@ const PackagesList = ({ units, packages, setPackages, currentPackage, setCurrent
     return (
 
         packages.length <= 0 ? <></> :
-        <>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-evenly', marginBottom: 15 }}>
+                <Tooltip title="View All Packages">
+                    <Button 
+                        aria-label="view" 
+                        size="small" 
+                        onClick={() => setShowPackageView(true)}
+                    >
+                        <ManageSearchIcon />
+                    </Button>
+                </Tooltip>
+                <Tooltip title="Add Packages">
+                    <Button aria-label="add" onClick={addPackage}>
+                        <AddIcon />
+                    </Button>
+                </Tooltip>
+                <Tooltip title="Delete Package">
+                    <Button 
+                        aria-label="delete" 
+                        size="small" 
+                        onClick={() => deletePackage(packages[currentPackage - 1])}
+                    >
+                        <DeleteIcon/>
+                    </Button>
+                </Tooltip>
+                <Tooltip title="Reset Package">
+                    <Button 
+                        aria-label="reset" 
+                        size="small" 
+                        onClick={() => resetPackage(packages[currentPackage - 1])}
+                    >
+                        <RefreshIcon />
+                    </Button>
+                </Tooltip>
+            </div>
             <div className="package-list">
                 <AddPackage
                     index={currentPackage - 1}
@@ -75,42 +109,6 @@ const PackagesList = ({ units, packages, setPackages, currentPackage, setCurrent
                     onDelete={deletePackage}
                     onChange={onChange}
                 />
-                <div className="package-buttons">
-                    <Tooltip title="Delete Package">
-                        <Button 
-                            aria-label="delete" 
-                            size="small" 
-                            onClick={() => deletePackage(packages[currentPackage - 1])}
-                        >
-                            <DeleteIcon/>
-                        </Button>
-                    </Tooltip>
-                    <Tooltip title="Reset Package">
-                        <Button 
-                            aria-label="reset" 
-                            size="small" 
-                            onClick={() => resetPackage(packages[currentPackage - 1])}
-                        >
-                            <RefreshIcon />
-                        </Button>
-                    </Tooltip>
-                </div>
-                <div className="general-buttons">
-                    <Tooltip title="View All Packages">
-                        <Button 
-                            aria-label="view" 
-                            size="small" 
-                            onClick={() => setShowPackageView(true)}
-                        >
-                            <ManageSearchIcon />
-                        </Button>
-                    </Tooltip>
-                    <Tooltip title="Add Packages">
-                        <Button aria-label="add" onClick={addPackage}>
-                            <AddIcon />
-                        </Button>
-                    </Tooltip>
-                </div>
             </div>
             <div className="pagination">
                 <Pagination 
@@ -133,7 +131,7 @@ const PackagesList = ({ units, packages, setPackages, currentPackage, setCurrent
                 showPackageView={showPackageView}
                 setShowPackageView={setShowPackageView}
             />
-        </>
+        </div>
     );
 };
 

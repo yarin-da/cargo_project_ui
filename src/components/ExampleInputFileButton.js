@@ -23,9 +23,6 @@ const ExampleInputFileButton = () => {
                 background: "black",
                 color: "white",
                 borderColor: "black",
-                marginTop: 15,
-                marginBottom: 20,
-                marginLeft: "50%"
             }}
             variant="outlined">
             {t("download_example_file")}

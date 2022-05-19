@@ -1,23 +1,7 @@
-/* .package-list-container {
-    position: relative;
-    border: 2px solid black;
-    border-radius: 20px;
-    padding: 20px;
-    margin: 10px;
-    background: #cfcfaf;
-    min-height: 600px;
-} */
-
-.package-list-container {
-}
-
 .package-list {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-}
-
-.general-buttons {
 }
 
 .add-package {
@@ -43,6 +27,8 @@
 /*}*/
 
 .package-title {
+    align-self: center;
+    margin: 10px;
 }
 
 .package-text-field {
@@ -54,9 +40,6 @@
 .toggle-boolean-buttons {
     display: flex;
     justify-content: space-evenly;
-}
-
-.package-buttons {
 }
 
 .pagination {
