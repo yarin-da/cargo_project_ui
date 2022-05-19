@@ -9,30 +9,20 @@
 } */
 
 .package-list-container {
-    position: relative;
-    width: 80%;
-    margin-left: 25%;
 }
 
 .package-list {
-    position: relative;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    width: 80%;
-    margin-left: 20%;
 }
 
 .general-buttons {
-    position: absolute;
-    top: 0;
-    right: 0;
 }
 
 .add-package {
     display: flex;
     flex-direction: column;
-
 }
 
 .package-fields {
@@ -53,14 +43,12 @@
 /*}*/
 
 .package-title {
-    margin-left: 25%;
 }
 
 .package-text-field {
     display: flex;
     justify-content: center;
     width: 100%;
-    margin-bottom: 55px;
 }
 
 .toggle-boolean-buttons {
@@ -69,9 +57,6 @@
 }
 
 .package-buttons {
-    position: absolute;
-    top: 0;
-    left: 0;
 }
 
 .pagination {

@@ -73,7 +73,14 @@ const Config = ({
     const [showSettings, setShowSettings] = useState(false);
     const toggleSettingsModal = () => setShowSettings(curr => !curr);
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100%' }}>
+        <div style={{ 
+            display: 'flex', 
+            flexDirection: 'column', 
+            width: '100vw', 
+            height: '100vh',
+            justifyContent: 'center',
+            alignItems: 'center'
+        }}>
             <Heading onClickSettings={toggleSettingsModal} />
 
             <div style={{ display: 'flex', width: '100%', height: '100%' }}>

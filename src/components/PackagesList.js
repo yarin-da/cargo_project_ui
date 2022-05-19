@@ -21,10 +21,12 @@ const PackagesList = ({ units, packages, setPackages, currentPackage, setCurrent
 
     const deletePackage = (values) => {
         const newPackages = packages.filter(p => p['id'] !== values['id']);
-        if (newPackages.length < currentPackage) {
-            setCurrentPackage(newPackages.length);
+        if (newPackages.length !== 0) {
+            if (newPackages.length < currentPackage) {
+                setCurrentPackage(newPackages.length);
+            }
+            setPackages(newPackages);    
         }
-        setPackages(newPackages);
     };
 
     const resetPackage = (values) => {
