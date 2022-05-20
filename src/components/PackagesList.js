@@ -7,6 +7,8 @@ import RefreshIcon from "@mui/icons-material/Refresh";
 import {Button, Tooltip, Pagination, PaginationItem} from '@mui/material';
 import ManageSearchIcon from '@mui/icons-material/ManageSearch';
 import SummaryModal from "./SummaryModal";
+import CustomText from "./CustomText";
+import { t } from "i18next";
 
 const PackagesList = ({ units, packages, setPackages, currentPackage, setCurrentPackage }) => {
     const [, forceUpdate] = useReducer(x => x + 1, 0);
@@ -67,38 +69,40 @@ const PackagesList = ({ units, packages, setPackages, currentPackage, setCurrent
     return (
 
         packages.length <= 0 ? <></> :
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-evenly', marginBottom: 15 }}>
-                <Tooltip title="View All Packages">
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <CustomText 
+                text="packageDetails" 
+                style={{
+                    alignSelf: 'center',
+                    marginBottom: '20px',
+                }}
+                variant="h4" 
+            />
+            <div style={{ display: 'flex', width: '100%', justifyContent: 'space-evenly' }}>
+                <Tooltip title={t('viewAllPackages')}>
                     <Button 
-                        aria-label="view" 
-                        size="small" 
                         onClick={() => setShowPackageView(true)}
                     >
-                        <ManageSearchIcon />
+                        <ManageSearchIcon fontSize="large" />
                     </Button>
                 </Tooltip>
-                <Tooltip title="Add Packages">
+                <Tooltip title={t('addPackages')}>
                     <Button aria-label="add" onClick={addPackage}>
-                        <AddIcon />
+                        <AddIcon fontSize="large" />
                     </Button>
                 </Tooltip>
-                <Tooltip title="Delete Package">
+                <Tooltip title={t('deletePackages')}>
                     <Button 
-                        aria-label="delete" 
-                        size="small" 
                         onClick={() => deletePackage(packages[currentPackage - 1])}
                     >
-                        <DeleteIcon/>
+                        <DeleteIcon fontSize="large" />
                     </Button>
                 </Tooltip>
-                <Tooltip title="Reset Package">
+                <Tooltip title={t('resetPackages')}>
                     <Button 
-                        aria-label="reset" 
-                        size="small" 
                         onClick={() => resetPackage(packages[currentPackage - 1])}
                     >
-                        <RefreshIcon />
+                        <RefreshIcon fontSize="large" />
                     </Button>
                 </Tooltip>
             </div>

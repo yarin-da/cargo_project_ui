@@ -20,7 +20,9 @@ const Header = () => {
                     className="start-button"
                     onClick={() => navigate('/config')}
                 >
-                    <CustomText text="start" />
+                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        <CustomText text="start" variant="h2" />
+                    </div>
                 </button>
             </div>
         </div>

@@ -26,11 +26,6 @@
 /*    align-self: center;*/
 /*}*/
 
-.package-title {
-    align-self: center;
-    margin: 10px;
-}
-
 .package-text-field {
     display: flex;
     justify-content: center;
@@ -46,4 +41,5 @@
     display: flex;
     justify-content: center;
     width: 100%;
+    margin-top: 20px;
 }

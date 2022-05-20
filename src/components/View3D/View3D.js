@@ -265,227 +265,34 @@ const Container = ({ scale }) => {
     );
 }
 
-const ColorMap = ({ colorMap }) => {
-    const parseColor = (color) => `#${color.toString(16).padStart(6, '0')}`;
-    return (
-        <div className="color-map">
-        {
-            Object.keys(colorMap).map(k => 
-                <li key={`color-map-${k}`} className="color-item">
-                    <div className="color-sample" style={{background: parseColor(colorMap[k])}} />
-                    <div className="color-type-name">{k}</div>
-                </li>
-            )
-        }
-        </div>
-    );
-};
-
-const View3D = ({ colorMap }) => {
+const View3D = ({ solution, colorMap }) => {
     const canvasStyle = {
-        width: '100vw',
-        height: '100vh',
+        width: '100%',
+        height: '100%',
     };
 
     const maxContainerDim = Object.values(solution['container']).reduce((a, b) => a > b ? a : b, 0);
     return (
-        <div>
-            <Canvas 
-                style={canvasStyle} 
-                dpr={[1, 2]} 
-                camera={{ 
-                    position: [maxContainerDim, maxContainerDim, maxContainerDim], 
-                    fov: 75, 
-                    near: 0.1,
-                    far: 1000 
-                }}
-            >
-                <Suspense fallback={null}>
-                    <OrbitControls enableDamping dampingFactor={0.1} rotateSpeed={0.5} />
-                    <Container scale={[solution['container']['width'], solution['container']['height'], solution['container']['depth']]} />
-                    <Packages {...solution} colorMap={colorMap} />
-                    <pointLight position={[0, 20, -5]} />
-                    <ambientLight intensity={0.4} />
-                    <Environment preset="warehouse" />
-                </Suspense>
-            </Canvas>
-            <ColorMap colorMap={colorMap} />
-        </div>
+        <Canvas 
+            style={canvasStyle} 
+            dpr={[1, 2]} 
+            camera={{ 
+                position: [maxContainerDim, maxContainerDim, maxContainerDim], 
+                fov: 75, 
+                near: 0.1,
+                far: 1000 
+            }}
+        >
+            <Suspense fallback={null}>
+                <OrbitControls enableDamping dampingFactor={0.1} rotateSpeed={0.5} />
+                <Container scale={[solution['container']['width'], solution['container']['height'], solution['container']['depth']]} />
+                <Packages {...solution} colorMap={colorMap} />
+                <pointLight position={[0, 20, -5]} />
+                <ambientLight intensity={0.4} />
+                <Environment preset="warehouse" />
+            </Suspense>
+        </Canvas>
     )
 }
 
 export default View3D;
-
-const solution = {
-    "container": {
-        "width": 10,
-        "height": 10,
-        "depth": 30
-    },
-    "packages": [
-        {
-            "type": "jewelry",
-            "width": 2,
-            "height": 3,
-            "depth": 2
-        },
-        {
-            "type": "clothing",
-            "width": 3,
-            "height": 2,
-            "depth": 3
-        },
-        {
-            "type": "electronics",
-            "width": 2,
-            "height": 2,
-            "depth": 2
-        },
-        {
-            "type": "glass",
-            "width": 1,
-            "height": 2,
-            "depth": 1
-        },
-    ],
-    "solution": [
-        {
-            "type": "jewelry",
-            "x": 0,
-            "y": 0,
-            "z": 0
-        },
-        {
-            "type": "jewelry",
-            "x": 3,
-            "y": 0,
-            "z": 0
-        },
-        {
-            "type": "clothing",
-            "x": 0,
-            "y": 3,
-            "z": 0
-        },
-        {
-            "type": "clothing",
-            "x": 0,
-            "y": 0,
-            "z": 6
-        },
-        {
-            "type": "clothing",
-            "x": 5,
-            "y": 0,
-            "z": 0
-        },
-        {
-            "type": "clothing",
-            "x": 0,
-            "y": 0,
-            "z": 27
-        },
-        {
-            "type": "clothing",
-            "x": 3,
-            "y": 0,
-            "z": 27
-        },
-        {
-            "type": "clothing",
-            "x": 6,
-            "y": 0,
-            "z": 27
-        },
-        {
-            "type": "jewelry",
-            "x": 3,
-            "y": 0,
-            "z": 9
-        },
-        {
-            "type": "jewelry",
-            "x": 0,
-            "y": 2,
-            "z": 27
-        },
-        {
-            "type": "jewelry",
-            "x": 2,
-            "y": 2,
-            "z": 27
-        },
-        {
-            "type": "jewelry",
-            "x": 4,
-            "y": 0,
-            "z": 21
-        },
-        {
-            "type": "jewelry",
-            "x": 6,
-            "y": 0,
-            "z": 24
-        },
-        {
-            "type": "jewelry",
-            "x": 8,
-            "y": 2,
-            "z": 27
-        },
-        {
-            "type": "electronics",
-            "x": 3,
-            "y": 3,
-            "z": 9
-        },
-        {
-            "type": "electronics",
-            "x": 0,
-            "y": 0,
-            "z": 11
-        },
-        {
-            "type": "electronics",
-            "x": 0,
-            "y": 2,
-            "z": 7
-        },
-        {
-            "type": "glass",
-            "x": 4,
-            "y": 0,
-            "z": 7
-        },
-        {
-            "type": "glass",
-            "x": 3,
-            "y": 0,
-            "z": 6
-        },
-        {
-            "type": "glass",
-            "x": 4,
-            "y": 3,
-            "z": 0
-        },
-        {
-            "type": "glass",
-            "x": 9,
-            "y": 0,
-            "z": 28
-        },
-        {
-            "type": "glass",
-            "x": 9,
-            "y": 0,
-            "z": 29
-        },
-        {
-            "type": "glass",
-            "x": 9,
-            "y": 0,
-            "z": 27
-        },
-    ]
-};

@@ -37,7 +37,6 @@ const AddPackage = ({ values, onChange }) => {
 
     return (
         <div className="add-package">
-            <CustomText text="packageDetails" className="package-title" noWrap component="div" variant="h6" />
             <div className="package-fields">
                 {Object.keys(fieldTypes).map(
                     (field, i) => 

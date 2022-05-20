@@ -1,30 +1,18 @@
 import { useState } from "react";
 import Header from './components/Header';
 import Package from "./components/Package";
-import { Alert, Button } from "@mui/material";
 import Config from "./components/Config";
-import { getSolution } from "./components/ServerHandler";
-import View3D from "./components/View3D/View3D";
-import CircularProgress from '@mui/material/CircularProgress';
-import { useTranslation } from 'react-i18next';
+import ViewPage from "./components/View3D/ViewPage";
 import "./App.css";
 
 import {
   BrowserRouter as Router,
   Routes,
   Route,
-  useNavigate
 } from "react-router-dom";
-import { Snackbar } from "@material-ui/core";
 
 function App() {
   const [solution, setSolution] = useState({});
-  const [colorMap, setColorMap] = useState({
-    jewelry: 0xFF0000,
-    clothing: 0x44AA44,
-    electronics: 0x775577,
-    glass: 0x005500
-  });
   const [showPackageView, setShowPackageView] = useState(false);
   const [currentPackage, setCurrentPackage] = useState(1);
   const [container, setContainer] = useState({
@@ -84,9 +72,8 @@ function App() {
         <Route 
           path="/view" 
           element={
-            <View3D 
+            <ViewPage 
               solution={solution}
-              colorMap={colorMap}
             />
           }
         >
@@ -96,86 +83,11 @@ function App() {
   );
 };
 
-const Home = ({
-  container, 
-  packages,  
-  setSolution
-}) => {
-  const [isPackages, setIsPackages] = useState(false);
-  const { t } = useTranslation();
-  const navigate = useNavigate();
-  
-  const [loading, setLoading] = useState(false);
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [snackbarTitle, setSnackbarTitle] = useState(false);
-  const [snackbarSeverity, setSnackbarSeverity] = useState(false);
-
-  const notifyLoading = async () => {
-    await setLoading(true);
-    await setSnackbarSeverity("info");
-    await setSnackbarTitle("Organizing your packages...");
-    await setSnackbarOpen(true);
-  };
-
-  const notifyError = async () => {
-    await setSnackbarSeverity("error");
-    await setSnackbarTitle("Failed to organize your packages.");
-    await setSnackbarOpen(true);
-  };
-
-  const uploadDataToServer = async () => {
-    const data = {
-      container,
-      packages,
-    };
-    // TODO: check if data is valid?
-    try {
-      await notifyLoading();
-      const solution = await getSolution(data);
-
-      // TODO: figure out why the algorithm flips dimensions (inner rotation??)
-      // TODO: handle rotations
-      // solution['packages'].forEach(pkg => {
-      //   const temp = pkg['width'];
-      //   pkg['width'] = pkg['height'];
-      //   pkg['height'] = temp;
-      // });
-      // const temp = solution['container']['width'];
-      // solution['container']['width'] = solution['container']['depth'];
-      // solution['container']['depth'] = temp;
-      // console.log(solution);
-
-      setSolution(solution);
-      navigate("/view");
-    } catch (e) {
-      console.log(e);
-      await notifyError();
-    } finally {
-      setLoading(false);
-    }
-  };
+const Home = () => {
 
   return (
     <div className="App">
       <Header />
-      {/* {loading ? 
-        <CircularProgress size={25} /> 
-        :
-        <Button
-          onClick={uploadDataToServer}
-          component="span"
-          style={buttonStyle}
-          size="large"
-          variant="outlined"
-        >
-          {t('confirm')}
-        </Button>
-      } */}
-      <Snackbar open={snackbarOpen} autoHideDuration={5000} onClose={() => setSnackbarOpen(false)}>
-        <Alert onClose={() => setSnackbarOpen(false)} severity={snackbarSeverity} sx={{ width: '100%' }}>
-          {snackbarTitle}
-        </Alert>
-      </Snackbar>
     </div>
   );
 }

@@ -27,8 +27,10 @@ const StandardContainerSize = ({image, imageSize, title, standard, isChosen, onC
         borderRadius: 10,
         background: isChosen ? 'lightgrey' : 'white'
     };
+
     const { t } = useTranslation();
     const imageRatio = 1.4;
+
     return (
         <Button component="span" style={buttonStyle} onClick={onClick}>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100%' }}>
@@ -41,7 +43,7 @@ const StandardContainerSize = ({image, imageSize, title, standard, isChosen, onC
                         height={imageSize}
                     />
                 </div>
-                <CustomText text={title} />
+                <CustomText style={{ textTransform: 'none' }} text={title} />
             </div>
         </Button>
     );

@@ -9,7 +9,7 @@ const UnitsOfMeasurement = ({ units, setUnits }) => {
         <div className="units-of-measurement">
             <div className="toggle-buttons">
                 <div className="button-group">
-                    <CustomText text="Weight" />
+                    <CustomText text="weight" />
                     <ToggleButtonGroup
                         color="primary"
                         value={units['weight']}
@@ -29,7 +29,7 @@ const UnitsOfMeasurement = ({ units, setUnits }) => {
                     </ToggleButtonGroup>
                 </div>
                 <div className="button-group">
-                    <CustomText text="Length" />
+                    <CustomText text="length" />
                     <ToggleButtonGroup
                         color="primary"
                         value={units['length']}

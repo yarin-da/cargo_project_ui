@@ -4,7 +4,6 @@ import parseCSV from "./CSVParser";
 const Dropzone = ({ setContainer, setPackages }) => {
     return (
         <DropzoneArea
-            showPreviews={true}
             acceptedFiles={[".csv, text/csv, application/vnd.ms-excel, application/csv, text/x-csv, application/x-csv, text/comma-separated-values, text/x-comma-separated-values"]}
             showPreviewsInDropzone={false}
             showFileNames={true}
