@@ -56,5 +56,7 @@
   "failedToOrganizeYourPackages": "Failed to organize your packages",
   "exportCSV": "CSV",
   "exportJSON": "JSON",
-  "exportSolution": "Export the solution"
+  "exportSolution": "Export the solution",
+  "dropOrClick": "Click or drop a file here",
+  "canOnlyUploadCSV": "You can only upload a CSV file"
 }

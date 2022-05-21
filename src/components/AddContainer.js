@@ -54,23 +54,23 @@ const StandardContainerButtons = ({ onContainerSizeChosen }) => {
 
     const standardSizes = {
         small: {
-            width: 100,
-            height: 100,
-            depth: 200,
+            width: 10,
+            height: 10,
+            depth: 20,
             maxWeight: 50,
             cost: 500,
         },
         medium: {
-            width: 100,
-            height: 100,
-            depth: 300,
+            width: 10,
+            height: 10,
+            depth: 30,
             maxWeight: 60,
             cost: 600,
         },
         large: {
-            width: 100,
-            height: 100,
-            depth: 400,
+            width: 10,
+            height: 10,
+            depth: 40,
             maxWeight: 70,
             cost: 700,
         },

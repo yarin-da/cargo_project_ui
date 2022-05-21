@@ -56,5 +56,7 @@
   "failedToOrganizeYourPackages": "תהליך הסידור נכשל",
   "exportCSV": "CSV",
   "exportJSON": "JSON",
-  "exportSolution": "ייצוא לקובץ"
+  "exportSolution": "ייצוא לקובץ",
+  "dropOrClick": "לחצו או גררו קובץ לכאן",
+  "canOnlyUploadCSV": "ניתן להעלות קבצי CSV בלבד"
 }
