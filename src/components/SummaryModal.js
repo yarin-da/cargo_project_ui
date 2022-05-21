@@ -95,24 +95,28 @@ const PackageRow = ({ units, values: p, onClick }) => {
                 <EditIcon />
             </IconButton>
             {/* TODO: CENTER THE ICON */}
-            <CardMedia 
-                component="img"
-                image={image}
-                sx={{
-                    width: 50,
-                    height: 50,
-                }}
-            />
-            <hr width="1" size="100" color="lightgrey" />
+            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: 100}}>
+              <CardMedia 
+                  component="img"
+                  image={image}
+                  sx={{
+                      width: 50,
+                      height: 50,
+                  }}
+              />
+              <hr width="1" size="100" color="lightgrey" />
+            </div>
             <div style={{display: 'flex', flexDirection: 'column'}}>
-                <Typography sx={{}} variant="h5" component="h2">
+                <Typography variant="h5" component="h2">
                     {`${p['type']}`}
                 </Typography>
                 <div style={detailsStyle}>
                     {Object.keys(details).map((key, i) => 
                         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}} key={i}>
                             <CustomText 
-                              sx={{fontWeight: 'bold', display: 'flex', alignItems: 'center', justifyContent: 'space-between'}} variant="subtitle2" component="h3"
+                              sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}} 
+                              variant="subtitle1" 
+                              component="h3"
                               text={key}
                             />
                             <Typography noWrap sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}} variant="subtitle2" component="h3">
