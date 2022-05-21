@@ -143,13 +143,13 @@ const Config = ({
     const notifyLoading = async () => {
       await setLoading(true);
       await setSnackbarSeverity("info");
-      await setSnackbarTitle(t("organizingYourPackages"));
+      await setSnackbarTitle("organizingYourPackages");
       await setSnackbarOpen(true);
     };
   
     const notifyError = async () => {
       await setSnackbarSeverity("error");
-      await setSnackbarTitle(t("failedToOrganizeYourPackages"));
+      await setSnackbarTitle("failedToOrganizeYourPackages");
       await setSnackbarOpen(true);
     };
 
@@ -258,10 +258,10 @@ const Config = ({
                 open={snackbarOpen} 
                 autoHideDuration={5000} 
                 onClose={() => setSnackbarOpen(false)}
-                // TODO: snackbar background?
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
             >
                 <Alert onClose={() => setSnackbarOpen(false)} severity={snackbarSeverity} sx={{ width: '100%' }}>
-                    {snackbarTitle}
+                    {t(snackbarTitle)}
                 </Alert>
             </Snackbar>
             <Modal 

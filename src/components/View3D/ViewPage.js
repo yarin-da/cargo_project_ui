@@ -35,7 +35,8 @@ function downloadSolutionFile(exportType, solution){
     saveAs(blob, `packing_solution.${exportType}`);
 }
 
-const ColorPicker = ({ open, colorMap, pkg, onColorPicked, onClose }) => {
+const ColorPicker = ({ open, onColorPicked, initialColor, onClose }) => {
+    const [color, setColor] = useState(initialColor);
     return (
         <Modal 
             style={{ position: 'absolute', top: 50, left: 50 }}
@@ -43,8 +44,8 @@ const ColorPicker = ({ open, colorMap, pkg, onColorPicked, onClose }) => {
             onClose={onClose}
         >
             <HexColorPicker
-                color={colorMap[pkg]}
-                onChange={(newColor) => onColorPicked(newColor, pkg)}
+                onChange={(newColor) => setColor(newColor)}
+                onClick={() => onColorPicked(color)}
                 onDoubleClick={onClose}
             />
         </Modal>
@@ -72,8 +73,12 @@ const ColorMap = ({ colorMap, setColorMap }) => {
         setOpenColorPicker(curr => !curr);
     };
 
-    const onColorPicked = (newColor, pkg) => {
-        setColorMap(curr => ({ ...curr, [pkg]: newColor }));
+    const onFinish = () => {
+        setOpenColorPicker(curr => !curr);
+    };
+
+    const onColorPicked = (newColor) => {
+        setColorMap(curr => ({ ...curr, [clickedPkg]: newColor }));
     };
 
     return (
@@ -90,9 +95,8 @@ const ColorMap = ({ colorMap, setColorMap }) => {
             )}
             <ColorPicker
                 open={openColorPicker}
-                onClose={() => setOpenColorPicker(curr => !curr)}
-                colorMap={colorMap}
-                pkg={clickedPkg}
+                onClose={onFinish}
+                initialColor={colorMap[clickedPkg]}
                 onColorPicked={onColorPicked}
             />
         </div>
@@ -127,11 +131,6 @@ const ViewPage = ({ solution }) => {
                 <DialogTitle>
                     <CustomText text="exportSolution" />
                 </DialogTitle>
-                {/* <DialogContent>
-                    <DialogContentText>
-                        {t(text)}
-                    </DialogContentText>
-                </DialogContent> */}
                 <DialogActions>
                     <Button style={{ textTransform: 'none' }} onClick={onClose}>{t("cancel")}</Button>
                     <Button style={{ textTransform: 'none' }} onClick={() => onDownload('csv')} autoFocus>{t("exportCSV")}</Button>

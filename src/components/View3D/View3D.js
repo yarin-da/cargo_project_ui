@@ -7,7 +7,7 @@ import '../../styles/ColorMap.css';
 const EDGE_COLOR = 0x334444;
 const EDGE_WIDTH = 0.5;
 const TEXT_SIZE = 0.3;
-const VISIBILITY_DIST = 7;
+const VISIBILITY_DIST = 9;
 const VISIBILITY_DIST2 = VISIBILITY_DIST * VISIBILITY_DIST;
 const CONTAINER_COLOR = 0x777777;
 const CONTAINER_THICKNESS = 0.1;
@@ -123,7 +123,7 @@ const CustomBox = ({ color=0xFF0000, scale=[1, 1, 1], position=[0, 0, 0], rotati
     
     useFrame(({ camera }) => {
         const { x, z, y } = camera.position;
-        const diff2 = [x, z, y].map((p, i) => (p - position[i])*(p - position[i]));
+        const diff2 = [x, y, z].map((p, i) => (p - position[i])*(p - position[i]));
         const dist = diff2.reduce((a, b) => a + b, 0);
         if (visible !== (dist >= VISIBILITY_DIST2)) {
             setVisible(curr => !curr);
