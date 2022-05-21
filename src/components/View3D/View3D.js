@@ -26,16 +26,16 @@ const BoxEdges = ({ position, scale }) => {
     const lines = [
         [[x,     y,     z    ], [x + w, y,     z    ]],
         [[x,     y,     z    ], [x,     y + h, z    ]],
-        [[x,     y + h, z    ], [x + w, y + h, z    ]],
-        [[x + w, y,     z    ], [x + w, y + h, z    ]],
         [[x,     y,     z    ], [x,     y,     z + d]],
-        [[x,     y + h, z    ], [x,     y + h, z + d]],
-        [[x + w, y,     z    ], [x + w, y,     z + d]],
         [[x,     y,     z + d], [x + w, y,     z + d]],
-        [[x,     y,     z + d], [x, y + h,     z + d]],
-        [[x + w, y + h, z + d], [x + w, y,     z + d]],
-        [[x + w, y + h, z + d], [x, y + h,     z + d]],
+        [[x,     y,     z + d], [x,     y + h, z + d]],
+        [[x,     y + h, z    ], [x + w, y + h, z    ]],
+        [[x,     y + h, z    ], [x,     y + h, z + d]],
+        [[x + w, y,     z    ], [x + w, y + h, z    ]],
+        [[x + w, y,     z    ], [x + w, y,     z + d]],
         [[x + w, y + h, z + d], [x + w, y + h, z    ]],
+        [[x + w, y + h, z + d], [x + w, y,     z + d]],
+        [[x + w, y + h, z + d], [x,     y + h, z + d]],
     ];
 
     return (
@@ -122,8 +122,8 @@ const CustomBox = ({ color=0xFF0000, scale=[1, 1, 1], position=[0, 0, 0], rotati
     const [visible, setVisible] = useState(true);
     
     useFrame(({ camera }) => {
-        const { x, y, z } = camera.position;
-        const diff2 = [x, y, z].map((p, i) => (p - position[i])*(p - position[i]));
+        const { x, z, y } = camera.position;
+        const diff2 = [x, z, y].map((p, i) => (p - position[i])*(p - position[i]));
         const dist = diff2.reduce((a, b) => a + b, 0);
         if (visible !== (dist >= VISIBILITY_DIST2)) {
             setVisible(curr => !curr);
@@ -173,8 +173,8 @@ const Packages = ({ packages, solution, colorMap }) => {
                     text={pkg['type']}
                     color={colorMap[pkg['type']]} 
                     scale={[pkg['width'], pkg['height'], pkg['depth']]}
-                    rotation={[sol['rotation-x'], sol['rotation-y'], sol['rotation-z']]}
-                    position={[sol['x'], sol['y'], sol['z']]} 
+                    rotation={[sol['rotation-x'], sol['rotation-z'], sol['rotation-y']]}
+                    position={[sol['x'], sol['z'], sol['y']]} 
                 />
             })
         }

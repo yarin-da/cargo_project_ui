@@ -84,7 +84,6 @@ function App() {
 };
 
 const Home = () => {
-
   return (
     <div className="App">
       <Header />
