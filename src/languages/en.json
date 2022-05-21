@@ -55,6 +55,6 @@
   "organizingYourPackages": "Organizing your packages",
   "failedToOrganizeYourPackages": "Failed to organize your packages",
   "exportCSV": "CSV",
-  "exportJSON": "JSON"
-
+  "exportJSON": "JSON",
+  "exportSolution": "Export the solution"
 }

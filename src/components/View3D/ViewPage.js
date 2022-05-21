@@ -5,7 +5,7 @@ import { HexColorPicker } from "react-colorful"
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import CustomText from "../CustomText";
 import { useTranslation } from "react-i18next";
-import { Fab, Modal, Dialog, DialogTitle, DialogContent, DialogActions, Button, DialogContentText } from "@mui/material";
+import { Tooltip, Fab, Modal, Dialog, DialogTitle, DialogActions, Button } from "@mui/material";
 import { saveAs } from "file-saver";
 import { parseJSONtoCSV } from "../CSVParser";
 
@@ -112,18 +112,20 @@ const ViewPage = ({ solution }) => {
         <div style={{ position: 'relative', width: '100vw', height: '100vh' }}>
             <View3D solution={solution} colorMap={colorMap} />
             <ColorMap colorMap={colorMap} setColorMap={setColorMap} />
-            <Fab 
-                style={{ position: 'absolute', right: 20, bottom: 20 }}
-                variant="circular"
-                size="large"
-                color="secondary"
-                onClick={() => setShowExportDialog(curr => !curr)}
-            >
-                <FileDownloadIcon fontSize="large" />
-            </Fab>
+            <Tooltip title={t('exportSolution')}>
+                <Fab 
+                    sx={{ position: 'absolute', right: 50, bottom: 50, padding: 5 }}
+                    variant="circular"
+                    size="large"
+                    color="secondary"
+                    onClick={() => setShowExportDialog(curr => !curr)}
+                >
+                    <FileDownloadIcon fontSize="large" />
+                </Fab>
+            </Tooltip>
             <Dialog open={showExportDialog} onClose={onClose}>
                 <DialogTitle>
-                    {t("hello")}
+                    <CustomText text="exportSolution" />
                 </DialogTitle>
                 {/* <DialogContent>
                     <DialogContentText>

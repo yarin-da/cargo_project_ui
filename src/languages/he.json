@@ -55,5 +55,6 @@
   "organizingYourPackages": "מסדרים את החבילות שלך",
   "failedToOrganizeYourPackages": "תהליך הסידור נכשל",
   "exportCSV": "CSV",
-  "exportJSON": "JSON"
+  "exportJSON": "JSON",
+  "exportSolution": "ייצוא לקובץ"
 }
