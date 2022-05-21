@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import { Tooltip, Fab, Modal, Dialog, DialogTitle, DialogActions, Button } from "@mui/material";
 import { saveAs } from "file-saver";
 import { parseJSONtoCSV } from "../CSVParser";
+import CustomAppBar from "../CustomAppBar";
 
 const jsonToBlob = (data) => {
     const str = JSON.stringify(data, null, 2);
@@ -103,7 +104,7 @@ const ColorMap = ({ colorMap, setColorMap }) => {
     );
 };
 
-const ViewPage = ({ solution }) => {
+const ViewPage = ({ solution, units, setUnits }) => {
     const [colorMap, setColorMap] = useState(initializeColors(solution));
     const [showExportDialog, setShowExportDialog] = useState(false);
     const { t } = useTranslation();
@@ -112,32 +113,39 @@ const ViewPage = ({ solution }) => {
         downloadSolutionFile(exportType, solution);
         onClose();
     };
+
+
+
     return (
-        <div style={{ position: 'relative', width: '100vw', height: '100vh' }}>
-            <View3D solution={solution} colorMap={colorMap} />
-            <ColorMap colorMap={colorMap} setColorMap={setColorMap} />
-            <Tooltip title={t('exportSolution')}>
-                <Fab 
-                    sx={{ position: 'absolute', right: 50, bottom: 50, padding: 5 }}
-                    variant="circular"
-                    size="large"
-                    color="secondary"
-                    onClick={() => setShowExportDialog(curr => !curr)}
-                >
-                    <FileDownloadIcon fontSize="large" />
-                </Fab>
-            </Tooltip>
-            <Dialog open={showExportDialog} onClose={onClose}>
-                <DialogTitle>
-                    <CustomText text="exportSolution" />
-                </DialogTitle>
-                <DialogActions>
-                    <Button style={{ textTransform: 'none' }} onClick={onClose}>{t("cancel")}</Button>
-                    <Button style={{ textTransform: 'none' }} onClick={() => onDownload('csv')} autoFocus>{t("exportCSV")}</Button>
-                    <Button style={{ textTransform: 'none' }} onClick={() => onDownload('json')} autoFocus>{t("exportJSON")}</Button>
-                </DialogActions>
-            </Dialog>
+        <div style={{ position: 'relative', width: '100vw', height: '100vh', display: 'flex', flexDirection: 'column' }}>
+            <CustomAppBar units={units} setUnits={setUnits} />
+            <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+                <View3D solution={solution} colorMap={colorMap} />
+                <ColorMap colorMap={colorMap} setColorMap={setColorMap} />
+                <Tooltip title={t('exportSolution')}>
+                    <Fab 
+                        sx={{ position: 'absolute', right: 50, bottom: 50, padding: 5 }}
+                        variant="circular"
+                        size="large"
+                        color="primary"
+                        onClick={() => setShowExportDialog(curr => !curr)}
+                    >
+                        <FileDownloadIcon fontSize="large" />
+                    </Fab>
+                </Tooltip>
+                <Dialog open={showExportDialog} onClose={onClose}>
+                    <DialogTitle>
+                        <CustomText text="exportSolution" />
+                    </DialogTitle>
+                    <DialogActions>
+                        <Button style={{ textTransform: 'none' }} onClick={onClose}>{t("cancel")}</Button>
+                        <Button style={{ textTransform: 'none' }} onClick={() => onDownload('csv')} autoFocus>{t("exportCSV")}</Button>
+                        <Button style={{ textTransform: 'none' }} onClick={() => onDownload('json')} autoFocus>{t("exportJSON")}</Button>
+                    </DialogActions>
+                </Dialog>
+            </div>
         </div>
+        
     );
 };
 

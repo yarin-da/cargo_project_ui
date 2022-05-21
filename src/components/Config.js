@@ -1,10 +1,7 @@
 import React, {useState} from "react";
 import {LocalShipping} from "@material-ui/icons";
-import {Stepper, Step, StepLabel, AppBar, Toolbar, Box, Button, Modal, Fab, Snackbar, Alert} from "@mui/material";
+import {Stepper, Step, StepLabel, Box, Fab, Snackbar, Alert} from "@mui/material";
 import {Upload} from "@mui/icons-material";
-import SettingsIcon from '@mui/icons-material/Settings';
-import SettingsPage from './SettingsPage';
-import Logo from '../images/logo.png';
 import CustomText from "./CustomText";
 import UploadFile from './UploadFile';
 import AddContainer from './AddContainer';
@@ -19,6 +16,7 @@ import ConfirmationDialog from "./ConfirmationDialog";
 import { useNavigate } from "react-router-dom";
 import { getSolution } from "./ServerHandler";
 import CircularProgress from '@mui/material/CircularProgress';
+import CustomAppBar from "./CustomAppBar";
 import '../styles/Config.css';
 
 const tabs = [
@@ -35,35 +33,6 @@ const tabs = [
         icon: <InventoryIcon/>,
     }
 ];
-
-const SettingsButton = ({ onClick }) => {
-    return (
-        <Button onClick={onClick}>
-            <SettingsIcon htmlColor="black" fontSize={"medium"} />
-        </Button>
-    );
-};
-
-const Heading = ({ onClickSettings }) => {
-    return (
-        <AppBar position="static">
-            <Toolbar style={{display: 'flex', justifyContent: 'space-between'}}>
-                <Box
-                    component="img"
-                    sx={{
-                        padding: 1,
-                        height: 64,
-                    }}
-                    alt="Your logo."
-                    src={Logo}
-                />
-                <Toolbar>
-                    <SettingsButton onClick={onClickSettings} />
-                </Toolbar>
-            </Toolbar>
-        </AppBar>
-    );
-};
 
 const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
     [`&.${stepConnectorClasses.alternativeLabel}`]: {
@@ -129,7 +98,6 @@ const Config = ({
                 }) => {
     const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
     const [currentPage, setCurrentPage] = useState(0);
-    const [showSettings, setShowSettings] = useState(false);
     const [loading, setLoading] = useState(false);
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [snackbarTitle, setSnackbarTitle] = useState(false);
@@ -137,8 +105,6 @@ const Config = ({
   
     const { t } = useTranslation();
     const navigate = useNavigate();
-
-    const toggleSettingsModal = () => setShowSettings(curr => !curr);
 
     const notifyLoading = async () => {
       await setLoading(true);
@@ -179,7 +145,7 @@ const Config = ({
             width: '100vw', 
             height: '100vh',
         }}>
-            <Heading onClickSettings={toggleSettingsModal} />
+            <CustomAppBar units={units} setUnits={setUnits} />
             <div style={{ width: '100%', height: '100%' }}>
                 <div style={{ display: 'flex',  flexDirection: 'column', width: '100%', height: '100%', alignItems: 'center' }}>
                     <Box sx={{ margin: 5, width: '100%' }}>
@@ -264,15 +230,6 @@ const Config = ({
                     {t(snackbarTitle)}
                 </Alert>
             </Snackbar>
-            <Modal 
-                style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-                open={showSettings} 
-                onClose={toggleSettingsModal}
-            >
-                <div className={'settings-modal'}>
-                    <SettingsPage units={units} setUnits={setUnits} />
-                </div>
-            </Modal>
         </div>
     );
 };

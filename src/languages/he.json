@@ -1,7 +1,8 @@
 {
   "uploadFile": "העלאת קובץ",
   "settings": "הגדרות",
-  "standardSize": "גודל סטנדרטי",
+  "standardSize": "גודל סטנדרטי (אופציונלי)",
+  "size": "גודל",
   "export": "ייצא",
   "start": "התחל",
   "language": "שפה",
@@ -33,7 +34,7 @@
   "profit": "רווח",
   "canRotate": "ניתן לסיבוב",
   "canStackAbove": "ניתן להעמיס מעל",
-  "reviewYourPackages": "החבילות שלך",
+  "reviewYourPackages": "צפייה בכל החבילות",
   "rotate": "סובב",
   "stackAbove": "העמס על",
   "uploadFileTab": "העלאת קובץ מידע (אופציונלי)",
@@ -58,5 +59,7 @@
   "exportJSON": "JSON",
   "exportSolution": "ייצוא לקובץ",
   "dropOrClick": "לחצו או גררו קובץ לכאן",
-  "canOnlyUploadCSV": "ניתן להעלות קבצי CSV בלבד"
+  "canOnlyUploadCSV": "ניתן להעלות קבצי CSV בלבד",
+  "uploadError": "ההעלאה נכשלה",
+  "uploadSuccess": "ההעלאה התבצעה בהצלחה"
 }

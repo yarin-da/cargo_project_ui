@@ -10,6 +10,8 @@ import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import ClearRoundedIcon from '@mui/icons-material/ClearRounded';
 import EditIcon from '@mui/icons-material/Edit';
 import { IconButton } from '@mui/material';
+import CustomText from "./CustomText";
+import { useTranslation } from 'react-i18next';
 
 const style = {
   display: 'flex',
@@ -55,6 +57,7 @@ const MyList = ({ units, container, packages, setCurrentPackage, handleClose }) 
   }
 
 const PackageRow = ({ units, values: p, onClick }) => {
+    const { t } = useTranslation();
     const rowStyle = {
         width: '100%',
         background: '#fff',
@@ -72,8 +75,8 @@ const PackageRow = ({ units, values: p, onClick }) => {
     };
     const details = {
         amount: `${p['amount']}`,
-        size: <div>{p['width']}&times;{p['height']}&times;{p['depth']}{units['length']}</div>,
-        weight: `${p['weight']}${units['weight']}`,
+        size: <div>{p['width']}&times;{p['height']}&times;{p['depth']} {t(units['length'])}</div>,
+        weight: `${p['weight']} ${t(units['weight'])}`,
         profit: `${p['profit']}`,
         priority: `${p['priority']}`,
         rotate: p['canRotate'] ? <CheckRoundedIcon htmlColor="green" /> : <ClearRoundedIcon htmlColor="red" />,
@@ -91,6 +94,7 @@ const PackageRow = ({ units, values: p, onClick }) => {
             >
                 <EditIcon />
             </IconButton>
+            {/* TODO: CENTER THE ICON */}
             <CardMedia 
                 component="img"
                 image={image}
@@ -100,16 +104,17 @@ const PackageRow = ({ units, values: p, onClick }) => {
                 }}
             />
             <hr width="1" size="100" color="lightgrey" />
-            <div>
-                <Typography sx={{marginBottom: 2}} variant="h5" component="h2">
+            <div style={{display: 'flex', flexDirection: 'column'}}>
+                <Typography sx={{}} variant="h5" component="h2">
                     {`${p['type']}`}
                 </Typography>
                 <div style={detailsStyle}>
                     {Object.keys(details).map((key, i) => 
                         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}} key={i}>
-                            <Typography noWrap sx={{fontWeight: 'bold', display: 'flex', alignItems: 'center', justifyContent: 'space-between'}} variant="subtitle2" component="h3">
-                                <span>{`${key}`}</span>
-                            </Typography>
+                            <CustomText 
+                              sx={{fontWeight: 'bold', display: 'flex', alignItems: 'center', justifyContent: 'space-between'}} variant="subtitle2" component="h3"
+                              text={key}
+                            />
                             <Typography noWrap sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}} variant="subtitle2" component="h3">
                                 <span>{details[key]}</span>
                             </Typography>
@@ -123,48 +128,43 @@ const PackageRow = ({ units, values: p, onClick }) => {
 
 const SummaryModal = ({ units, packages, setCurrentPackage, showPackageView, setShowPackageView }) => {
   return (
-    <div>
-      <Modal
-        keepMounted
-        open={showPackageView}
-        onClose={() => setShowPackageView(false)}
-        aria-labelledby="keep-mounted-modal-title"
-        aria-describedby="keep-mounted-modal-description"
-      >
-          <Box style={style}>
-              <IconButton 
-                onClick={() => setShowPackageView(false)}
-                sx={{
-                    position: 'absolute',
-                    top: 0,
-                    right: 0,
-                }}
-              >
-                <ClearRoundedIcon fontSize="large" />
-              </IconButton>
-              <Typography 
-                noWrap 
-                variant="h4"
-                component="h3" 
-                sx={{
-                    fontWeight: 'bold', 
-                    width: '100%', 
-                    borderBottom: '1px solid black',
-                    display: 'flex',
-                    justifyContent: 'center',
-                }}
-              >
-                  Review Your Packages
-              </Typography>
-              <MyList 
-                packages={packages} 
-                units={units} 
-                setCurrentPackage={setCurrentPackage}
-                handleClose={() => setShowPackageView(false)}
+    <Modal
+      keepMounted
+      open={showPackageView}
+      onClose={() => setShowPackageView(false)}
+      aria-labelledby="keep-mounted-modal-title"
+      aria-describedby="keep-mounted-modal-description"
+    >
+        <Box style={style}>
+            <IconButton 
+              onClick={() => setShowPackageView(false)}
+              sx={{
+                  position: 'absolute',
+                  top: 0,
+                  right: 0,
+              }}
+            >
+              <ClearRoundedIcon fontSize="large" />
+            </IconButton>
+            <CustomText 
+              variant="h4"
+              sx={{
+                  fontWeight: 'bold', 
+                  width: '100%', 
+                  borderBottom: '1px solid black',
+                  display: 'flex',
+                  justifyContent: 'center',
+              }}
+              text="reviewYourPackages"
             />
-          </Box>
-      </Modal>
-    </div>
+            <MyList 
+              packages={packages} 
+              units={units} 
+              setCurrentPackage={setCurrentPackage}
+              handleClose={() => setShowPackageView(false)}
+          />
+        </Box>
+    </Modal>
   );
 }
 

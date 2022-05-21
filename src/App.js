@@ -74,6 +74,8 @@ function App() {
           element={
             <ViewPage 
               solution={solution}
+              units={units}
+              setUnits={setUnits}
             />
           }
         >

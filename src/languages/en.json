@@ -1,6 +1,7 @@
 {
   "settings": "Settings",
-  "standardSize": "Standard Size",
+  "standardSize": "Standard Size (optional)",
+  "size": "Size",
   "export": "Export",
   "start": "Start",
   "language": "Language",
@@ -58,5 +59,7 @@
   "exportJSON": "JSON",
   "exportSolution": "Export the solution",
   "dropOrClick": "Click or drop a file here",
-  "canOnlyUploadCSV": "You can only upload a CSV file"
+  "canOnlyUploadCSV": "You can only upload a CSV file",
+  "uploadError": "Failed to upload your file",
+  "uploadSuccess": "File has been uploaded"
 }
