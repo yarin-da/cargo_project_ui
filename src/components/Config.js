@@ -133,7 +133,7 @@ const Config = ({
     const [loading, setLoading] = useState(false);
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [snackbarTitle, setSnackbarTitle] = useState(false);
-    const [snackbarSeverity, setSnackbarSeverity] = useState(false);
+    const [snackbarSeverity, setSnackbarSeverity] = useState("info");
   
     const { t } = useTranslation();
     const navigate = useNavigate();
