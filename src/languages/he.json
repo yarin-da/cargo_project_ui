@@ -53,5 +53,7 @@
   "finish": "סיום",
   "viewSolution": "צפייה בפתרון",
   "organizingYourPackages": "מסדרים את החבילות שלך",
-  "failedToOrganizeYourPackages": "תהליך הסידור נכשל"
+  "failedToOrganizeYourPackages": "תהליך הסידור נכשל",
+  "exportCSV": "CSV",
+  "exportJSON": "JSON"
 }

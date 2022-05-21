@@ -133,4 +133,30 @@ function parseCSV(file, handler) {
     }
 };
 
+function parseArrayToCSV(array) {
+    let ret = '';
+    if (array.length > 0) {
+        const keys = Object.keys(array[0]);
+        ret += keys.join(',') + '\n';
+        array.forEach(element => {
+            ret += keys.map(key => element[key]).join(',') + '\n';
+        });
+    }
+    return ret;
+}
+
+function parseJSONtoCSV(json) {
+    // is 'json' an array?
+    if (!!json && json.constructor === Array) return parseArrayToCSV(json);
+    // is 'json' an object?
+    if (json === Object(json)) return Object.keys(json).map(prop => `\n${prop}\n` + parseJSONtoCSV(json[prop])).join('\n');
+    // 'json' is primitive
+    return json;
+};
+
+export {
+    parseCSV,
+    parseJSONtoCSV,
+}
+
 export default parseCSV
