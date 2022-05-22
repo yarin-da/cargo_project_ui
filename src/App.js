@@ -4,6 +4,10 @@ import Package from "./components/Package";
 import Config from "./components/Config";
 import ViewPage from "./components/View3D/ViewPage";
 import "./App.css";
+import { Admin, Resource } from 'react-admin';
+import jsonServerProvider from 'ra-data-json-server';
+import {ListOfPackages} from "./components/ListOfPackages";
+
 
 import {
     BrowserRouter as Router,
@@ -89,6 +93,9 @@ const Home = ({ units, setUnits, setSolution }) => {
     return (
         <div className="App">
             <Header units={units} setUnits={setUnits} setSolution={setSolution} />
+
+            {/*<ListOfPackages/>*/}
+
         </div>
     );
 }
