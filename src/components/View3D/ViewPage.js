@@ -104,7 +104,7 @@ const ColorMap = ({ colorMap, setColorMap }) => {
     );
 };
 
-const ViewPage = ({ solution, units, setUnits }) => {
+const ViewPage = ({ /* TODO: solution,*/ units, setUnits }) => {
     const [colorMap, setColorMap] = useState(initializeColors(solution));
     const [showExportDialog, setShowExportDialog] = useState(false);
     const { t } = useTranslation();
@@ -150,3 +150,845 @@ const ViewPage = ({ solution, units, setUnits }) => {
 };
 
 export default ViewPage;
+
+
+// TODO: remove
+const solution = {
+    "packages": [
+      {
+        "type": "Jewelry",
+        "width": 2,
+        "height": 3,
+        "depth": 2
+      },
+      {
+        "type": "Glass",
+        "width": 3,
+        "height": 4,
+        "depth": 2
+      },
+      {
+        "type": "Clothes",
+        "width": 5,
+        "height": 1,
+        "depth": 3
+      },
+      {
+        "type": "Electronic",
+        "width": 5,
+        "height": 2,
+        "depth": 3
+      },
+      {
+        "type": "Food",
+        "width": 6,
+        "height": 2,
+        "depth": 3
+      },
+      {
+        "type": "Shoes",
+        "width": 7,
+        "height": 2,
+        "depth": 3
+      }
+    ],
+    "container": {
+      "width": 10,
+      "height": 10,
+      "depth": 40
+    },
+    "solution": [
+      {
+        "type": "Shoes",
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Shoes",
+        "x": 0,
+        "y": 0,
+        "z": 2,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Shoes",
+        "x": 0,
+        "y": 0,
+        "z": 4,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Shoes",
+        "x": 0,
+        "y": 0,
+        "z": 6,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Shoes",
+        "x": 0,
+        "y": 0,
+        "z": 8,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Shoes",
+        "x": 0,
+        "y": 3,
+        "z": 0,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Shoes",
+        "x": 0,
+        "y": 3,
+        "z": 2,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Shoes",
+        "x": 0,
+        "y": 3,
+        "z": 4,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Shoes",
+        "x": 0,
+        "y": 3,
+        "z": 6,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Shoes",
+        "x": 0,
+        "y": 3,
+        "z": 8,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Shoes",
+        "x": 0,
+        "y": 6,
+        "z": 0,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Shoes",
+        "x": 0,
+        "y": 6,
+        "z": 2,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Shoes",
+        "x": 0,
+        "y": 6,
+        "z": 4,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Shoes",
+        "x": 0,
+        "y": 6,
+        "z": 6,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Shoes",
+        "x": 0,
+        "y": 6,
+        "z": 8,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Shoes",
+        "x": 0,
+        "y": 9,
+        "z": 0,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Shoes",
+        "x": 0,
+        "y": 9,
+        "z": 2,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Shoes",
+        "x": 0,
+        "y": 9,
+        "z": 4,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Shoes",
+        "x": 0,
+        "y": 9,
+        "z": 6,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Shoes",
+        "x": 0,
+        "y": 9,
+        "z": 8,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Food",
+        "x": 0,
+        "y": 12,
+        "z": 0,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Food",
+        "x": 0,
+        "y": 12,
+        "z": 2,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Food",
+        "x": 0,
+        "y": 12,
+        "z": 4,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Food",
+        "x": 0,
+        "y": 12,
+        "z": 6,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Food",
+        "x": 0,
+        "y": 12,
+        "z": 8,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Food",
+        "x": 0,
+        "y": 15,
+        "z": 0,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Food",
+        "x": 0,
+        "y": 15,
+        "z": 2,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Food",
+        "x": 0,
+        "y": 15,
+        "z": 4,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Food",
+        "x": 0,
+        "y": 15,
+        "z": 6,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Food",
+        "x": 0,
+        "y": 15,
+        "z": 8,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Food",
+        "x": 0,
+        "y": 18,
+        "z": 0,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Food",
+        "x": 0,
+        "y": 18,
+        "z": 2,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Food",
+        "x": 0,
+        "y": 18,
+        "z": 4,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Food",
+        "x": 0,
+        "y": 18,
+        "z": 6,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Food",
+        "x": 0,
+        "y": 18,
+        "z": 8,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Electronic",
+        "x": 0,
+        "y": 21,
+        "z": 0,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Electronic",
+        "x": 0,
+        "y": 21,
+        "z": 2,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Electronic",
+        "x": 0,
+        "y": 21,
+        "z": 4,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Electronic",
+        "x": 0,
+        "y": 21,
+        "z": 6,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Electronic",
+        "x": 0,
+        "y": 21,
+        "z": 8,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Electronic",
+        "x": 5,
+        "y": 21,
+        "z": 0,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Electronic",
+        "x": 5,
+        "y": 21,
+        "z": 2,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Electronic",
+        "x": 5,
+        "y": 21,
+        "z": 4,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Electronic",
+        "x": 5,
+        "y": 21,
+        "z": 6,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Electronic",
+        "x": 5,
+        "y": 21,
+        "z": 8,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Electronic",
+        "x": 0,
+        "y": 24,
+        "z": 0,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Electronic",
+        "x": 0,
+        "y": 24,
+        "z": 2,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Electronic",
+        "x": 0,
+        "y": 24,
+        "z": 4,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Electronic",
+        "x": 0,
+        "y": 24,
+        "z": 6,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Electronic",
+        "x": 0,
+        "y": 24,
+        "z": 8,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Electronic",
+        "x": 5,
+        "y": 24,
+        "z": 0,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Electronic",
+        "x": 5,
+        "y": 24,
+        "z": 2,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Electronic",
+        "x": 5,
+        "y": 24,
+        "z": 4,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Electronic",
+        "x": 5,
+        "y": 24,
+        "z": 6,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Electronic",
+        "x": 5,
+        "y": 24,
+        "z": 8,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Electronic",
+        "x": 0,
+        "y": 27,
+        "z": 0,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Electronic",
+        "x": 0,
+        "y": 27,
+        "z": 2,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Electronic",
+        "x": 0,
+        "y": 27,
+        "z": 4,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Electronic",
+        "x": 0,
+        "y": 27,
+        "z": 6,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Electronic",
+        "x": 0,
+        "y": 27,
+        "z": 8,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Glass",
+        "x": 5,
+        "y": 27,
+        "z": 0,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Glass",
+        "x": 5,
+        "y": 27,
+        "z": 4,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Clothes",
+        "x": 5,
+        "y": 27,
+        "z": 8,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Clothes",
+        "x": 5,
+        "y": 27,
+        "z": 9,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Glass",
+        "x": 0,
+        "y": 30,
+        "z": 0,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Glass",
+        "x": 0,
+        "y": 30,
+        "z": 4,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Clothes",
+        "x": 0,
+        "y": 30,
+        "z": 8,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Clothes",
+        "x": 0,
+        "y": 30,
+        "z": 9,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Glass",
+        "x": 5,
+        "y": 30,
+        "z": 0,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Glass",
+        "x": 5,
+        "y": 30,
+        "z": 4,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Clothes",
+        "x": 5,
+        "y": 30,
+        "z": 8,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Clothes",
+        "x": 5,
+        "y": 30,
+        "z": 9,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Glass",
+        "x": 0,
+        "y": 33,
+        "z": 0,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Glass",
+        "x": 0,
+        "y": 33,
+        "z": 4,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Clothes",
+        "x": 0,
+        "y": 33,
+        "z": 8,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Clothes",
+        "x": 0,
+        "y": 33,
+        "z": 9,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Glass",
+        "x": 5,
+        "y": 33,
+        "z": 0,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Glass",
+        "x": 5,
+        "y": 33,
+        "z": 4,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Clothes",
+        "x": 5,
+        "y": 33,
+        "z": 8,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Clothes",
+        "x": 5,
+        "y": 33,
+        "z": 9,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Glass",
+        "x": 0,
+        "y": 36,
+        "z": 0,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Glass",
+        "x": 0,
+        "y": 36,
+        "z": 4,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Clothes",
+        "x": 0,
+        "y": 36,
+        "z": 8,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Clothes",
+        "x": 0,
+        "y": 36,
+        "z": 9,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Glass",
+        "x": 5,
+        "y": 36,
+        "z": 0,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Glass",
+        "x": 5,
+        "y": 36,
+        "z": 4,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Clothes",
+        "x": 5,
+        "y": 36,
+        "z": 8,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      },
+      {
+        "type": "Clothes",
+        "x": 5,
+        "y": 36,
+        "z": 9,
+        "rotation-x": 0,
+        "rotation-y": 0,
+        "rotation-z": 0
+      }
+    ]
+  };

@@ -12,6 +12,10 @@ const VISIBILITY_DIST2 = VISIBILITY_DIST * VISIBILITY_DIST;
 const CONTAINER_COLOR = 0x777777;
 const CONTAINER_THICKNESS = 0.1;
 
+const SELECTED_BOX_COLOR = 0x004477;
+const SELECTED_EDGE_COLOR = 0x00aadd;
+const SELECTED_TEXT_COLOR = 0xffffff;
+
 extend({ Text });
 
 const dotProduct = (a, b) => a.map((_, i) => a[i] * b[i]).reduce((m, n) => m + n);
@@ -20,7 +24,7 @@ const parsePosition = ({ scale, position }) => {
     return position.map((p, i) => p + scale[i]/2);
 };
 
-const BoxEdges = ({ position, scale }) => {
+const BoxEdges = ({ position, scale, selected }) => {
     const [x, y, z] = position;
     const [w, h, d] = scale;
     const lines = [
@@ -46,7 +50,7 @@ const BoxEdges = ({ position, scale }) => {
                     key={`box-edge-${i}`}
                     points={line}
                     lineWidth={EDGE_WIDTH}
-                    color={EDGE_COLOR} 
+                    color={selected ? SELECTED_EDGE_COLOR : EDGE_COLOR} 
                 />
             )
         }
@@ -54,14 +58,14 @@ const BoxEdges = ({ position, scale }) => {
     );
 };
 
-const CustomText = ({ position, rotation, text }) => {
+const CustomText = ({ position, rotation, text, selected }) => {
     return (
         <text
             position={position ?? [0, 0, 0]}
             rotation={rotation ?? [0, 0, 0]}
             text={text ?? ''}
             fontSize={TEXT_SIZE}
-            color={"black"}
+            color={selected ? SELECTED_TEXT_COLOR : "black"}
             maxWidth={1}
             lineHeight={1}
             letterSpacing={0}
@@ -73,7 +77,7 @@ const CustomText = ({ position, rotation, text }) => {
     );
 };
 
-const BoxText = ({ position, scale, text }) => {
+const BoxText = ({ position, scale, text, selected }) => {
     const offset = 0.01
     const dist = scale.map(s => s / 2);
     const texts = [
@@ -108,6 +112,7 @@ const BoxText = ({ position, scale, text }) => {
             texts.map((t, i) => 
                 <CustomText
                     key={`text-${i}`} 
+                    selected={selected}
                     text={text} 
                     position={position.map((p, i) => p + t.position[i])} 
                     rotation={t.rotation}
@@ -118,7 +123,16 @@ const BoxText = ({ position, scale, text }) => {
     );
 };
 
-const CustomBox = ({ color=0xFF0000, scale=[1, 1, 1], position=[0, 0, 0], rotation=[0, 0, 0], text='', parseByScale=null }) => {   
+const CustomBox = ({ 
+    color=0xFF0000, 
+    scale=[1, 1, 1], 
+    position=[0, 0, 0], 
+    rotation=[0, 0, 0], 
+    text='', 
+    parseByScale=null,
+    onClick,
+    selected
+}) => {   
     const [visible, setVisible] = useState(true);
     
     useFrame(({ camera }) => {
@@ -151,24 +165,30 @@ const CustomBox = ({ color=0xFF0000, scale=[1, 1, 1], position=[0, 0, 0], rotati
     return (
         <>{
             visible &&
-            <group>
+            <group onClick={onClick}>
                 <Box scale={translatedScale} position={translatedPos}>
-                    <meshStandardMaterial color={color} />
+                    <meshStandardMaterial color={selected ? SELECTED_BOX_COLOR : color} />
                 </Box>
-                <BoxText position={translatedPos} scale={translatedScale} text={text} />
-                <BoxEdges position={position} scale={translatedScale} />
+                <BoxText position={translatedPos} scale={translatedScale} text={text} selected={selected} />
+                <BoxEdges position={position} scale={translatedScale} selected={selected} />
             </group>
         }</>
     );
 };
 
-const Packages = ({ packages, solution, colorMap }) => {
+const Packages = ({ packages, solution, colorMap, selected, onSelect }) => {
+    const onPackageClick = (e, pkgIndex) => {
+        e.stopPropagation();
+        onSelect(curr => curr === pkgIndex ? -1 : pkgIndex);
+    };
     return (
         <group>
         {
             solution.map((sol, i) => {
                 const pkg = packages.find(pkg => pkg['type'] === sol['type']);
                 return <CustomBox 
+                    selected={selected === i}
+                    onClick={(e) => onPackageClick(e, i)}
                     key={`package-${i}`}
                     text={pkg['type']}
                     color={colorMap[pkg['type']]} 
@@ -266,6 +286,8 @@ const Container = ({ scale }) => {
 }
 
 const View3D = ({ solution, colorMap }) => {
+    const [selectedPackage, setSelectedPackage] = useState(-1);
+
     const canvasStyle = {
         width: '100%',
         height: '100%',
@@ -286,7 +308,7 @@ const View3D = ({ solution, colorMap }) => {
             <Suspense fallback={null}>
                 <OrbitControls enableDamping dampingFactor={0.1} rotateSpeed={0.5} />
                 <Container scale={[solution['container']['width'], solution['container']['height'], solution['container']['depth']]} />
-                <Packages {...solution} colorMap={colorMap} />
+                <Packages {...solution} colorMap={colorMap} selected={selectedPackage} onSelect={setSelectedPackage} />
                 <pointLight position={[0, 20, -5]} />
                 <ambientLight intensity={0.4} />
                 <Environment preset="warehouse" />
