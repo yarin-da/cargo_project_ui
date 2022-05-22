@@ -4,6 +4,7 @@ import React from "react";
 import CustomText from "./CustomText";
 import CustomAppBar from "./CustomAppBar";
 import { Button } from "@mui/material";
+import { Typography } from "@material-ui/core";
 
 const Header = ({ units, setUnits }) => {
     const navigate = useNavigate();
@@ -12,24 +13,53 @@ const Header = ({ units, setUnits }) => {
             <div className="head">
                 <div className="header">
                     <div className="header-title">
-                        <div className="header-title-text">LET YOUR SUCCESS</div>
-                        <div className="header-title-text">RIDE WITH US.</div>    
+                        <Typography 
+                            className="header-title-text"
+                            variant="h2"
+                        >
+                            LET YOUR SUCCESS
+                        </Typography>
+                        <Typography 
+                            className="header-title-text" 
+                            variant="h2"
+                        >
+                            RIDE WITH US.
+                        </Typography>
                     </div>
-                    <Button
-                        sx={{
-                            color: "primary",
-                            border: '2px solid',
-                            borderColor: "primary",
-                            borderRadius: 5,
-                            padding: 3,
-                            background: 'rgba(120, 120, 150, 0.33)',
-                            alignSelf: 'center',
-                            cursor: 'pointer',
-                        }}
-                        onClick={() => navigate('/config')}
-                    >
-                        <CustomText text="start" variant="h3" />
-                    </Button>
+                    <div style={{alignSelf: 'center', display: 'flex', flexDirection: 'column'}}>
+                        <Button
+                            sx={{
+                                textTransform: 'none',
+                                color: "primary",
+                                border: '2px solid',
+                                borderColor: "primary",
+                                borderRadius: 5,
+                                padding: 3,
+                                background: 'rgba(30, 30, 45, 0.5)',
+                                cursor: 'pointer',
+                                margin: 1,
+                            }}
+                            onClick={() => navigate('/config')}
+                        >
+                            <CustomText text="findPacking" variant="h3" />
+                        </Button>
+                        {/* <Button
+                            sx={{
+                                textTransform: 'none',
+                                color: "primary",
+                                border: '2px solid',
+                                borderColor: "primary",
+                                borderRadius: 5,
+                                padding: 3,
+                                background: 'rgba(30, 30, 45, 0.5)',
+                                cursor: 'pointer',
+                                margin: 1,
+                            }}
+                            onClick={() => navigate('/view')}
+                        >
+                            <CustomText text="viewSolution" variant="h3" />
+                        </Button> */}
+                    </div>
                 </div>
             </div>
             <CustomAppBar units={units} setUnits={setUnits} />

@@ -61,5 +61,6 @@
   "dropOrClick": "לחצו או גררו קובץ לכאן",
   "canOnlyUploadCSV": "ניתן להעלות קבצי CSV בלבד",
   "uploadError": "ההעלאה נכשלה",
-  "uploadSuccess": "ההעלאה התבצעה בהצלחה"
+  "uploadSuccess": "ההעלאה התבצעה בהצלחה",
+  "findPacking": "מצא סידור"
 }
