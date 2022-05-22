@@ -1,13 +1,10 @@
 import { useState } from "react";
+import React from "react";
 import Header from './components/Header';
 import Package from "./components/Package";
 import Config from "./components/Config";
 import ViewPage from "./components/View3D/ViewPage";
 import "./App.css";
-import { Admin, Resource } from 'react-admin';
-import jsonServerProvider from 'ra-data-json-server';
-import {ListOfPackages} from "./components/ListOfPackages";
-
 
 import {
     BrowserRouter as Router,
@@ -15,7 +12,9 @@ import {
     Route,
 } from "react-router-dom";
 
+
 function App() {
+
     const [solution, setSolution] = useState({});
     const [showPackageView, setShowPackageView] = useState(false);
     const [currentPackage, setCurrentPackage] = useState(1);
@@ -40,13 +39,14 @@ function App() {
     // }, [solution, colorMap, showPackageView, currentPackage, container, packages, units]);
 
     return (
+
         <Router>
             <Routes>
-                <Route 
-                    exact 
+                <Route
+                    exact
                     path="/"
                     element={
-                        <Home 
+                        <Home
                             units={units}
                             setUnits={setUnits}
                             setSolution={setSolution}
@@ -54,29 +54,29 @@ function App() {
                     }
                 >
                 </Route>
-                <Route 
+                <Route
                     path="/config"
                     element={
-                        <Config 
+                        <Config
                             units={units}
                             setUnits={setUnits}
                             packages={packages}
                             setPackages={setPackages}
                             currentPackage={currentPackage}
                             setCurrentPackage={setCurrentPackage}
-                            container={container} 
+                            container={container}
                             setContainer={setContainer}
-                            showPackageView={showPackageView} 
+                            showPackageView={showPackageView}
                             setShowPackageView={setShowPackageView}
                             setSolution={setSolution}
                         />
                     }
                 >
                 </Route>
-                <Route 
-                    path="/view" 
+                <Route
+                    path="/view"
                     element={
-                        <ViewPage 
+                        <ViewPage
                             solution={solution}
                             units={units}
                             setUnits={setUnits}
@@ -94,7 +94,7 @@ const Home = ({ units, setUnits, setSolution }) => {
         <div className="App">
             <Header units={units} setUnits={setUnits} setSolution={setSolution} />
 
-            {/*<ListOfPackages/>*/}
+            {/*<PostList/>*/}
 
         </div>
     );
