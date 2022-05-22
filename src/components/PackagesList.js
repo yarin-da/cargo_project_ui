@@ -59,9 +59,7 @@ const PackagesList = ({ units, packages, setPackages, currentPackage, setCurrent
         }
         return (
             <Tooltip title={text}>
-                <span>
-                    <PaginationItem {...item} />
-                </span>
+                <PaginationItem {...item} />
             </Tooltip>
         );
     };

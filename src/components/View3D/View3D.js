@@ -7,7 +7,7 @@ import '../../styles/ColorMap.css';
 const EDGE_COLOR = 0x334444;
 const EDGE_WIDTH = 0.5;
 const TEXT_SIZE = 0.3;
-const VISIBILITY_DIST = 10;
+const VISIBILITY_DIST = 15;
 const VISIBILITY_DIST2 = VISIBILITY_DIST * VISIBILITY_DIST;
 const CONTAINER_COLOR = 0x777777;
 const CONTAINER_THICKNESS = 0.1;
