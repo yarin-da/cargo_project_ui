@@ -48,7 +48,7 @@
   "viewAllPackages": "View All Packages",
   "addPackages": "Add Packages",
   "deletePackages": "Delete Packages",
-  "resetPackages": "Reset Packages",
+  "resetPackage": "Reset Package",
   "cancel": "Cancel",
   "confirm": "Confirm",
   "finish": "Finish",

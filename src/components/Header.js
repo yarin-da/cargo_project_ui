@@ -6,8 +6,13 @@ import CustomAppBar from "./CustomAppBar";
 import { Button } from "@mui/material";
 import { Typography } from "@material-ui/core";
 
-const Header = ({ units, setUnits }) => {
+const Header = ({ units, setUnits, setSolution }) => {
     const navigate = useNavigate();
+    // const onViewSolution = () => {
+    //     //const solution = ;
+    //     //setSolution(solution);
+    //     navigate('/view');
+    // };
     return (
         <div style={{ display: 'flex', flexDirection: 'column-reverse', width: '100vw', height: '100vh' }}>
             <div className="head">
@@ -55,9 +60,10 @@ const Header = ({ units, setUnits }) => {
                                 cursor: 'pointer',
                                 margin: 1,
                             }}
-                            onClick={() => navigate('/view')}
+                            onClick={onViewSolution}
                         >
                             <CustomText text="viewSolution" variant="h3" />
+                            <input type="file" hidden />
                         </Button> */}
                     </div>
                 </div>

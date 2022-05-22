@@ -45,6 +45,7 @@ function App() {
                         <Home 
                             units={units}
                             setUnits={setUnits}
+                            setSolution={setSolution}
                         />
                     }
                 >
@@ -84,10 +85,10 @@ function App() {
     );
 };
 
-const Home = ({ units, setUnits }) => {
+const Home = ({ units, setUnits, setSolution }) => {
     return (
         <div className="App">
-            <Header units={units} setUnits={setUnits} />
+            <Header units={units} setUnits={setUnits} setSolution={setSolution} />
         </div>
     );
 }

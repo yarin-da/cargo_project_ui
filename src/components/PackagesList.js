@@ -96,7 +96,7 @@ const PackagesList = ({ units, packages, setPackages, currentPackage, setCurrent
                         <DeleteIcon fontSize="large" />
                     </Button>
                 </Tooltip>
-                <Tooltip title={t('resetPackages')}>
+                <Tooltip title={t('resetPackage')}>
                     <Button 
                         onClick={() => resetPackage(packages[currentPackage - 1])}
                     >
