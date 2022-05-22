@@ -136,6 +136,7 @@ const CustomBox = ({
     const [visible, setVisible] = useState(true);
     
     useFrame(({ camera }) => {
+        if (selected) return;
         const { x, z, y } = camera.position;
         const diff2 = [x, y, z].map((p, i) => (p - position[i])*(p - position[i]));
         const dist = diff2.reduce((a, b) => a + b, 0);
@@ -176,27 +177,38 @@ const CustomBox = ({
     );
 };
 
+const Package = ({ solution, packages, colorMap, index, selected, onSelect }) => {
+    const sol = solution[index];
+    const pkg = packages.find(pkg => pkg['type'] === sol['type']);
+    return (
+        <CustomBox 
+            selected={index === selected}
+            onClick={(e) => onSelect(e, index)}
+            text={pkg['type']}
+            color={colorMap[pkg['type']]} 
+            scale={[pkg['width'], pkg['height'], pkg['depth']]}
+            rotation={[sol['rotation-x'], sol['rotation-z'], sol['rotation-y']]}
+            position={[sol['x'], sol['z'], sol['y']]} 
+        />
+    );
+};
+
 const Packages = ({ packages, solution, colorMap, selected, onSelect }) => {
-    const onPackageClick = (e, pkgIndex) => {
-        e.stopPropagation();
-        onSelect(curr => curr === pkgIndex ? -1 : pkgIndex);
-    };
     return (
         <group>
         {
-            solution.map((sol, i) => {
-                const pkg = packages.find(pkg => pkg['type'] === sol['type']);
-                return <CustomBox 
-                    selected={selected === i}
-                    onClick={(e) => onPackageClick(e, i)}
-                    key={`package-${i}`}
-                    text={pkg['type']}
-                    color={colorMap[pkg['type']]} 
-                    scale={[pkg['width'], pkg['height'], pkg['depth']]}
-                    rotation={[sol['rotation-x'], sol['rotation-z'], sol['rotation-y']]}
-                    position={[sol['x'], sol['z'], sol['y']]} 
+            solution
+            .map((_, i) =>
+                <Package 
+                    key={`package-${i}`} 
+                    solution={solution} 
+                    packages={packages}
+                    colorMap={colorMap} 
+                    selected={selected} 
+                    onSelect={onSelect} 
+                    index={i}
                 />
-            })
+            )
         }
         </group>
     );
@@ -267,14 +279,7 @@ const Container = ({ scale }) => {
     return (
         <group>
             {
-                walls.map((wall, i) => 
-                    // <CustomBox 
-                    //     key={`container-wall-${i}`}
-                    //     scale={wall.scale}
-                    //     parseByScale={scale}
-                    //     position={wall.position}
-                    //     color={CONTAINER_COLOR}
-                    // />
+                walls.map((wall, i) =>
                     wall.visible &&
                     <Box key={`container-wall-${i}`} scale={wall.scale} position={parsePosition({ position: wall.position, scale })}>
                         <meshStandardMaterial color={CONTAINER_COLOR} />        
@@ -285,15 +290,29 @@ const Container = ({ scale }) => {
     );
 }
 
-const View3D = ({ solution, colorMap }) => {
-    const [selectedPackage, setSelectedPackage] = useState(-1);
-
+const View3D = ({ solution, colorMap, selectedPackage, setSelectedPackage }) => {
+    const [controlTarget, setControlTarget] = useState([0, 0, 0]);
     const canvasStyle = {
         width: '100%',
         height: '100%',
     };
 
     const maxContainerDim = Object.values(solution['container']).reduce((a, b) => a > b ? a : b, 0);
+
+    // TODO: update perhaps only on right click?
+    const updateControlsTarget = (index) => {
+        if (index !== -1) {
+            const pkg = solution['solution'][index];
+            setControlTarget([pkg['x'],pkg['z'],pkg['y']]);
+        }
+    }
+
+    const onPackageClick = (e, pkgIndex) => {
+        e.stopPropagation();
+        setSelectedPackage(curr => curr === pkgIndex ? -1 : pkgIndex);
+        updateControlsTarget(pkgIndex);
+    };
+
     return (
         <Canvas 
             style={canvasStyle} 
@@ -306,9 +325,9 @@ const View3D = ({ solution, colorMap }) => {
             }}
         >
             <Suspense fallback={null}>
-                <OrbitControls enableDamping dampingFactor={0.1} rotateSpeed={0.5} />
+                <OrbitControls enableDamping dampingFactor={0.1} rotateSpeed={0.5} target={controlTarget} />
                 <Container scale={[solution['container']['width'], solution['container']['height'], solution['container']['depth']]} />
-                <Packages {...solution} colorMap={colorMap} selected={selectedPackage} onSelect={setSelectedPackage} />
+                <Packages {...solution} colorMap={colorMap} selected={selectedPackage} onSelect={onPackageClick} />
                 <pointLight position={[0, 20, -5]} />
                 <ambientLight intensity={0.4} />
                 <Environment preset="warehouse" />

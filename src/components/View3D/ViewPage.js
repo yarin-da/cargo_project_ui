@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import View3D from "./View3D";
 import { getColorsByHash } from "./Color";
 import { HexColorPicker } from "react-colorful" 
@@ -44,11 +44,13 @@ const ColorPicker = ({ open, onColorPicked, initialColor, onClose }) => {
             open={open} 
             onClose={onClose}
         >
-            <HexColorPicker
-                onChange={(newColor) => setColor(newColor)}
-                onClick={() => onColorPicked(color)}
-                onDoubleClick={onClose}
-            />
+            <span>
+                <HexColorPicker
+                    onChange={(newColor) => setColor(newColor)}
+                    onClick={() => onColorPicked(color)}
+                    onDoubleClick={onClose}
+                />
+            </span>
         </Modal>
     );
 }
@@ -105,6 +107,7 @@ const ColorMap = ({ colorMap, setColorMap }) => {
 };
 
 const ViewPage = ({ /* TODO: solution,*/ units, setUnits }) => {
+    const [selectedPackage, setSelectedPackage] = useState(-1);
     const [colorMap, setColorMap] = useState(initializeColors(solution));
     const [showExportDialog, setShowExportDialog] = useState(false);
     const { t } = useTranslation();
@@ -114,13 +117,11 @@ const ViewPage = ({ /* TODO: solution,*/ units, setUnits }) => {
         onClose();
     };
 
-
-
     return (
         <div style={{ position: 'relative', width: '100vw', height: '100vh', display: 'flex', flexDirection: 'column' }}>
             <CustomAppBar units={units} setUnits={setUnits} />
             <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-                <View3D solution={solution} colorMap={colorMap} />
+                <View3D solution={solution} colorMap={colorMap} selectedPackage={selectedPackage} setSelectedPackage={setSelectedPackage} />
                 <ColorMap colorMap={colorMap} setColorMap={setColorMap} />
                 <Tooltip title={t('exportSolution')}>
                     <Fab 
