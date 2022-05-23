@@ -13,8 +13,9 @@
     flex-direction: column;
     padding: 40px;
     flex: 1;
-    background-repeat: no-repeat;
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../images/background.jpeg);
+    height: 100%;
+    background: url("../images/XDbackground.png") no-repeat;
+    /*background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../images/XDbackground.png);*/
 }
 
 .header-nav {
