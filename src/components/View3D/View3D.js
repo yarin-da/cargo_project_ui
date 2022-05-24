@@ -3,6 +3,7 @@ import { extend, Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls, Environment, Box, Line } from '@react-three/drei'
 import { Text } from "troika-three-text";
 import '../../styles/ColorMap.css';
+import * as THREE from "three";
 
 const EDGE_COLOR = 0x334444;
 const EDGE_WIDTH = 0.5;
@@ -17,6 +18,14 @@ const SELECTED_EDGE_COLOR = 0x00aadd;
 const SELECTED_TEXT_COLOR = 0xffffff;
 
 extend({ Text });
+
+const calculatePlane = (A, B, C) => {
+    const coefficientX = (B[0] - A[0]) * (C[0] - A[0]);
+    const coefficientY = (B[1] - A[1]) * (C[1] - A[1]);
+    const coefficientZ = (B[2] - A[2]) * (C[2] - A[2]);
+    const coefficientFree = coefficientX * A[0] + coefficientY * A[1] + coefficientZ * A[2];
+    return new THREE.Plane(new THREE.Vector3(coefficientX, coefficientY, coefficientZ), coefficientFree);
+};
 
 const dotProduct = (a, b) => a.map((_, i) => a[i] * b[i]).reduce((m, n) => m + n);
 
@@ -290,19 +299,19 @@ const Container = ({ scale }) => {
     );
 }
 
-const View3D = ({ solution, colorMap, selectedPackage, setSelectedPackage }) => {
+const View3D = ({ setSolution, solution, packages, container, colorMap, selectedPackage, setSelectedPackage }) => {
     const [controlTarget, setControlTarget] = useState([0, 0, 0]);
     const canvasStyle = {
         width: '100%',
         height: '100%',
     };
 
-    const maxContainerDim = Object.values(solution['container']).reduce((a, b) => a > b ? a : b, 0);
+    const maxContainerDim = Object.values(container).reduce((a, b) => a > b ? a : b, 0);
 
     // TODO: update perhaps only on right click?
     const updateControlsTarget = (index) => {
         if (index !== -1) {
-            const pkg = solution['solution'][index];
+            const pkg = solution[index];
             setControlTarget([pkg['x'],pkg['z'],pkg['y']]);
         }
     }
@@ -326,8 +335,15 @@ const View3D = ({ solution, colorMap, selectedPackage, setSelectedPackage }) => 
         >
             <Suspense fallback={null}>
                 <OrbitControls enableDamping dampingFactor={0.1} rotateSpeed={0.5} target={controlTarget} />
-                <Container scale={[solution['container']['width'], solution['container']['height'], solution['container']['depth']]} />
-                <Packages {...solution} colorMap={colorMap} selected={selectedPackage} onSelect={onPackageClick} />
+                <Container scale={[container['width'], container['height'], container['depth']]} />
+                <Packages 
+                    solution={solution} 
+                    packages={packages} 
+                    container={container} 
+                    colorMap={colorMap} 
+                    selected={selectedPackage} 
+                    onSelect={onPackageClick} 
+                />
                 <pointLight position={[0, 20, -5]} />
                 <ambientLight intensity={0.4} />
                 <Environment preset="warehouse" />

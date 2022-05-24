@@ -55,10 +55,10 @@ const ColorPicker = ({ open, onColorPicked, initialColor, onClose }) => {
     );
 }
 
-const initializeColors = (solution) => {  
+const initializeColors = (packages) => {  
     const colorMap = {};
-    if (solution['packages']) {
-        solution['packages'].forEach(pkg => {
+    if (packages) {
+        packages.forEach(pkg => {
             const pkgType = pkg['type'];
             const pkgColor = getColorsByHash(pkgType);
             colorMap[pkgType] = pkgColor;
@@ -106,9 +106,78 @@ const ColorMap = ({ colorMap, setColorMap }) => {
     );
 };
 
+const PackageControl = ({ solution, setSolution, selectedPackage }) => {
+    
+    const update = (prop, value) => {
+        try {
+            const newPackage = {...solution[selectedPackage]};
+            newPackage[prop] += value;
+            console.log(prop, value, selectedPackage, solution[selectedPackage], newPackage);
+            const newSolution = [...solution];
+            newSolution[selectedPackage] = newPackage;
+            setSolution(newSolution);
+        }
+        catch (e) {
+            console.log(e);
+        }
+
+    };
+
+    const buttonStyle = {
+        borderRadius: '50%',
+        border: '2px solid #ddf',
+        background: '#446',
+        color: '#ddf',
+        width: 50,
+        height: 50,
+        margin: 5,
+        fontWeight: 'bold',
+        fontSize: 20,
+        cursor: 'pointer',
+        '&:hover': {
+            background: '#669'
+        }
+    };
+    
+    return (
+        selectedPackage === -1 ? <></> :
+        <div style={{ 
+            position: 'absolute', 
+            top: 20, 
+            right: 20, 
+            background: 'rgba(64, 64, 96, 0.35)', 
+            padding: 5,
+            borderRadius: 20,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+        }}>
+            <div>
+                <button style={buttonStyle} onClick={() => update('rotation-x', 90)}>x</button>
+                <button style={buttonStyle} onClick={() => update('x', -1)}>-x</button>
+                <button style={buttonStyle} onClick={() => update('x', +1)}>+x</button>    
+            </div>
+            <div>
+                <button style={buttonStyle} onClick={() => update('rotation-y', 90)}>y</button>
+                <button style={buttonStyle} onClick={() => update('y', -1)}>-y</button>
+                <button style={buttonStyle} onClick={() => update('y', +1)}>+y</button>
+            </div>
+            <div>
+                <button style={buttonStyle} onClick={() => update('rotation-z', 90)}>z</button>
+                <button style={buttonStyle} onClick={() => update('z', -1)}>-z</button>
+                <button style={buttonStyle} onClick={() => update('z', +1)}>+z</button>
+            </div>
+        </div>
+    );
+};
+
 const ViewPage = ({ /* TODO: solution,*/ units, setUnits }) => {
+    const [solution, setSolution] = useState(mockSolution && mockSolution['solution'] ? mockSolution['solution'] : []);
+    const [container, setContainer] = useState(mockSolution && mockSolution['container'] ? mockSolution['container'] : {});
+    const [packages, setPackages] = useState(mockSolution && mockSolution['packages'] ? mockSolution['packages'] : []);
     const [selectedPackage, setSelectedPackage] = useState(-1);
-    const [colorMap, setColorMap] = useState(initializeColors(solution));
+    const [colorMap, setColorMap] = useState(initializeColors(packages));
     const [showExportDialog, setShowExportDialog] = useState(false);
     const { t } = useTranslation();
     const onClose = () => setShowExportDialog(false);
@@ -121,7 +190,15 @@ const ViewPage = ({ /* TODO: solution,*/ units, setUnits }) => {
         <div style={{ position: 'relative', width: '100vw', height: '100vh', display: 'flex', flexDirection: 'column' }}>
             <CustomAppBar units={units} setUnits={setUnits} />
             <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-                <View3D solution={solution} colorMap={colorMap} selectedPackage={selectedPackage} setSelectedPackage={setSelectedPackage} />
+                <View3D 
+                    solution={solution} 
+                    setSolution={setSolution} 
+                    packages={packages}
+                    container={container}
+                    colorMap={colorMap} 
+                    selectedPackage={selectedPackage} 
+                    setSelectedPackage={setSelectedPackage} 
+                />
                 <ColorMap colorMap={colorMap} setColorMap={setColorMap} />
                 <Tooltip title={t('exportSolution')}>
                     <Fab 
@@ -144,6 +221,7 @@ const ViewPage = ({ /* TODO: solution,*/ units, setUnits }) => {
                         <Button style={{ textTransform: 'none' }} onClick={() => onDownload('json')} autoFocus>{t("exportJSON")}</Button>
                     </DialogActions>
                 </Dialog>
+                <PackageControl solution={solution} setSolution={setSolution} selectedPackage={selectedPackage} />
             </div>
         </div>
         
@@ -154,7 +232,7 @@ export default ViewPage;
 
 
 // TODO: remove
-const solution = {
+const mockSolution = {
     "packages": [
       {
         "type": "Jewelry",
