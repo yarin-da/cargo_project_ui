@@ -62,5 +62,6 @@
   "canOnlyUploadCSV": "You can only upload a CSV file",
   "uploadError": "Failed to upload your file",
   "uploadSuccess": "File has been uploaded",
-  "findPacking": "Find Packing"
+  "findPacking": "Find Packing",
+  "actions": "Actions"
 }

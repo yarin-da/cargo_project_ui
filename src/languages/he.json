@@ -62,5 +62,6 @@
   "canOnlyUploadCSV": "ניתן להעלות קבצי CSV בלבד",
   "uploadError": "ההעלאה נכשלה",
   "uploadSuccess": "ההעלאה התבצעה בהצלחה",
-  "findPacking": "מצא סידור"
+  "findPacking": "מצא סידור",
+  "actions": "פעולות"
 }

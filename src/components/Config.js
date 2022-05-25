@@ -18,6 +18,7 @@ import { getSolution } from "./ServerHandler";
 import CircularProgress from '@mui/material/CircularProgress';
 import CustomAppBar from "./CustomAppBar";
 import '../styles/Config.css';
+import ConfigPackageList from "./ConfigPackageList";
 
 const tabs = [
     {
@@ -166,7 +167,7 @@ const Config = ({
                             (currentPage === 1 && <AddContainer container={container} setContainer={setContainer} />)
                             ||
                             (currentPage === 2 &&
-                                <PackagesList
+                                <ConfigPackageList
                                     units={units}
                                     packages={packages}
                                     setPackages={setPackages}
