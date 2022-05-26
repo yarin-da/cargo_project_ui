@@ -14,7 +14,6 @@ import {
 function App() {
     const [solution, setSolution] = useState({});
     const [showPackageView, setShowPackageView] = useState(false);
-    const [currentPackage, setCurrentPackage] = useState(1);
     const [container, setContainer] = useState({
         width: 0,
         height: 0,
@@ -23,7 +22,7 @@ function App() {
         cost: 0,
     });
 
-    const [packages, setPackages] = useState([ new Package() ]);
+    const [packages, setPackages] = useState([]);
     
     const [units, setUnits] = useState({
         length: 'm',
@@ -58,8 +57,6 @@ function App() {
                             setUnits={setUnits}
                             packages={packages}
                             setPackages={setPackages}
-                            currentPackage={currentPackage}
-                            setCurrentPackage={setCurrentPackage}
                             container={container} 
                             setContainer={setContainer}
                             showPackageView={showPackageView} 

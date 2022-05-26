@@ -5,7 +5,6 @@ import {Upload} from "@mui/icons-material";
 import CustomText from "./CustomText";
 import UploadFile from './UploadFile';
 import AddContainer from './AddContainer';
-import PackagesList from './PackagesList';
 import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import { useTranslation } from "react-i18next";
@@ -91,8 +90,6 @@ const Config = ({
                     setUnits,
                     packages,
                     setPackages,
-                    currentPackage,
-                    setCurrentPackage,
                     container,
                     setContainer,
                     setSolution
@@ -171,8 +168,6 @@ const Config = ({
                                     units={units}
                                     packages={packages}
                                     setPackages={setPackages}
-                                    currentPackage={currentPackage}
-                                    setCurrentPackage={setCurrentPackage}
                                 />
                             )
                         }

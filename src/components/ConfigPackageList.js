@@ -1,7 +1,5 @@
 import { useState } from "react";
-import AddPackage from "./AddPackage";
-import Package from "./Package";
-import AddIcon from "@material-ui/icons/Add";
+import AddPackageForm from "./AddPackageForm";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Button, Modal, Stack } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
@@ -20,11 +18,11 @@ const useStyles = makeStyles({
     }
 });
 
-const ConfigPackageList = ({ units, packages, setPackages, currentPackage, setCurrentPackage }) => {
+const ConfigPackageList = ({ units, packages, setPackages }) => {
     const [selectedPackages, setSelectedPackages] = useState([]);
     const [editedPackage, setEditedPackage] = useState({});
     const [showEdit, setShowEdit] = useState(false);
-    const [error, setError] = useState('');
+    const [mode, setMode] = useState('edit');
 
     const deleteSelected = () => {
         if (selectedPackages.length > 0) {
@@ -35,26 +33,10 @@ const ConfigPackageList = ({ units, packages, setPackages, currentPackage, setCu
         }
     };
 
-    const addPackage = () => {
-        if (currentPackage === packages.length) {
-            setCurrentPackage(packages.length + 1);
-        }
-        setPackages(prev => [...prev, new Package()]);
-    }
-
-    const deletePackage = (values) => {
-        const newPackages = packages.filter(p => p['id'] !== values['id']);
-        if (newPackages.length !== 0) {
-            if (newPackages.length < currentPackage) {
-                setCurrentPackage(newPackages.length);
-            }
-            setPackages(newPackages);
-        }
-    };
-
-    const onChange = (values) => setEditedPackage({...values});
+    const deletePackage = (values) => 
+        setPackages(curr => curr.filter(p => p['id'] !== values['id']));
     
-    const keys = ['type','width','height','depth','weight','amount','profit','priority'];
+    const keys = ['type','amount','width','height','depth','weight','profit','priority'];
     const isLength = (key) => ['width', 'height', 'depth'].includes(key);
     const isWeight = (key) => ['weight'].includes(key);
     const isCurrency = (key) => ['profit'].includes(key);
@@ -109,6 +91,7 @@ const ConfigPackageList = ({ units, packages, setPackages, currentPackage, setCu
             return (
                 <div>
                     <Button onClick={() => {
+                        setMode('edit');
                         setEditedPackage({...row});
                         setShowEdit(true);
                     }}>
@@ -122,32 +105,34 @@ const ConfigPackageList = ({ units, packages, setPackages, currentPackage, setCu
         }
     });
 
-    const onSave = () => {
-        const canSave = editedPackage['type'] && editedPackage['type'].length > 0;
-        if (canSave) {
+    const onSave = (formPackage) => {
+        if (mode === 'add') {
+            setPackages(curr => [formPackage, ...curr]);
+        } else if (mode === 'edit') {
             const newPackages = [...packages];
             const index = newPackages.findIndex(x => x['id'] === editedPackage['id']);
-            newPackages[index] = editedPackage;
+            newPackages[index] = formPackage;
             setPackages(newPackages);
-            onEditClose();    
-        } else {
-            setError('invalidType');
         }
-    };
-
-    const onEditClose = () => {
-        setError('');
         setShowEdit(false);
     };
 
     const classes = useStyles();
     return (
-        <div style={{ width: '90%', maxHeight: 'calc(100% - 150px)', overflow: 'hidden' }}>
+        <div style={{ width: '90%' }}>
             <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
                 <CustomText text="addPackagesTab" variant="h4" />
             </div>
             <div style={{ width: '100%', display: 'flex', justifyContent: 'flex-end' }}>
-                <Button variant="contained" sx={{ margin: 1 }}>
+                <Button 
+                    variant="contained" 
+                    sx={{ margin: 1 }} 
+                    onClick={() => { 
+                        setMode('add'); 
+                        setEditedPackage({});
+                        setShowEdit(true); 
+                    }}
+                >
                     <CustomText text="add" style={{textTransform: 'none'}} />
                 </Button>
                 <Button variant="contained" sx={{ margin: 1 }} onClick={deleteSelected}>
@@ -156,6 +141,7 @@ const ConfigPackageList = ({ units, packages, setPackages, currentPackage, setCu
             </div>
             <DataGrid
                 // TODO: NOT ALL ROWS SHOW IF OVERFLOW
+                // TODO: translate column menu (sort, filter, etc.)
                 className={classes.root}
                 rows={packages}
                 columns={columns}
@@ -165,7 +151,7 @@ const ConfigPackageList = ({ units, packages, setPackages, currentPackage, setCu
                 checkboxSelection
                 disableSelectionOnClick
                 hideFooter={packages.length <= 100}
-                // TODO: autoHeight?
+                autoHeight
                 column
                 components={{
                     NoRowsOverlay: () => (
@@ -182,7 +168,7 @@ const ConfigPackageList = ({ units, packages, setPackages, currentPackage, setCu
             />
             <Modal 
                 open={showEdit} 
-                onClose={onEditClose}
+                onClose={() => setShowEdit(false)}
             >
                 <div style={{
                     background: 'white',
@@ -193,25 +179,11 @@ const ConfigPackageList = ({ units, packages, setPackages, currentPackage, setCu
                     padding: 25,
                     borderRadius: 25,
                 }}>
-                    <AddPackage values={{...editedPackage}} onChange={onChange} />
-                    <div style={{ display: 'flex', justifyContent: 'center', marginTop: 25 }}>
-                        <Button 
-                            variant="contained" 
-                            sx={{ width: 85, height: 50 }}
-                            onClick={() => onSave()}
-                        >
-                            <CustomText text="save" style={{textTransform: 'none'}} />
-                        </Button>
-                        <Button 
-                            sx={{ position: 'absolute', top: 15, right: 5 }}
-                            onClick={onEditClose}
-                        >
-                            <CrossIcon htmlColor="black" fontSize="medium" />
-                        </Button>
-                    </div>
-                    <div style={{ display: 'flex', justifyContent: 'center', marginTop: 5 }}>
-                        <CustomText text={error} style={{ color: 'red' }} />
-                    </div>
+                    <AddPackageForm 
+                        values={{...editedPackage}} 
+                        onSubmit={onSave} 
+                        onClose={() => setShowEdit(false)} 
+                    />
                 </div>
             </Modal>
         </div>

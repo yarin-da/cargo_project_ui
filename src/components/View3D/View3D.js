@@ -266,8 +266,7 @@ const Container = ({ scale }) => {
     ]);
 
     useFrame(({ camera }) => {
-        // TODO:
-        // const direction = camera.getWorldDirection(targetVector);
+        // TODO: const direction = camera.getWorldDirection(targetVector);
         const direction = camera.position;
         const [x, y, z] = direction;
         const wallsCopy = [...walls];
