@@ -63,5 +63,11 @@
   "uploadError": "Failed to upload your file",
   "uploadSuccess": "File has been uploaded",
   "findPacking": "Find Packing",
-  "actions": "Actions"
+  "actions": "Actions",
+  "save": "Save",
+  "invalidType": "Invalid package type",
+  "add": "Add",
+  "deleteChecked": "Delete Selected",
+  "tableNoData": "There are no packages",
+  "tableNoResults": "No results"
 }

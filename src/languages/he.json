@@ -63,5 +63,11 @@
   "uploadError": "ההעלאה נכשלה",
   "uploadSuccess": "ההעלאה התבצעה בהצלחה",
   "findPacking": "מצא סידור",
-  "actions": "פעולות"
+  "actions": "פעולות",
+  "save": "שמור",
+  "invalidType": "סוג חבילה לא תקין",
+  "add": "הוסף",
+  "deleteChecked": "מחק מסומנים",
+  "tableNoData": "לא הוגדרו חבילות",
+  "tableNoResults": "אין תוצאות לחיפוש"
 }

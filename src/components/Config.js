@@ -189,7 +189,7 @@ const Config = ({
                         color="primary"
                         size="large"
                         variant="extended"
-                        style={{ position: 'absolute', left: 50, bottom: 50, minWidth: 100 }}
+                        style={{ position: 'fixed', left: 50, bottom: 50, minWidth: 100 }}
                         onClick={() => setCurrentPage(curr => curr - 1)}
                     >
                         <ArrowBackRoundedIcon fontSize="large" />
@@ -199,7 +199,7 @@ const Config = ({
                         color={currentPage === tabs.length - 1 ? "secondary" : "primary"}
                         size="large"
                         variant="extended"
-                        style={{ position: 'absolute', right: 50, bottom: 50, minWidth: 100 }}
+                        style={{ position: 'fixed', right: 50, bottom: 50, minWidth: 100 }}
                         onClick={() => {
                             if (currentPage === tabs.length - 1) {
                                 setOpenConfirmDialog(true);

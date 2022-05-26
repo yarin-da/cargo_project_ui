@@ -1,37 +1,39 @@
-import {useReducer, useState} from "react";
+import { useState } from "react";
 import AddPackage from "./AddPackage";
 import Package from "./Package";
 import AddIcon from "@material-ui/icons/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
-import RefreshIcon from "@mui/icons-material/Refresh";
-import {
-    Button, 
-    Tooltip, 
-    Pagination, 
-    PaginationItem,
-    TableContainer,
-    Paper,
-    Table,
-    TableRow,
-    TableCell,
-    TableBody,
-    TableHead,
-    Modal,
-} from '@mui/material';
+import { Button, Modal, Stack } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
-import ManageSearchIcon from '@mui/icons-material/ManageSearch';
-import SummaryModal from "./SummaryModal";
 import CustomText from "./CustomText";
 import { t } from "i18next";
 import EditIcon from '@mui/icons-material/Edit';
 import CheckIcon from '@mui/icons-material/CheckRounded';
 import CrossIcon from '@mui/icons-material/ClearRounded';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles({
+    root: {
+        '&.MuiDataGrid-root .MuiDataGrid-cell:focus': {
+            outline: 'none',
+        },
+    }
+});
 
 const ConfigPackageList = ({ units, packages, setPackages, currentPackage, setCurrentPackage }) => {
-    const [, forceUpdate] = useReducer(x => x + 1, 0);
-    const [showPackageView, setShowPackageView] = useState(false);
-    const [editPackageType, setEditPackageType] = useState('');
+    const [selectedPackages, setSelectedPackages] = useState([]);
+    const [editedPackage, setEditedPackage] = useState({});
     const [showEdit, setShowEdit] = useState(false);
+    const [error, setError] = useState('');
+
+    const deleteSelected = () => {
+        if (selectedPackages.length > 0) {
+            const newPackages = packages.filter(pkg => 
+                !selectedPackages.find(x => x === pkg['id'])
+            );
+            setPackages(newPackages);    
+        }
+    };
 
     const addPackage = () => {
         if (currentPackage === packages.length) {
@@ -46,53 +48,38 @@ const ConfigPackageList = ({ units, packages, setPackages, currentPackage, setCu
             if (newPackages.length < currentPackage) {
                 setCurrentPackage(newPackages.length);
             }
-            setPackages(newPackages);    
+            setPackages(newPackages);
         }
     };
 
-    const resetPackage = (values) => {
-        values['type'] = '';
-        values['canRotate'] = false;
-        values['canStackAbove'] = false;
-        values['height'] = 0;
-        values['width'] = 0;
-        values['depth'] = 0;
-        values['amount'] = 0;
-        values['weight'] = 0;
-        values['priority'] = 0;
-        values['profit'] = 0;
-        forceUpdate();
-    }
-
-    const onChange = (values) => {
-        const newPackages = packages.map(p => p['id'] === values['id'] ? values : p);
-        setPackages(newPackages);
-    };
-
-    const CustomPaginationItem = (item) => {
-        let text = '';
-        if (item['type'] === 'page') {
-            const index = item['page'] - 1;
-            const packageType = packages[index]['type'];
-            text = packageType ? packageType : `Package ${index + 1}`;
-        }
-        return (
-            <Tooltip title={text}>
-                <PaginationItem {...item} />
-            </Tooltip>
-        );
-    };
+    const onChange = (values) => setEditedPackage({...values});
     
     const keys = ['type','width','height','depth','weight','amount','profit','priority'];
+    const isLength = (key) => ['width', 'height', 'depth'].includes(key);
+    const isWeight = (key) => ['weight'].includes(key);
+    const isCurrency = (key) => ['profit'].includes(key);
+    const parseKey = (key) => {
+        let parsedKey = t(key);
+        if (isLength(key)) {
+            parsedKey += ` (${t(units['length'])})`;
+        } else if (isWeight(key)) {
+            parsedKey += ` (${t(units['weight'])})`;
+        } else if (isCurrency(key)) {
+            parsedKey += ` ($)`;
+        }
+        return parsedKey;
+    };
     const columns = keys.map(key => 
         ({
             field: key,
-            headerName: t(key),
+            headerName: parseKey(key),
+            flex: 1,
         })
     );
     columns.push({
         field: 'canStackAbove',
         headerName: t('canStackAbove'),
+        flex: 1,
         renderCell: ({ value }) => {
             return (
                 <div>
@@ -104,6 +91,7 @@ const ConfigPackageList = ({ units, packages, setPackages, currentPackage, setCu
     columns.push({
         field: 'canRotate',
         headerName: t('canRotate'),
+        flex: 1,
         renderCell: ({ value }) => {
             return (
                 <div>
@@ -115,14 +103,13 @@ const ConfigPackageList = ({ units, packages, setPackages, currentPackage, setCu
     columns.push({
         field: 'actions',
         headerName: t('actions'),
-        width: 120,
+        minWidth: 160,
         sortable: false,
-        disableClickEventBubbling: true,
         renderCell: ({ row }) => {
             return (
                 <div>
                     <Button onClick={() => {
-                        setEditPackageType(row['type']);
+                        setEditedPackage({...row});
                         setShowEdit(true);
                     }}>
                         <EditIcon />
@@ -135,20 +122,67 @@ const ConfigPackageList = ({ units, packages, setPackages, currentPackage, setCu
         }
     });
 
+    const onSave = () => {
+        const canSave = editedPackage['type'] && editedPackage['type'].length > 0;
+        if (canSave) {
+            const newPackages = [...packages];
+            const index = newPackages.findIndex(x => x['id'] === editedPackage['id']);
+            newPackages[index] = editedPackage;
+            setPackages(newPackages);
+            onEditClose();    
+        } else {
+            setError('invalidType');
+        }
+    };
+
+    const onEditClose = () => {
+        setError('');
+        setShowEdit(false);
+    };
+
+    const classes = useStyles();
     return (
-        <div style={{ height: 400, width: '100%' }}>
+        <div style={{ width: '90%', maxHeight: 'calc(100% - 150px)', overflow: 'hidden' }}>
+            <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                <CustomText text="addPackagesTab" variant="h4" />
+            </div>
+            <div style={{ width: '100%', display: 'flex', justifyContent: 'flex-end' }}>
+                <Button variant="contained" sx={{ margin: 1 }}>
+                    <CustomText text="add" style={{textTransform: 'none'}} />
+                </Button>
+                <Button variant="contained" sx={{ margin: 1 }} onClick={deleteSelected}>
+                    <CustomText text="deleteChecked" style={{textTransform: 'none'}} />
+                </Button>
+            </div>
             <DataGrid
+                // TODO: NOT ALL ROWS SHOW IF OVERFLOW
+                className={classes.root}
                 rows={packages}
                 columns={columns}
                 pageSize={100}
                 rowsPerPageOptions={[5]}
+                onSelectionModelChange={(selection) => setSelectedPackages(selection)}
                 checkboxSelection
                 disableSelectionOnClick
                 hideFooter={packages.length <= 100}
+                // TODO: autoHeight?
+                column
+                components={{
+                    NoRowsOverlay: () => (
+                        <Stack height="100%" alignItems="center" justifyContent="center">
+                            {t("tableNoData")}
+                        </Stack>
+                    ),
+                    NoResultsOverlay: () => (
+                        <Stack height="100%" alignItems="center" justifyContent="center">
+                            {t("tableNoResults")}
+                        </Stack>
+                    )
+                }}
             />
             <Modal 
                 open={showEdit} 
-                onClose={() => setShowEdit(false)}
+                onClose={onEditClose}
             >
                 <div style={{
                     background: 'white',
@@ -159,108 +193,29 @@ const ConfigPackageList = ({ units, packages, setPackages, currentPackage, setCu
                     padding: 25,
                     borderRadius: 25,
                 }}>
-                    {/* TOOD: 
-                        Add form instead - and change packages on 'Save' 
-                        (check that values are valid - e.g. there's a type and width above 0) */}
-                    <AddPackage values={{...packages.find(x => x['type'] === editPackageType)}} onChange={onChange} />
+                    <AddPackage values={{...editedPackage}} onChange={onChange} />
+                    <div style={{ display: 'flex', justifyContent: 'center', marginTop: 25 }}>
+                        <Button 
+                            variant="contained" 
+                            sx={{ width: 85, height: 50 }}
+                            onClick={() => onSave()}
+                        >
+                            <CustomText text="save" style={{textTransform: 'none'}} />
+                        </Button>
+                        <Button 
+                            sx={{ position: 'absolute', top: 15, right: 5 }}
+                            onClick={onEditClose}
+                        >
+                            <CrossIcon htmlColor="black" fontSize="medium" />
+                        </Button>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'center', marginTop: 5 }}>
+                        <CustomText text={error} style={{ color: 'red' }} />
+                    </div>
                 </div>
             </Modal>
         </div>
     );
-
-    // return (
-    //     <TableContainer component={Paper}>
-    //         <Table aria-label="simple table">
-    //             <TableHead>
-    //             <TableRow>
-    //                 <TableCell>
-    //                     {t('type')}
-    //                 </TableCell>
-    //                 <TableCell align="right">
-    //                     {t('width')}
-    //                 </TableCell>
-    //                 <TableCell align="right">
-    //                     {t('height')}
-    //                 </TableCell>
-    //                 <TableCell align="right">
-    //                     {t('depth')}
-    //                 </TableCell>
-    //                 <TableCell align="right">
-    //                     {t('weight')}
-    //                 </TableCell>
-    //                 <TableCell align="right">
-    //                     {t('amount')}
-    //                 </TableCell>
-    //                 <TableCell align="right">
-    //                     {t('priority')}
-    //                 </TableCell>
-    //                 <TableCell align="right">
-    //                     {t('profit')}
-    //                 </TableCell>
-    //                 <TableCell align="right">
-    //                     {t('canRotate')}
-    //                 </TableCell>
-    //                 <TableCell align="right">
-    //                     {t('canStackAbove')}
-    //                 </TableCell>
-    //                 <TableCell align="right">
-    //                     {t('actions')}
-    //                 </TableCell>
-    //             </TableRow>
-    //             </TableHead>
-    //             <TableBody>
-    //             {packages.map(pkg => (
-    //                 <TableRow key={pkg['type']}>
-    //                 <TableCell component="th" scope="row">
-    //                     {pkg['type']}
-    //                 </TableCell>
-    //                 <TableCell align="right">
-    //                     {pkg['width']}
-    //                 </TableCell>
-    //                 <TableCell align="right">
-    //                     {pkg['height']}
-    //                 </TableCell>
-    //                 <TableCell align="right">
-    //                     {pkg['depth']}
-    //                 </TableCell>
-    //                 <TableCell align="right">
-    //                     {pkg['weight']}
-    //                 </TableCell>
-    //                 <TableCell align="right">
-    //                     {pkg['amount']}
-    //                 </TableCell>
-    //                 <TableCell align="right">
-    //                     {pkg['priority']}
-    //                 </TableCell>
-    //                 <TableCell align="right">
-    //                     {pkg['profit']}
-    //                 </TableCell>
-    //                 <TableCell align="right">
-    //                     {pkg['canRotate'] ? 
-    //                         <CheckIcon htmlColor="green" /> : 
-    //                         <CrossIcon htmlColor="red" />
-    //                     }
-    //                 </TableCell>
-    //                 <TableCell align="right">
-    //                     {pkg['canStackAbove'] ?
-    //                         <CheckIcon htmlColor="green" /> : 
-    //                         <CrossIcon htmlColor="red" />                    
-    //                     }
-    //                 </TableCell>
-    //                 <TableCell align="right">
-    //                     <Button aria-label="edit">
-    //                         <EditIcon />
-    //                     </Button>
-    //                     <Button aria-label="delete">
-    //                         <DeleteIcon />
-    //                     </Button>
-    //                 </TableCell>
-    //                 </TableRow>
-    //             ))}
-    //             </TableBody>
-    //         </Table>
-    //     </TableContainer>
-    // );
 };
 
 export default ConfigPackageList;
