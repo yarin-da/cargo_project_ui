@@ -50,7 +50,6 @@ const BoxEdges = ({ position, scale, selected }) => {
         [[x + w, y + h, z + d], [x + w, y,     z + d]],
         [[x + w, y + h, z + d], [x,     y + h, z + d]],
     ];
-
     return (
         <group>
         {
@@ -298,7 +297,7 @@ const Container = ({ scale }) => {
     );
 }
 
-const View3D = ({ setSolution, solution, packages, container, colorMap, selectedPackage, setSelectedPackage }) => {
+const View3D = ({ solution, packages, container, colorMap, selectedPackage, setSelectedPackage }) => {
     const [controlTarget, setControlTarget] = useState([0, 0, 0]);
     const canvasStyle = {
         width: '100%',
@@ -320,7 +319,7 @@ const View3D = ({ setSolution, solution, packages, container, colorMap, selected
         setSelectedPackage(curr => curr === pkgIndex ? -1 : pkgIndex);
         updateControlsTarget(pkgIndex);
     };
-
+    
     return (
         <Canvas 
             style={canvasStyle} 

@@ -1,23 +1,9 @@
+import { parseValue } from "./Type";
 import Package from "./Package";
 
 const headers = "width,height,depth,cost,maxWeight,type,amount,priority,weight,profit,canRotate,canStackAbove".split(',');
 const cargoHeaders = "width,height,depth,cost,maxWeight".split(',');
 const packageHeaders = "width,height,depth,type,amount,priority,weight,profit,canRotate,canStackAbove".split(',');
-
-const types = {
-    width: 'number',
-    height: 'number',
-    depth: 'number',
-    weight: 'number',
-    maxWeight: 'number',
-    amount: 'number',
-    cost: 'number',
-    profit: 'number',
-    priority: 'number',
-    type: 'string',
-    canRotate: 'boolean',
-    canStackAbove: 'boolean',
-};
 
 function unexpectedFileFormat(error) {
     console.log(error);
@@ -46,18 +32,6 @@ function headerToIndexMap(firstRow) {
     return map
 }
 
-function parseValue(field, value) {
-    const type = types[field];
-    switch(type) {
-        case 'boolean':
-            return trueOrFalse(value);
-        case 'number':
-            return parseFloat(value);
-        default:
-            return value;
-    }
-}
-
 function containerFields(containerRow, map) {
     const container = {};
     for (const [col, index] of map) {
@@ -66,13 +40,6 @@ function containerFields(containerRow, map) {
         }
     }
     return container;
-}
-
-function trueOrFalse(str) {
-    const upperCaseStr = str.toUpperCase();
-    if (upperCaseStr === 'TRUE') return true;
-    if (upperCaseStr === 'FALSE') return false;
-    unexpectedFileFormat('true/false');
 }
 
 function packagesFields(packagesRows, map) {

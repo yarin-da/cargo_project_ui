@@ -1,19 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FormControl,InputLabel, Input, Button, Grid } from "@mui/material";
 import ToggleButton from "@mui/material/ToggleButton";
 import "../styles/AddPackage.css";
 import CrossIcon from '@mui/icons-material/ClearRounded';
 import CustomText from "./CustomText";
 import Package from "./Package";
+import { parseValue } from "./Type";
 
-const CustomBooleanInput = ({ initialValue, inputId }) => {
-    const [value, setValue] = useState(initialValue);
+const CustomBooleanInput = ({ value, setValue, inputId }) => {
     const onClick = () => setValue(curr => !curr);
     return (
         <FormControl style={{width:'100%'}}>
-            <ToggleButton id={inputId} onClick={onClick} selected={value}>
+            <ToggleButton htmlFor={inputId} onClick={onClick} selected={value}>
                 <CustomText text={inputId} />
             </ToggleButton>
+            <Input id={inputId} type="hidden" value={value} />
         </FormControl>
     );
 };
@@ -36,16 +37,22 @@ const CustomNumberInput = ({ initialValue, inputId }) =>
 
 const AddPackageForm = ({ values, onSubmit, onClose }) => {
     const [error, setError] = useState(null);
+    const [canRotate, setCanRotate] = useState(values['canRotate']);
+    const [canStackAbove, setCanStackAbove] = useState(values['canStackAbove']);
     return (
         <form 
             onSubmit={(e) => { 
                 e.preventDefault();
                 const formValues = new Package();
-                for (let i = 0; i < 10; i++) {
+                for (let i = 0; i < 8; i++) {
                     const curr = e.target[i];
-                    formValues[curr['id']] = curr['value'];
+                    const value = parseValue(curr['id'], curr['value'])
+                    formValues[curr['id']] = value;
                 }
                 
+                formValues['canRotate'] = canRotate;
+                formValues['canStackAbove'] = canStackAbove;
+
                 if (!formValues['type'] || formValues['type'].length === 0) {
                     setError('invalidType');
                     return;
@@ -79,11 +86,11 @@ const AddPackageForm = ({ values, onSubmit, onClose }) => {
                 <Grid item xs={6}>
                     <CustomNumberInput initialValue={values['priority']} inputId={'priority'} />
                 </Grid>
-                <Grid item xs={6} flex={1}>
-                    <CustomBooleanInput initialValue={values['canRotate']} inputId={'canRotate'} />
-                </Grid>
                 <Grid item xs={6}>
-                    <CustomBooleanInput initialValue={values['canStackAbove']} inputId={'canStackAbove'} />
+                    <CustomBooleanInput value={canStackAbove} setValue={setCanStackAbove} inputId={'canStackAbove'} />
+                </Grid>
+                <Grid item xs={6} flex={1}>
+                    <CustomBooleanInput value={canRotate} setValue={setCanRotate} inputId={'canRotate'} />
                 </Grid>
                 <Grid item xs={2} justifySelf="center">
                     <Button type="submit" variant="contained" sx={{ width: 85, height: 50, marginTop: 3 }}>

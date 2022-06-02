@@ -8,11 +8,11 @@ import { Typography } from "@material-ui/core";
 
 const Header = ({ units, setUnits, setSolution }) => {
     const navigate = useNavigate();
-    // const onViewSolution = () => {
-    //     //const solution = ;
-    //     //setSolution(solution);
-    //     navigate('/view');
-    // };
+    const onViewSolution = () => {
+        //const solution = ;
+        //setSolution(solution);
+        navigate('/view');
+    };
     return (
         <div style={{ display: 'flex', flexDirection: 'column-reverse', width: '100vw', height: '100vh' }}>
             <div className="head">
@@ -48,7 +48,7 @@ const Header = ({ units, setUnits, setSolution }) => {
                         >
                             <CustomText text="findPacking" variant="h3" />
                         </Button>
-                        {/* <Button
+                        <Button
                             sx={{
                                 textTransform: 'none',
                                 color: "primary",
@@ -64,7 +64,7 @@ const Header = ({ units, setUnits, setSolution }) => {
                         >
                             <CustomText text="viewSolution" variant="h3" />
                             <input type="file" hidden />
-                        </Button> */}
+                        </Button>
                     </div>
                 </div>
             </div>

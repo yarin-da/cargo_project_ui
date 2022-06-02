@@ -4,12 +4,13 @@ import Package from "./components/Package";
 import Config from "./components/Config";
 import ViewPage from "./components/View3D/ViewPage";
 import "./App.css";
-
 import {
     BrowserRouter as Router,
     Routes,
     Route,
 } from "react-router-dom";
+
+// TODO: delete all console.logs, debuggers and unused variables/imports
 
 function App() {
     const [solution, setSolution] = useState({});
