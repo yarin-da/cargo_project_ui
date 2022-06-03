@@ -140,8 +140,7 @@ const ConfigPackageList = ({ units, packages, setPackages }) => {
                 </Button>
             </div>
             <DataGrid
-                // TODO: NOT ALL ROWS SHOW IF OVERFLOW
-                // TODO: translate column menu (sort, filter, etc.)
+                // TODO: translate column menu (sort, filter, etc.) (or disable? but prefer not to...)
                 className={classes.root}
                 rows={packages}
                 columns={columns}
@@ -166,6 +165,8 @@ const ConfigPackageList = ({ units, packages, setPackages }) => {
                     )
                 }}
             />
+            {/* add spacing so that the buttons won't overshadow the table's values */}
+            <div style={{height: 125}}></div>
             <Modal 
                 open={showEdit} 
                 onClose={() => setShowEdit(false)}

@@ -5,6 +5,7 @@ const headers = "width,height,depth,cost,maxWeight,type,amount,priority,weight,p
 const cargoHeaders = "width,height,depth,cost,maxWeight".split(',');
 const packageHeaders = "width,height,depth,type,amount,priority,weight,profit,canRotate,canStackAbove".split(',');
 
+// TODO: alert user 
 function unexpectedFileFormat(error) {
     console.log(error);
 }

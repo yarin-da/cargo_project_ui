@@ -84,6 +84,8 @@ const ColorMap = ({ colorMap, setColorMap }) => {
         setColorMap(curr => ({ ...curr, [clickedPkg]: newColor }));
     };
 
+    // TODO: fix styling (currently height is way too big and radius is wrong)
+    // TODO: add some indication for the user that he can change the colors by clicking the circles
     return (
         <div className="color-map">
             {Object.keys(colorMap).map(k => 
@@ -106,21 +108,16 @@ const ColorMap = ({ colorMap, setColorMap }) => {
     );
 };
 
-const PackageControl = ({ solution, setSolution, selectedPackage }) => {
+const PackageControl = ({ solution, setSolution, selectedPackages }) => {
     
     const update = (prop, value) => {
-        try {
+        const newSolution = [...solution];
+        selectedPackages.forEach(selectedPackage => {
             const newPackage = {...solution[selectedPackage]};
             newPackage[prop] += value;
-            console.log(prop, value, selectedPackage, solution[selectedPackage], newPackage);
-            const newSolution = [...solution];
             newSolution[selectedPackage] = newPackage;
-            setSolution(newSolution);
-        }
-        catch (e) {
-            console.log(e);
-        }
-
+        });
+        setSolution(newSolution);
     };
 
     const buttonStyle = {
@@ -140,7 +137,7 @@ const PackageControl = ({ solution, setSolution, selectedPackage }) => {
     };
     
     return (
-        selectedPackage === -1 ? <></> :
+        selectedPackages.length === 0 ? <></> :
         <div style={{ 
             position: 'absolute', 
             top: 20, 
@@ -176,7 +173,7 @@ const ViewPage = ({ solution:inputSolution, units, setUnits }) => {
     const [solution, setSolution] = useState(inputSolution && inputSolution['solution'] ? inputSolution['solution'] : []);
     const [container, setContainer] = useState(inputSolution && inputSolution['container'] ? inputSolution['container'] : {});
     const [packages, setPackages] = useState(inputSolution && inputSolution['packages'] ? inputSolution['packages'] : []);
-    const [selectedPackage, setSelectedPackage] = useState(-1);
+    const [selectedPackages, setSelectedPackages] = useState([]);
     const [colorMap, setColorMap] = useState(initializeColors(packages));
     const [showExportDialog, setShowExportDialog] = useState(false);
     const { t } = useTranslation();
@@ -196,8 +193,8 @@ const ViewPage = ({ solution:inputSolution, units, setUnits }) => {
                     packages={packages}
                     container={container}
                     colorMap={colorMap} 
-                    selectedPackage={selectedPackage} 
-                    setSelectedPackage={setSelectedPackage} 
+                    selectedPackages={selectedPackages} 
+                    setSelectedPackages={setSelectedPackages} 
                 />
                 <ColorMap colorMap={colorMap} setColorMap={setColorMap} />
                 <Tooltip title={t('exportSolution')}>
@@ -221,7 +218,7 @@ const ViewPage = ({ solution:inputSolution, units, setUnits }) => {
                         <Button style={{ textTransform: 'none' }} onClick={() => onDownload('json')} autoFocus>{t("exportJSON")}</Button>
                     </DialogActions>
                 </Dialog>
-                <PackageControl solution={solution} setSolution={setSolution} selectedPackage={selectedPackage} />
+                <PackageControl solution={solution} setSolution={setSolution} selectedPackages={selectedPackages} />
             </div>
         </div>
         

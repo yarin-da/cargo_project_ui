@@ -19,14 +19,6 @@ const SELECTED_TEXT_COLOR = 0xffffff;
 
 extend({ Text });
 
-const calculatePlane = (A, B, C) => {
-    const coefficientX = (B[0] - A[0]) * (C[0] - A[0]);
-    const coefficientY = (B[1] - A[1]) * (C[1] - A[1]);
-    const coefficientZ = (B[2] - A[2]) * (C[2] - A[2]);
-    const coefficientFree = coefficientX * A[0] + coefficientY * A[1] + coefficientZ * A[2];
-    return new THREE.Plane(new THREE.Vector3(coefficientX, coefficientY, coefficientZ), coefficientFree);
-};
-
 const dotProduct = (a, b) => a.map((_, i) => a[i] * b[i]).reduce((m, n) => m + n);
 
 const parsePosition = ({ scale, position }) => {
@@ -152,7 +144,7 @@ const CustomBox = ({
             setVisible(curr => !curr);
         }
     });
-
+    
     const rotate = ({scale, rotation}) => {
         const newScale = [...scale];
         rotation.forEach((r, i) => {
@@ -190,7 +182,7 @@ const Package = ({ solution, packages, colorMap, index, selected, onSelect }) =>
     const pkg = packages.find(pkg => pkg['type'] === sol['type']);
     return (
         <CustomBox 
-            selected={index === selected}
+            selected={selected.includes(index)}
             onClick={(e) => onSelect(e, index)}
             text={pkg['type']}
             color={colorMap[pkg['type']]} 
@@ -297,7 +289,8 @@ const Container = ({ scale }) => {
     );
 }
 
-const View3D = ({ solution, packages, container, colorMap, selectedPackage, setSelectedPackage }) => {
+// TODO: multiple selected packages (if ctrl -> add to selected array, else swap to array with one package)
+const View3D = ({ solution, packages, container, colorMap, selectedPackages, setSelectedPackages }) => {
     const [controlTarget, setControlTarget] = useState([0, 0, 0]);
     const canvasStyle = {
         width: '100%',
@@ -314,10 +307,23 @@ const View3D = ({ solution, packages, container, colorMap, selectedPackage, setS
         }
     }
 
+    // TODO: let the user know somehow about these features
     const onPackageClick = (e, pkgIndex) => {
         e.stopPropagation();
-        setSelectedPackage(curr => curr === pkgIndex ? -1 : pkgIndex);
-        updateControlsTarget(pkgIndex);
+        // focus on package when alt is pressed
+        if (e.altKey) {
+            updateControlsTarget(pkgIndex);
+            return;
+        }
+        
+        if (e.ctrlKey) {
+            // add to selected packages when ctrl is pressed
+            setSelectedPackages(curr => curr.includes(pkgIndex) ? curr.filter(x => x !== pkgIndex) : [...curr, pkgIndex]);
+        }
+        else {
+            // simply set selected packages to the clicked package
+            setSelectedPackages(curr => curr.length > 1 ? [pkgIndex] : curr.includes(pkgIndex) ? [] : [pkgIndex]);
+        }
     };
     
     return (
@@ -339,7 +345,7 @@ const View3D = ({ solution, packages, container, colorMap, selectedPackage, setS
                     packages={packages} 
                     container={container} 
                     colorMap={colorMap} 
-                    selected={selectedPackage} 
+                    selected={selectedPackages} 
                     onSelect={onPackageClick} 
                 />
                 <pointLight position={[0, 20, -5]} />

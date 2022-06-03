@@ -4,8 +4,6 @@ import "../styles/AddPackage.css";
 import { useTranslation } from "react-i18next";
 import CustomText from "./CustomText";
 
-// TODO: there's input delay - should remove onChange and create it as a normal form with onSubmit
-
 const toggleStyle = {
     textTransform: 'none'
 };
