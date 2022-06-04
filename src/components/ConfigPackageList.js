@@ -2,9 +2,9 @@ import { useState } from "react";
 import AddPackageForm from "./AddPackageForm";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Button, Modal, Stack } from '@mui/material';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, heIL, enUS } from '@mui/x-data-grid';
 import CustomText from "./CustomText";
-import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 import EditIcon from '@mui/icons-material/Edit';
 import CheckIcon from '@mui/icons-material/CheckRounded';
 import CrossIcon from '@mui/icons-material/ClearRounded';
@@ -23,6 +23,8 @@ const ConfigPackageList = ({ units, packages, setPackages }) => {
     const [editedPackage, setEditedPackage] = useState({});
     const [showEdit, setShowEdit] = useState(false);
     const [mode, setMode] = useState('edit');
+
+    const { t, i18n } = useTranslation();
 
     const deleteSelected = () => {
         if (selectedPackages.length > 0) {
@@ -117,6 +119,7 @@ const ConfigPackageList = ({ units, packages, setPackages }) => {
         setShowEdit(false);
     };
 
+    const locale = i18n.language === 'he' ? heIL : enUS;
     const classes = useStyles();
     return (
         <div style={{ width: '90%' }}>
@@ -140,7 +143,7 @@ const ConfigPackageList = ({ units, packages, setPackages }) => {
                 </Button>
             </div>
             <DataGrid
-                // TODO: translate column menu (sort, filter, etc.) (or disable? but prefer not to...)
+                localeText={locale.components.MuiDataGrid.defaultProps.localeText}
                 className={classes.root}
                 rows={packages}
                 columns={columns}

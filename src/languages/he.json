@@ -1,4 +1,6 @@
 {
+  "package": "חבילה",
+  "container": "מכולה",
   "uploadFile": "העלאת קובץ",
   "settings": "הגדרות",
   "standardSize": "גודל סטנדרטי (אופציונלי)",
@@ -69,5 +71,12 @@
   "add": "הוסף",
   "deleteChecked": "מחק מסומנים",
   "tableNoData": "לא הוגדרו חבילות",
-  "tableNoResults": "אין תוצאות לחיפוש"
+  "tableNoResults": "אין תוצאות לחיפוש",
+  "inputError": "קלט לא תקין: [{{object}}->{{key}}] צריך להיות מסוג [{{type}}], אבל התקבל \"{{value}}\"",
+  "mustBeOnlyOneContainer": "ניתן להגדיר רק מכולה אחת",
+  "duplicateColumn": "{{column}} הקלט מכיל כפילות של עמודה",
+  "invalidColumn": "{{column}} הקלט מכיל עמודה שגויה",
+  "boolean": "בוליאני",
+  "positiveInteger": "מספר שלם חיובי",
+  "nonNegativeNumber": "מספר אי-שלילי"
 }

@@ -18,6 +18,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import CustomAppBar from "./CustomAppBar";
 import '../styles/Config.css';
 import ConfigPackageList from "./ConfigPackageList";
+import { isInputValid } from "./Type";
 
 const tabs = [
     {
@@ -111,9 +112,9 @@ const Config = ({
       await setSnackbarOpen(true);
     };
   
-    const notifyError = async () => {
+    const notifyError = async (err) => {
       await setSnackbarSeverity("error");
-      await setSnackbarTitle("failedToOrganizeYourPackages");
+      await setSnackbarTitle(err);
       await setSnackbarOpen(true);
     };
 
@@ -122,17 +123,18 @@ const Config = ({
             container,
             packages,
         };
-        // TODO: check if data is valid?
+
         try {
             await notifyLoading();
+            const err = isInputValid(data)
+            if (err) throw err;
             const solution = await getSolution(data);
             setSolution(solution);
             navigate("/view");
         } catch (e) {
-            console.log(e);
-            await notifyError();
+            await notifyError(e);
         } finally {
-            setLoading(false);
+            await setLoading(false);
         }
     };
 

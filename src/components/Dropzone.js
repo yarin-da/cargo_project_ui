@@ -1,7 +1,7 @@
-import {useState} from "react";
-import {DropzoneArea} from "material-ui-dropzone";
+import { useState } from "react";
+import { DropzoneArea } from "material-ui-dropzone";
 import { useTranslation } from "react-i18next";
-import parseCSV from "./CSVParser";
+import { parseCSVFile } from "./CSVParser";
 import { Snackbar } from "@material-ui/core";
 import { Alert } from "@mui/material";
 
@@ -10,12 +10,35 @@ const Dropzone = ({ setContainer, setPackages }) => {
     const [alertType, setAlertType] = useState('info');
     const [alertText, setAlertText] = useState('');
     const [showAlert, setShowAlert] = useState(false);
+    const [inputError, setInputError] = useState(false);
 
     const onAlert = (variant) => {
-        const isError = (variant === 'error');
-        setAlertType(isError ? 'error' : 'success');
-        setAlertText(isError ? 'uploadError' : 'uploadSuccess');
-        setShowAlert(true);
+        if (!inputError) {
+            const isError = (variant === 'error');
+            setAlertType(isError ? 'error' : 'success');
+            setAlertText(isError ? 'uploadError' : 'uploadSuccess');
+            setShowAlert(true);    
+        }
+    };
+
+    const onDrop = (droppedFiles) => {
+        let reader = new FileReader();
+        reader.readAsText(droppedFiles[0]);
+        reader.onload = () => {
+            const parsedData = parseCSVFile(reader.result);
+            if (parsedData.error) {
+                setAlertType('error');
+                setAlertText(parsedData.error);
+                setShowAlert(true);
+                setInputError(true);
+                debugger;
+            } else {
+                setInputError(false);
+                const { container, packages } = parsedData;
+                setContainer(container);
+                setPackages(packages);
+            }
+        }
     };
 
     return (
@@ -29,19 +52,11 @@ const Dropzone = ({ setContainer, setPackages }) => {
                 previewGridProps={{container: {spacing: 1, direction: 'row'}}}
                 showAlerts={false}
                 onAlert={(_, variant) => onAlert(variant)}
-                onDrop={(droppedFiles) => {
-                    parseCSV(
-                        droppedFiles[0], 
-                        ({ container, packages }) => {
-                            setContainer(container);
-                            setPackages(packages);
-                        }
-                    );
-                }}
+                onDrop={onDrop}
             />
             <Snackbar 
                 open={showAlert} 
-                autoHideDuration={5000} 
+                autoHideDuration={10000} 
                 onClose={() => setShowAlert(false)}
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
             >

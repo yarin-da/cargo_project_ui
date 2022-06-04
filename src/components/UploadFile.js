@@ -1,6 +1,7 @@
 import Dropzone from "./Dropzone";
 import ExampleInputFileButton from "./ExampleInputFileButton";
 import CustomText from "./CustomText";
+import { useState } from "react";
 
 const UploadFile = ({ setContainer, setPackages }) => {
     return (

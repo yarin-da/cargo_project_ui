@@ -1,14 +1,10 @@
-import { parseValue } from "./Type";
+import { parseValue, types, stringTypeTesters } from "./Type";
 import Package from "./Package";
+import { t } from "i18next";
 
 const headers = "width,height,depth,cost,maxWeight,type,amount,priority,weight,profit,canRotate,canStackAbove".split(',');
 const cargoHeaders = "width,height,depth,cost,maxWeight".split(',');
 const packageHeaders = "width,height,depth,type,amount,priority,weight,profit,canRotate,canStackAbove".split(',');
-
-// TODO: alert user 
-function unexpectedFileFormat(error) {
-    console.log(error);
-}
 
 function splitRowsToArrays(rows) {
     for (let i = 0; i < rows.length; i++) {
@@ -24,23 +20,30 @@ function headerToIndexMap(firstRow) {
             if (!map.has(firstRow[i])) {
                 map.set(firstRow[i], i + 1);
             } else {
-                unexpectedFileFormat(`column ${firstRow[i]} appears more than once`);
+                return { error: t('duplicateColumn', { column: firstRow[i] }) };
             }
         } else {
-            unexpectedFileFormat(`invalid column ${firstRow[i]}`);
+            return { error: t('invalidColumn', { column: firstRow[i] }) };
         }
     }
-    return map
+    return { map };
 }
 
 function containerFields(containerRow, map) {
     const container = {};
     for (const [col, index] of map) {
         if (cargoHeaders.includes(col)) {
-            container[col] = parseValue(col, containerRow[index]);
+            const type = types[col];
+            const tester = stringTypeTesters[type];
+            const value = containerRow[index]
+            if (tester(value)) {
+                container[col] = parseValue(col, value);
+            } else {
+                return { error: t('inputError', { object: t('container'), key: t(col), type: t(type), value }) }
+            }
         }
     }
-    return container;
+    return { container };
 }
 
 function packagesFields(packagesRows, map) {
@@ -49,12 +52,19 @@ function packagesFields(packagesRows, map) {
         const p = new Package();
         for (const [col, index] of map) {
             if (packageHeaders.includes(col)) {
-                p[col] = parseValue(col, packagesRows[i][index]);
+                const type = types[col];
+                const tester = stringTypeTesters[type];
+                const value = packagesRows[i][index];
+                if (tester(value)) {
+                    p[col] = parseValue(col, value);
+                } else {
+                    return { error: t('inputError', { object: t('package'), key: t(col), type: t(type), value }) }
+                }
             }
         }
         packages.push(p);
     }
-    return packages;
+    return { packages };
 }
 
 function parseCSVFile(file) {
@@ -66,20 +76,20 @@ function parseCSVFile(file) {
 
     let newFirstRow = firstRow.split(',');
     newFirstRow.shift();
-    let headerToIndex = headerToIndexMap(newFirstRow);
+    let { map: headerToIndex, error } = headerToIndexMap(newFirstRow);
+    if (error) return { error };
 
-    let isContainer = false;
+    let seenContainer = false;
     let containerRow = [];
     let packagesRows = [];
     for (let i = 0; i < dataRows.length; i++) {
-        if (dataRows[i][0] === 'container' && isContainer) {
-            unexpectedFileFormat('more than 1 container')
+        if (dataRows[i][0] === 'container' && seenContainer) {
             containerRow.length = 0;
             packagesRows.length = 0;
-            break;
+            return { error: t('mustBeOnlyOneContainer') };
         }
-        if (dataRows[i][0] === 'container' && !isContainer) {
-            isContainer = true;
+        if (dataRows[i][0] === 'container') {
+            seenContainer = true;
             containerRow = dataRows[i];
         }
         if (dataRows[i][0] === 'package') {
@@ -87,16 +97,23 @@ function parseCSVFile(file) {
         }
     }
 
-    const container = containerFields(containerRow, headerToIndex);
-    const packages = packagesFields(packagesRows, headerToIndex);
+    const containerRet = containerFields(containerRow, headerToIndex);
+    if (containerRet.error) return {...containerRet};
+    const packagesRet = packagesFields(packagesRows, headerToIndex);
+    if (packagesRet.error) return {...packagesRet};
+
+    const { packages } = packagesRet;
+    const { container } = containerRet;
     return { container, packages }
 }
 
+// TODO: exception not caught in Dropzone --- error not shown
 function parseCSV(file, handler) {
-    let reader = new FileReader()
-    reader.readAsText(file)
+    let reader = new FileReader();
+    reader.readAsText(file);
     reader.onload = () => {
         const parsedData = parseCSVFile(reader.result);
+        if (parsedData.error) throw parsedData.error;
         handler(parsedData);
     }
 };
@@ -125,6 +142,7 @@ function parseJSONtoCSV(json) {
 export {
     parseCSV,
     parseJSONtoCSV,
+    parseCSVFile,
 }
 
 export default parseCSV

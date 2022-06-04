@@ -257,7 +257,6 @@ const Container = ({ scale }) => {
     ]);
 
     useFrame(({ camera }) => {
-        // TODO: const direction = camera.getWorldDirection(targetVector);
         const direction = camera.position;
         const [x, y, z] = direction;
         const wallsCopy = [...walls];
@@ -289,7 +288,6 @@ const Container = ({ scale }) => {
     );
 }
 
-// TODO: multiple selected packages (if ctrl -> add to selected array, else swap to array with one package)
 const View3D = ({ solution, packages, container, colorMap, selectedPackages, setSelectedPackages }) => {
     const [controlTarget, setControlTarget] = useState([0, 0, 0]);
     const canvasStyle = {
@@ -299,7 +297,6 @@ const View3D = ({ solution, packages, container, colorMap, selectedPackages, set
 
     const maxContainerDim = Object.values(container).reduce((a, b) => a > b ? a : b, 0);
 
-    // TODO: update perhaps only on right click?
     const updateControlsTarget = (index) => {
         if (index !== -1) {
             const pkg = solution[index];

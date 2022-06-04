@@ -84,7 +84,6 @@ const ColorMap = ({ colorMap, setColorMap }) => {
         setColorMap(curr => ({ ...curr, [clickedPkg]: newColor }));
     };
 
-    // TODO: fix styling (currently height is way too big and radius is wrong)
     // TODO: add some indication for the user that he can change the colors by clicking the circles
     return (
         <div className="color-map">

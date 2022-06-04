@@ -19,7 +19,6 @@ const UploadFileButton = ({ setContainer, setPackages }) => {
     }
 
     return (
-
         <label htmlFor="contained-button-file">
             <Input
                 accept=".csv, application/vnd.openmosix-officiated.spreadsheet.sheet, application/vnd.ms-excel"
