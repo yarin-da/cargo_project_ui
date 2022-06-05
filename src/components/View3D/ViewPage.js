@@ -116,7 +116,7 @@ const PackageControl = ({ solution, setSolution, selectedPackages }) => {
             newPackage[prop] += value;
             newSolution[selectedPackage] = newPackage;
         });
-        setSolution(newSolution);
+        setSolution(curr => ({...curr, solution: newSolution}));
     };
 
     const buttonStyle = {
@@ -168,12 +168,9 @@ const PackageControl = ({ solution, setSolution, selectedPackages }) => {
     );
 };
 
-const ViewPage = ({ solution:inputSolution, units, setUnits }) => {
-    const [solution, setSolution] = useState(inputSolution && inputSolution['solution'] ? inputSolution['solution'] : []);
-    const [container, setContainer] = useState(inputSolution && inputSolution['container'] ? inputSolution['container'] : {});
-    const [packages, setPackages] = useState(inputSolution && inputSolution['packages'] ? inputSolution['packages'] : []);
+const ViewPage = ({ solution, setSolution, units, setUnits }) => {
     const [selectedPackages, setSelectedPackages] = useState([]);
-    const [colorMap, setColorMap] = useState(initializeColors(packages));
+    const [colorMap, setColorMap] = useState(initializeColors(solution ? (solution['packages'] ?? []) : []));
     const [showExportDialog, setShowExportDialog] = useState(false);
     const { t } = useTranslation();
     const onClose = () => setShowExportDialog(false);
@@ -187,10 +184,10 @@ const ViewPage = ({ solution:inputSolution, units, setUnits }) => {
             <CustomAppBar units={units} setUnits={setUnits} />
             <div style={{ position: 'relative', width: '100%', height: '100%' }}>
                 <View3D 
-                    solution={solution} 
+                    solution={solution ? (solution['solution'] ?? []) : []} 
                     setSolution={setSolution} 
-                    packages={packages}
-                    container={container}
+                    packages={solution ? (solution['packages'] ?? []) : []}
+                    container={solution ? (solution['container'] ?? {}) : {}}
                     colorMap={colorMap} 
                     selectedPackages={selectedPackages} 
                     setSelectedPackages={setSelectedPackages} 
@@ -217,7 +214,7 @@ const ViewPage = ({ solution:inputSolution, units, setUnits }) => {
                         <Button style={{ textTransform: 'none' }} onClick={() => onDownload('json')} autoFocus>{t("exportJSON")}</Button>
                     </DialogActions>
                 </Dialog>
-                <PackageControl solution={solution} setSolution={setSolution} selectedPackages={selectedPackages} />
+                <PackageControl solution={solution ? solution['solution'] : []} setSolution={setSolution} selectedPackages={selectedPackages} />
             </div>
         </div>
         

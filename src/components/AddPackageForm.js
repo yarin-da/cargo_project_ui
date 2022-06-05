@@ -12,7 +12,7 @@ const CustomBooleanInput = ({ value, setValue, inputId }) => {
     return (
         <FormControl style={{width:'100%'}}>
             <ToggleButton htmlFor={inputId} onClick={onClick} selected={value}>
-                <CustomText text={inputId} />
+                <CustomText text={inputId} style={{textTransform: 'none'}} />
             </ToggleButton>
             <Input id={inputId} type="hidden" value={value} />
         </FormControl>

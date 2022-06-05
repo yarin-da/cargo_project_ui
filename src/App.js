@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from './components/Header';
 import Config from "./components/Config";
 import ViewPage from "./components/View3D/ViewPage";
@@ -11,29 +11,34 @@ import {
 
 // TODO: delete all console.logs, debuggers and unused variables/imports
 
+const getJSONFromStorage = (key, defaultValue) => {
+    const item = localStorage.getItem(key);
+    return item ? JSON.parse(item) : defaultValue;
+}
+
+const saveJSONinStorage = (key, value) => {
+    localStorage.setItem(key, JSON.stringify(value));
+}
+
 function App() {
-    const [solution, setSolution] = useState({});
-    const [showPackageView, setShowPackageView] = useState(false);
-    const [container, setContainer] = useState({
+    const [solution, setSolution] = useState(getJSONFromStorage('solution', {}));
+    const [packages, setPackages] = useState(getJSONFromStorage('packages', []));
+    const [container, setContainer] = useState(getJSONFromStorage('container', {
         width: null,
         height: null,
         depth: null,
         maxWeight: null,
         cost: null,
-    });
-
-    const [packages, setPackages] = useState([]);
-    
-    const [units, setUnits] = useState({
+    }));    
+    const [units, setUnits] = useState(getJSONFromStorage('units', {
         length: 'm',
         weight: 'kg',
-    });
+    }));
 
-    // TODO: persist data
-    // https://joaoforja.com/blog/how-to-persist-state-after-a-page-refresh-in-react-using-local-storage
-    // useEffect(() => {
-    //   localStorage.setItem('__p');
-    // }, [solution, colorMap, showPackageView, currentPackage, container, packages, units]);
+    useEffect(() => { saveJSONinStorage('solution', solution); console.log('saved'); }, [solution]);
+    useEffect(() => { saveJSONinStorage('packages', packages) }, [packages]);
+    useEffect(() => { saveJSONinStorage('container', container) }, [container]);
+    useEffect(() => { saveJSONinStorage('units', units) }, [units]);
 
     return (
         <Router>
@@ -42,11 +47,7 @@ function App() {
                     exact 
                     path="/"
                     element={
-                        <Home 
-                            units={units}
-                            setUnits={setUnits}
-                            setSolution={setSolution}
-                        />
+                        <Header units={units} setUnits={setUnits} setSolution={setSolution} />
                     }
                 >
                 </Route>
@@ -60,8 +61,6 @@ function App() {
                             setPackages={setPackages}
                             container={container} 
                             setContainer={setContainer}
-                            showPackageView={showPackageView} 
-                            setShowPackageView={setShowPackageView}
                             setSolution={setSolution}
                         />
                     }
@@ -72,6 +71,7 @@ function App() {
                     element={
                         <ViewPage 
                             solution={solution}
+                            setSolution={setSolution}
                             units={units}
                             setUnits={setUnits}
                         />
@@ -82,13 +82,5 @@ function App() {
         </Router>
     );
 };
-
-const Home = ({ units, setUnits, setSolution }) => {
-    return (
-        <div className="App">
-            <Header units={units} setUnits={setUnits} setSolution={setSolution} />
-        </div>
-    );
-}
 
 export default App;
