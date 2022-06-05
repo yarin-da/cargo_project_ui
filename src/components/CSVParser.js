@@ -107,7 +107,6 @@ function parseCSVFile(file) {
     return { container, packages }
 }
 
-// TODO: exception not caught in Dropzone --- error not shown
 function parseCSV(file, handler) {
     let reader = new FileReader();
     reader.readAsText(file);

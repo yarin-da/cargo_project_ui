@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Header from './components/Header';
-import Package from "./components/Package";
 import Config from "./components/Config";
 import ViewPage from "./components/View3D/ViewPage";
 import "./App.css";
@@ -16,11 +15,11 @@ function App() {
     const [solution, setSolution] = useState({});
     const [showPackageView, setShowPackageView] = useState(false);
     const [container, setContainer] = useState({
-        width: 0,
-        height: 0,
-        depth: 0,
-        maxWeight: 0,
-        cost: 0,
+        width: null,
+        height: null,
+        depth: null,
+        maxWeight: null,
+        cost: null,
     });
 
     const [packages, setPackages] = useState([]);
@@ -30,6 +29,7 @@ function App() {
         weight: 'kg',
     });
 
+    // TODO: persist data
     // https://joaoforja.com/blog/how-to-persist-state-after-a-page-refresh-in-react-using-local-storage
     // useEffect(() => {
     //   localStorage.setItem('__p');

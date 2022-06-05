@@ -58,7 +58,7 @@ const BoxEdges = ({ position, scale, selected }) => {
     );
 };
 
-const CustomText = ({ position, rotation, text, selected }) => {
+const CustomText = ({ position, rotation, text, selected, maxWidth }) => {
     return (
         <text
             position={position ?? [0, 0, 0]}
@@ -66,13 +66,14 @@ const CustomText = ({ position, rotation, text, selected }) => {
             text={text ?? ''}
             fontSize={TEXT_SIZE}
             color={selected ? SELECTED_TEXT_COLOR : "black"}
-            maxWidth={1}
+            maxWidth={maxWidth}
             lineHeight={1}
             letterSpacing={0}
             textAlign={"justify"}
             font={'https://fonts.gstatic.com/s/roboto/v18/KFOmCnqEu92Fr1Mu4mxM.woff'}
             anchorX="center"
             anchorY="middle"
+            overflowWrap={'break-word'}
         />
     );
 };
@@ -82,26 +83,32 @@ const BoxText = ({ position, scale, text, selected }) => {
     const dist = scale.map(s => s / 2);
     const texts = [
         {
+            maxWidth: Math.min(scale[0], scale[1]),
             position: [0, 0, dist[2] + offset],
             rotation: [0, 0, 0]
         },
         {
+            maxWidth: Math.min(scale[0], scale[1]),
             position: [0, 0, -(dist[2] + offset)],
             rotation: [0, Math.PI, 0]
         },
         {
+            maxWidth: Math.min(scale[1], scale[2]),
             position: [dist[0] + offset, 0, 0],
             rotation: [0, Math.PI/2, 0]
         },
         {
+            maxWidth: Math.min(scale[1], scale[2]),
             position: [-(dist[0] + offset), 0, 0],
             rotation: [0, Math.PI + Math.PI/2, 0]
         },
         {
+            maxWidth: Math.min(scale[0], scale[2]),
             position: [0, dist[1] + 0.01, 0],
             rotation: [-Math.PI/2, 0, 0]
         },
         {
+            maxWidth: Math.min(scale[0], scale[2]),
             position: [0, -(dist[1] + 0.01), 0],
             rotation: [Math.PI/2, 0, 0]
         },
@@ -116,6 +123,7 @@ const BoxText = ({ position, scale, text, selected }) => {
                     text={text} 
                     position={position.map((p, i) => p + t.position[i])} 
                     rotation={t.rotation}
+                    maxWidth={t.maxWidth}
                 />
             )
         }
@@ -293,6 +301,7 @@ const View3D = ({ solution, packages, container, colorMap, selectedPackages, set
     const canvasStyle = {
         width: '100%',
         height: '100%',
+        backgroundColor: '#e7e7ff',
     };
 
     const maxContainerDim = Object.values(container).reduce((a, b) => a > b ? a : b, 0);

@@ -119,15 +119,11 @@ const Config = ({
     };
 
     const uploadDataToServer = async () => {
-        const data = {
-            container,
-            packages,
-        };
-
         try {
+            const data = { container, packages };
             await notifyLoading();
             const err = isInputValid(data)
-            if (err) throw err;
+            // TODO: if (err) throw err;
             const solution = await getSolution(data);
             setSolution(solution);
             navigate("/view");
@@ -217,7 +213,6 @@ const Config = ({
                     </Fab>
                 </div>
             </div>
-
             <Snackbar 
                 open={snackbarOpen} 
                 autoHideDuration={5000} 

@@ -1,18 +1,31 @@
 import "../styles/Header.css";
 import { useNavigate } from "react-router-dom";
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import CustomText from "./CustomText";
 import CustomAppBar from "./CustomAppBar";
 import { Button } from "@mui/material";
 import { Typography } from "@material-ui/core";
 
 const Header = ({ units, setUnits, setSolution }) => {
+    const fileInputRef = useRef();
     const navigate = useNavigate();
-    const onViewSolution = () => {
-        //const solution = ;
-        //setSolution(solution);
-        navigate('/view');
-    };
+
+    useEffect(() => {
+        console.log(fileInputRef);
+        fileInputRef.current.onchange = (event) => {
+            // TODO: got filepath and not blob...
+            const file = event.target.value;
+            debugger;
+            let reader = new FileReader();
+            reader.readAsText(file);
+            reader.onload = () => {
+                const solution = JSON.parse(reader.result);
+                setSolution(solution);
+                navigate('/view');
+            }
+        };
+    }, [fileInputRef]);
+
     return (
         <div style={{ display: 'flex', flexDirection: 'column-reverse', width: '100vw', height: '100vh' }}>
             <div className="head">
@@ -60,10 +73,10 @@ const Header = ({ units, setUnits, setSolution }) => {
                                 cursor: 'pointer',
                                 margin: 1,
                             }}
-                            onClick={onViewSolution}
+                            onClick={() => fileInputRef.current.click()}
                         >
                             <CustomText text="viewSolution" variant="h3" />
-                            <input type="file" hidden />
+                            <input ref={fileInputRef} type="file" hidden />
                         </Button>
                     </div>
                 </div>
