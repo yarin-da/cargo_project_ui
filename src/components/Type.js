@@ -44,8 +44,9 @@ const isInputValid = (data) => {
     for (let key of Object.keys(container)) {
         const keyType = types[key];
         const tester = typeTesters[keyType];
-        const value = container[keyType];
+        const value = container[key];
         if (tester && !tester(value)) {
+            debugger;
             return t('inputError', { object: 'container', key, type: keyType, value: value });
         }
     }
@@ -54,7 +55,7 @@ const isInputValid = (data) => {
         for (let key of Object.keys(pkg)) {
             const keyType = types[key];
             const tester = typeTesters[keyType];
-            const value = container[keyType];
+            const value = pkg[key];
             if (tester && !tester(value)) {
                 return t('inputError', { object: 'package', key, type: keyType, value: value });
             }

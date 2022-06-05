@@ -123,7 +123,7 @@ const Config = ({
             const data = { container, packages };
             await notifyLoading();
             const err = isInputValid(data)
-            // TODO: if (err) throw err;
+            if (err) throw err;
             const solution = await getSolution(data);
             setSolution(solution);
             navigate("/view");
