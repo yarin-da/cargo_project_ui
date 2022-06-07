@@ -47,6 +47,7 @@ const Header = ({ units, setUnits, setSolution }) => {
                     <div style={{alignSelf: 'flex-start', display: 'flex', flexDirection: 'row'}}>
                         <Button
                             variant="contained"
+                            size="small"
                             sx={{
                                 textTransform: 'none',
                                 color: "white",
@@ -64,6 +65,7 @@ const Header = ({ units, setUnits, setSolution }) => {
                         </Button>
                         <Button
                             variant="contained"
+                            size="small"
                             sx={{
                                 textTransform: 'none',
                                 color: '#42A5F5',

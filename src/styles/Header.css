@@ -10,10 +10,9 @@
 
 .head {
     display: flex;
-    flex-direction: column;
+    /*flex-direction: column;*/
     padding: 40px;
-
-    background-size: cover;
+    background-size: auto;
     flex: 1;
     background: url(../images/XDbackground.png) no-repeat;
     /*background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../images/XDbackground.png);*/
