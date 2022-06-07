@@ -44,16 +44,17 @@ const Header = ({ units, setUnits, setSolution }) => {
                             RIDE WITH US.
                         </Typography>
                     </div>
-                    <div style={{alignSelf: 'center', display: 'flex', flexDirection: 'column'}}>
+                    <div style={{alignSelf: 'flex-start', display: 'flex', flexDirection: 'row'}}>
                         <Button
+                            variant="contained"
                             sx={{
                                 textTransform: 'none',
-                                color: "primary",
+                                color: "white",
                                 border: '2px solid',
-                                borderColor: "primary",
+                                borderColor: "#42A5F5",
                                 borderRadius: 5,
                                 padding: 3,
-                                background: 'rgba(30, 30, 45, 0.5)',
+                                background: '#42A5F5',
                                 cursor: 'pointer',
                                 margin: 1,
                             }}
@@ -62,14 +63,18 @@ const Header = ({ units, setUnits, setSolution }) => {
                             <CustomText text="findPacking" variant="h3" />
                         </Button>
                         <Button
+                            variant="contained"
                             sx={{
                                 textTransform: 'none',
-                                color: "primary",
+                                color: '#42A5F5',
+                                '&:hover': {
+                                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                                },
                                 border: '2px solid',
-                                borderColor: "primary",
+                                borderColor: "#42A5F5",
                                 borderRadius: 5,
                                 padding: 3,
-                                background: 'rgba(30, 30, 45, 0.5)',
+                                background: 'white',
                                 cursor: 'pointer',
                                 margin: 1,
                             }}

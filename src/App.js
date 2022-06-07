@@ -8,6 +8,8 @@ import {
     Routes,
     Route,
 } from "react-router-dom";
+import {createTheme} from "@material-ui/core";
+import {ThemeProvider} from "@emotion/react";
 
 // TODO: delete all console.logs, debuggers and unused variables/imports
 
@@ -19,6 +21,18 @@ const getJSONFromStorage = (key, defaultValue) => {
 const saveJSONinStorage = (key, value) => {
     localStorage.setItem(key, JSON.stringify(value));
 }
+
+const theme = createTheme({
+    palette: {
+        primary: {
+            // Purple and green play nicely together.
+            main: '#42A5F5',
+            light: '#42A5F5',
+            dark: '#42A5F5'
+        },
+    },
+});
+
 
 function App() {
     const [solution, setSolution] = useState(getJSONFromStorage('solution', {}));
@@ -41,45 +55,47 @@ function App() {
     useEffect(() => { saveJSONinStorage('units', units) }, [units]);
 
     return (
-        <Router>
-            <Routes>
-                <Route 
-                    exact 
-                    path="/"
-                    element={
-                        <Header units={units} setUnits={setUnits} setSolution={setSolution} />
-                    }
-                >
-                </Route>
-                <Route 
-                    path="/config"
-                    element={
-                        <Config 
-                            units={units}
-                            setUnits={setUnits}
-                            packages={packages}
-                            setPackages={setPackages}
-                            container={container} 
-                            setContainer={setContainer}
-                            setSolution={setSolution}
-                        />
-                    }
-                >
-                </Route>
-                <Route 
-                    path="/view" 
-                    element={
-                        <ViewPage 
-                            solution={solution}
-                            setSolution={setSolution}
-                            units={units}
-                            setUnits={setUnits}
-                        />
-                    }
-                >
-                </Route>
-            </Routes>
-        </Router>
+        <ThemeProvider theme={theme}>
+            <Router>
+                <Routes>
+                    <Route
+                        exact
+                        path="/"
+                        element={
+                            <Header units={units} setUnits={setUnits} setSolution={setSolution} />
+                        }
+                    >
+                    </Route>
+                    <Route
+                        path="/config"
+                        element={
+                            <Config
+                                units={units}
+                                setUnits={setUnits}
+                                packages={packages}
+                                setPackages={setPackages}
+                                container={container}
+                                setContainer={setContainer}
+                                setSolution={setSolution}
+                            />
+                        }
+                    >
+                    </Route>
+                    <Route
+                        path="/view"
+                        element={
+                            <ViewPage
+                                solution={solution}
+                                setSolution={setSolution}
+                                units={units}
+                                setUnits={setUnits}
+                            />
+                        }
+                    >
+                    </Route>
+                </Routes>
+            </Router>
+        </ThemeProvider>
     );
 };
 
