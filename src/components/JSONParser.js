@@ -41,6 +41,12 @@ function parseJSONFile(file) {
     file = file.trim();
     const data = JSON.parse(file)
 
+    for (const k in Object.keys(data) ) {
+        if (k !== 'container' && k !== 'packages') {
+            return { error: t('invalidObjectKey') };
+        }
+    }
+
     if (file.split('container').length - 1 > 1) {
         return { error: t('mustBeOnlyOneContainer') };
     }

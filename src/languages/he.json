@@ -76,6 +76,7 @@
   "mustBeOnlyOneContainer": "ניתן להגדיר רק מכולה אחת",
   "duplicateColumn": "{{column}} הקלט מכיל כפילות של עמודה",
   "invalidColumn": "{{column}} הקלט מכיל עמודה שגויה",
+  "invalidObjectKey": "הקלט מכיל אובייקט לא צפוי",
   "boolean": "בוליאני",
   "positiveInteger": "מספר שלם חיובי",
   "nonNegativeNumber": "מספר אי-שלילי"
