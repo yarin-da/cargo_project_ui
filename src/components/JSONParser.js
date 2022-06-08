@@ -41,8 +41,6 @@ function parseJSONFile(file) {
     file = file.trim();
     const data = JSON.parse(file)
 
-    console.log(file.split('container').length - 1)
-
     if (file.split('container').length - 1 > 1) {
         return { error: t('mustBeOnlyOneContainer') };
     }
