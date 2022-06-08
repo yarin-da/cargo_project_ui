@@ -1,110 +1,58 @@
-import { parseValue, types, stringTypeTesters } from "./Type";
+import {parseValue, types, stringTypeTesters} from "./Type";
 import Package from "./Package";
-import { t } from "i18next";
+import {t} from "i18next";
 
-const headers = "width,height,depth,cost,maxWeight,type,amount,priority,weight,profit,canRotate,canStackAbove".split(',');
-const cargoHeaders = "width,height,depth,cost,maxWeight".split(',');
-const packageHeaders = "width,height,depth,type,amount,priority,weight,profit,canRotate,canStackAbove".split(',');
-
-function splitRowsToArrays(rows) {
-    for (let i = 0; i < rows.length; i++) {
-        rows[i] = rows[i].split(',');
-    }
-    return rows
-}
-
-function headerToIndexMap(firstRow) {
-    const map = new Map();
-    for (let i = 0; i < firstRow.length; i++) {
-        if (headers.includes(firstRow[i])) {
-            if (!map.has(firstRow[i])) {
-                map.set(firstRow[i], i + 1);
-            } else {
-                return { error: t('duplicateColumn', { column: firstRow[i] }) };
-            }
-        } else {
-            return { error: t('invalidColumn', { column: firstRow[i] }) };
-        }
-    }
-    return { map };
-}
-
-function containerFields(containerRow, map) {
+function containerFields(containerObject) {
     const container = {};
-    for (const [col, index] of map) {
-        if (cargoHeaders.includes(col)) {
-            const type = types[col];
-            const tester = stringTypeTesters[type];
-            const value = containerRow[index]
-            if (tester(value)) {
-                container[col] = parseValue(col, value);
-            } else {
-                return { error: t('inputError', { object: t('container'), key: t(col), type: t(type), value }) }
-            }
+    for (const [key, value] of Object.entries(containerObject)) {
+        const type = types[key];
+        const tester = stringTypeTesters[type];
+        if (tester(value)) {
+            container[key] = parseValue(key, value);
+        } else {
+            return {error: t('inputError', {object: t('container'), key: t(key), type: t(type), value})}
         }
     }
-    return { container };
+    return {container};
 }
 
-function packagesFields(packagesRows, map) {
+function packagesFields(packagesObjects) {
     const packages = [];
-    for (let i = 0; i < packagesRows.length; i++) {
+    for (let i = 0; i < packagesObjects.length; i++) {
         const p = new Package();
-        for (const [col, index] of map) {
-            if (packageHeaders.includes(col)) {
-                const type = types[col];
-                const tester = stringTypeTesters[type];
-                const value = packagesRows[i][index];
-                if (tester(value)) {
-                    p[col] = parseValue(col, value);
-                } else {
-                    return { error: t('inputError', { object: t('package'), key: t(col), type: t(type), value }) }
-                }
+        for (const [key, value] of Object.entries(packagesObjects[i])) {
+            if (key === 'id') {
+                continue;
+            }
+            const type = types[key];
+            const tester = stringTypeTesters[type];
+            if (tester(value)) {
+                p[key] = parseValue(key, value);
+            } else {
+                return {error: t('inputError', {object: t('package'), key: t(key), type: t(type), value})}
             }
         }
         packages.push(p);
     }
-    return { packages };
+    return {packages};
 }
 
 function parseJSONFile(file) {
-    // split file text to rows (take into account possible carriage return in windows)
-    let rows = file.split(/\r?\n/);
-    // delete titles
-    let firstRow = rows.shift();
-    let dataRows = splitRowsToArrays(rows);
+    file = file.trim();
+    const data = JSON.parse(file)
 
-    let newFirstRow = firstRow.split(',');
-    newFirstRow.shift();
-    let { map: headerToIndex, error } = headerToIndexMap(newFirstRow);
-    if (error) return { error };
+    const containerObj = data['container']
+    const packagesObj = data['packages']
+    const containerRet = containerFields(containerObj)
+    const packagesRet = packagesFields(packagesObj)
 
-    let seenContainer = false;
-    let containerRow = [];
-    let packagesRows = [];
-    for (let i = 0; i < dataRows.length; i++) {
-        if (dataRows[i][0] === 'container' && seenContainer) {
-            containerRow.length = 0;
-            packagesRows.length = 0;
-            return { error: t('mustBeOnlyOneContainer') };
-        }
-        if (dataRows[i][0] === 'container') {
-            seenContainer = true;
-            containerRow = dataRows[i];
-        }
-        if (dataRows[i][0] === 'package') {
-            packagesRows.push(dataRows[i]);
-        }
-    }
-
-    const containerRet = containerFields(containerRow, headerToIndex);
     if (containerRet.error) return {...containerRet};
-    const packagesRet = packagesFields(packagesRows, headerToIndex);
     if (packagesRet.error) return {...packagesRet};
 
-    const { packages } = packagesRet;
-    const { container } = containerRet;
-    return { container, packages }
+    const {container} = containerRet
+    const {packages} = packagesRet
+
+    return {container, packages}
 }
 
 function parseJSON(file, handler) {

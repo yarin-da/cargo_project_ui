@@ -67,7 +67,7 @@ const isInputValid = (data) => {
 
 
 function parseBool(str) {
-    const upperCaseStr = str.toUpperCase();
+    const upperCaseStr = str.toString().toUpperCase();
     if (upperCaseStr === 'TRUE') return true;
     if (upperCaseStr === 'FALSE') return false;
     return undefined;
