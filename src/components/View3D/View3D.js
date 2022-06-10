@@ -83,32 +83,32 @@ const BoxText = ({ position, scale, text, selected }) => {
     const dist = scale.map(s => s / 2);
     const texts = [
         {
-            maxWidth: Math.min(scale[0], scale[1]),
+            maxWidth: scale[0],
             position: [0, 0, dist[2] + offset],
             rotation: [0, 0, 0]
         },
         {
-            maxWidth: Math.min(scale[0], scale[1]),
+            maxWidth: scale[0],
             position: [0, 0, -(dist[2] + offset)],
             rotation: [0, Math.PI, 0]
         },
         {
-            maxWidth: Math.min(scale[1], scale[2]),
+            maxWidth: scale[2],
             position: [dist[0] + offset, 0, 0],
             rotation: [0, Math.PI/2, 0]
         },
         {
-            maxWidth: Math.min(scale[1], scale[2]),
+            maxWidth: scale[2],
             position: [-(dist[0] + offset), 0, 0],
             rotation: [0, Math.PI + Math.PI/2, 0]
         },
         {
-            maxWidth: Math.min(scale[0], scale[2]),
+            maxWidth: scale[0],
             position: [0, dist[1] + 0.01, 0],
             rotation: [-Math.PI/2, 0, 0]
         },
         {
-            maxWidth: Math.min(scale[0], scale[2]),
+            maxWidth: scale[0],
             position: [0, -(dist[1] + 0.01), 0],
             rotation: [Math.PI/2, 0, 0]
         },
