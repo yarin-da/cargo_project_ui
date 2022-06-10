@@ -1,21 +1,15 @@
-.image {
+.header-background-image {
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    background: no-repeat center center fixed;
-    width: 100%;
-    height: auto;
+    background-image: url(../images/XDbackground-cropped.png);
 }
 
 .head {
     display: flex;
-    /*flex-direction: column;*/
     padding: 40px;
-    background-size: 100% 100%;
     flex: 1;
-    background: url(../images/XDbackground.png) no-repeat center;
-    /*background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../images/XDbackground.png);*/
 }
 
 .header-nav {
@@ -81,6 +75,6 @@
 .header {
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: flex-end;
     height: 100%;
 }

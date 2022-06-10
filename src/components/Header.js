@@ -28,18 +28,20 @@ const Header = ({ units, setUnits, setSolution }) => {
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column-reverse', width: '100vw', height: '100vh' }}>
-            <div className="head">
+            <div className="head header-background-image">
                 <div className="header">
                     <div className="header-title">
                         <Typography 
                             className="header-title-text"
                             variant="h2"
+                            style={{ color: 'black', fontWeight: 'bold' }}
                         >
                             LET YOUR SUCCESS
                         </Typography>
                         <Typography 
                             className="header-title-text" 
                             variant="h2"
+                            style={{ color: 'black', fontWeight: 'bold' }}
                         >
                             RIDE WITH US.
                         </Typography>
@@ -58,6 +60,9 @@ const Header = ({ units, setUnits, setSolution }) => {
                                 background: '#42A5F5',
                                 cursor: 'pointer',
                                 margin: 1,
+                                '&:hover': {
+                                    filter: 'brightness(90%)',
+                                },
                             }}
                             onClick={() => navigate('/config')}
                         >
@@ -70,7 +75,7 @@ const Header = ({ units, setUnits, setSolution }) => {
                                 textTransform: 'none',
                                 color: '#42A5F5',
                                 '&:hover': {
-                                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                                    background: 'rgba(0, 0, 0, 0.1)',
                                 },
                                 border: '2px solid',
                                 borderColor: "#42A5F5",
