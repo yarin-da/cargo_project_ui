@@ -21,6 +21,7 @@ const saveJSONinStorage = (key, value) => {
 }
 
 function App() {
+    const [originalSolution, setOriginalSolution] = useState(getJSONFromStorage('originalSolution', {}));
     const [solution, setSolution] = useState(getJSONFromStorage('solution', {}));
     const [packages, setPackages] = useState(getJSONFromStorage('packages', []));
     const [container, setContainer] = useState(getJSONFromStorage('container', {
@@ -62,6 +63,7 @@ function App() {
                             container={container} 
                             setContainer={setContainer}
                             setSolution={setSolution}
+                            setOriginalSolution={setOriginalSolution}
                         />
                     }
                 >
@@ -74,6 +76,7 @@ function App() {
                             setSolution={setSolution}
                             units={units}
                             setUnits={setUnits}
+                            originalSolution={originalSolution}
                         />
                     }
                 >

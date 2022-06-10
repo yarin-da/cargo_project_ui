@@ -12,7 +12,7 @@ const VISIBILITY_DIST = 15;
 const VISIBILITY_DIST2 = VISIBILITY_DIST * VISIBILITY_DIST;
 const CONTAINER_COLOR = 0x777777;
 const CONTAINER_THICKNESS = 0.1;
-
+const BACKGROUND_COLOR = '#d4d4e4';
 const SELECTED_BOX_COLOR = 0x004477;
 const SELECTED_EDGE_COLOR = 0x00aadd;
 const SELECTED_TEXT_COLOR = 0xffffff;
@@ -83,32 +83,32 @@ const BoxText = ({ position, scale, text, selected }) => {
     const dist = scale.map(s => s / 2);
     const texts = [
         {
-            maxWidth: Math.min(scale[0], scale[1]),
+            maxWidth: scale[0],
             position: [0, 0, dist[2] + offset],
             rotation: [0, 0, 0]
         },
         {
-            maxWidth: Math.min(scale[0], scale[1]),
+            maxWidth: scale[0],
             position: [0, 0, -(dist[2] + offset)],
             rotation: [0, Math.PI, 0]
         },
         {
-            maxWidth: Math.min(scale[1], scale[2]),
+            maxWidth: scale[2],
             position: [dist[0] + offset, 0, 0],
             rotation: [0, Math.PI/2, 0]
         },
         {
-            maxWidth: Math.min(scale[1], scale[2]),
+            maxWidth: scale[2],
             position: [-(dist[0] + offset), 0, 0],
             rotation: [0, Math.PI + Math.PI/2, 0]
         },
         {
-            maxWidth: Math.min(scale[0], scale[2]),
+            maxWidth: scale[0],
             position: [0, dist[1] + 0.01, 0],
             rotation: [-Math.PI/2, 0, 0]
         },
         {
-            maxWidth: Math.min(scale[0], scale[2]),
+            maxWidth: scale[0],
             position: [0, -(dist[1] + 0.01), 0],
             rotation: [Math.PI/2, 0, 0]
         },
@@ -296,12 +296,31 @@ const Container = ({ scale }) => {
     );
 }
 
+const Arrow = ({ from, to, length, color }) => {
+    const direction = to.clone().sub(from);
+    const arrow = new THREE.ArrowHelper(direction.normalize(), from, length, color, 0.5, 0.5 );
+    return (
+        <primitive object={arrow} />
+    );
+};
+
+const AxisHelpers = ({ container }) => {
+    const { width, height, depth } = container;
+    return (
+        <group>
+            <Arrow from={new THREE.Vector3(-1, -1, -1)} to={new THREE.Vector3(1, -1, -1)} length={width + 2} color={0xFF0000} />
+            <Arrow from={new THREE.Vector3(-1, -1, -1)} to={new THREE.Vector3(-1, 1, -1)} length={height + 2} color={0x7700} />
+            <Arrow from={new THREE.Vector3(-1, -1, -1)} to={new THREE.Vector3(-1, -1, 1)} length={depth + 2} color={0xFF} />
+        </group>
+    );
+};
+
 const View3D = ({ solution, packages, container, colorMap, selectedPackages, setSelectedPackages }) => {
     const [controlTarget, setControlTarget] = useState([0, 0, 0]);
     const canvasStyle = {
         width: '100%',
         height: '100%',
-        backgroundColor: '#e7e7ff',
+        backgroundColor: BACKGROUND_COLOR,
     };
 
     const maxContainerDim = Object.values(container).reduce((a, b) => a > b ? a : b, 0);
@@ -331,7 +350,7 @@ const View3D = ({ solution, packages, container, colorMap, selectedPackages, set
             setSelectedPackages(curr => curr.length > 1 ? [pkgIndex] : curr.includes(pkgIndex) ? [] : [pkgIndex]);
         }
     };
-    
+
     return (
         <Canvas 
             style={canvasStyle} 
@@ -354,6 +373,7 @@ const View3D = ({ solution, packages, container, colorMap, selectedPackages, set
                     selected={selectedPackages} 
                     onSelect={onPackageClick} 
                 />
+                {selectedPackages.length > 0 && <AxisHelpers container={container} />}
                 <pointLight position={[0, 20, -5]} />
                 <ambientLight intensity={0.4} />
                 <Environment preset="warehouse" />

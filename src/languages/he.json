@@ -64,12 +64,12 @@
   "canOnlyUploadCSV": "ניתן להעלות קבצי CSV בלבד",
   "uploadError": "ההעלאה נכשלה",
   "uploadSuccess": "ההעלאה התבצעה בהצלחה",
-  "findPacking": "מצא סידור",
+  "findPacking": "מציאת סידור",
   "actions": "פעולות",
-  "save": "שמור",
+  "save": "שמירה",
   "invalidType": "סוג חבילה לא תקין",
-  "add": "הוסף",
-  "deleteChecked": "מחק מסומנים",
+  "add": "הוספה",
+  "deleteChecked": "מחיקת מסומנים",
   "tableNoData": "לא הוגדרו חבילות",
   "tableNoResults": "אין תוצאות לחיפוש",
   "inputError": "קלט לא תקין: [{{object}}->{{key}}] צריך להיות מסוג [{{type}}], אבל התקבל \"{{value}}\"",
@@ -78,5 +78,6 @@
   "invalidColumn": "{{column}} הקלט מכיל עמודה שגויה",
   "boolean": "בוליאני",
   "positiveInteger": "מספר שלם חיובי",
-  "nonNegativeNumber": "מספר אי-שלילי"
+  "nonNegativeNumber": "מספר אי-שלילי",
+  "editSolution": "עריכת את הפתרון"
 }

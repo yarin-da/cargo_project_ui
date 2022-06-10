@@ -93,7 +93,8 @@ const Config = ({
                     setPackages,
                     container,
                     setContainer,
-                    setSolution
+                    setSolution,
+                    setOriginalSolution,
                 }) => {
     const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
     const [currentPage, setCurrentPage] = useState(0);
@@ -126,6 +127,7 @@ const Config = ({
             if (err) throw err;
             const solution = await getSolution(data);
             setSolution(solution);
+            setOriginalSolution(solution);
             navigate("/view");
         } catch (e) {
             await notifyError(e);
