@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import View3D from "./View3D";
 import { getColorsByHash } from "./Color";
 import { HexColorPicker } from "react-colorful" 
@@ -122,23 +122,20 @@ const PackageControl = ({
     changeHistoryIndex, 
     originalSolution,
     resetHistory,
+    history,
 }) => {
     
-    const isLegal = (pkg) => {
-        // TODO: implement (handle rotations)
-        return true;
-    };
-
     const update = (prop, value) => {
         const newSolution = [...solution];
-        addHistory(selectedPackages.map(idx => ({index: idx, pkg: solution[idx]})));
         selectedPackages.forEach(selectedPackage => {
             const newPackage = {...solution[selectedPackage]};
             newPackage[prop] += value;
-            if (isLegal(newPackage)) {
-                newSolution[selectedPackage] = newPackage;    
-            }
+            newSolution[selectedPackage] = newPackage;  
         });
+        if (history.length === 0) {
+            addHistory(selectedPackages.map(idx => ({index: idx, pkg: solution[idx]})));
+        }
+        addHistory(selectedPackages.map(idx => ({index: idx, pkg: newSolution[idx]})));
         setSolution(curr => ({...curr, solution: newSolution}));
     };
 
@@ -221,6 +218,7 @@ const ViewPage = ({ solution, setSolution, units, setUnits, originalSolution }) 
     const [colorMap, setColorMap] = useState(initializeColors(solution ? (solution['packages'] ?? []) : []));
     const [showExportDialog, setShowExportDialog] = useState(false);
     const { t } = useTranslation();
+
     const onClose = () => setShowExportDialog(false);
     const onDownload = (exportType) => {
         downloadSolutionFile(exportType, solution);
@@ -228,16 +226,18 @@ const ViewPage = ({ solution, setSolution, units, setUnits, originalSolution }) 
     };
 
     const addHistory = (h) => {
-        setHistory(curr => [h, ...curr.slice(historyIndex, Math.min(curr.length, historyIndex + MAX_HISTORY - 1))]);
+        const currIndex = Math.max(historyIndex, 0);
+        setHistory(curr => [h, ...curr.slice(currIndex, Math.min(curr.length, historyIndex + MAX_HISTORY - 1))]);
         setHistoryIndex(0);
     };
 
     const changeHistoryIndex = (step) => {
         const currIndex = historyIndex;
         const newIndex = currIndex + step;
-        if (newIndex >= 0 && newIndex <= history.length) {
+        if (0 <= newIndex && newIndex < history.length) {
             const newSolution = {...solution};
-            history[step < 0 ? newIndex : currIndex].forEach(hist => newSolution['solution'][hist['index']] = hist['pkg']);
+            console.log(`${history.length}: ${currIndex} -> ${newIndex}`);
+            history[newIndex].forEach(hist => newSolution['solution'][hist['index']] = hist['pkg']);
             setSolution(newSolution);
             setHistoryIndex(newIndex);
         }
@@ -311,6 +311,7 @@ const ViewPage = ({ solution, setSolution, units, setUnits, originalSolution }) 
                     changeHistoryIndex={changeHistoryIndex}
                     originalSolution={originalSolution}
                     resetHistory={resetHistory}
+                    history={history}
                 />
             </div>
         </div>

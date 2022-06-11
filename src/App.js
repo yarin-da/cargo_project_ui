@@ -36,7 +36,8 @@ function App() {
         weight: 'kg',
     }));
 
-    useEffect(() => { saveJSONinStorage('solution', solution); console.log('saved'); }, [solution]);
+    useEffect(() => { saveJSONinStorage('originalSolution', originalSolution) }, [originalSolution]);
+    useEffect(() => { saveJSONinStorage('solution', solution) }, [solution]);
     useEffect(() => { saveJSONinStorage('packages', packages) }, [packages]);
     useEffect(() => { saveJSONinStorage('container', container) }, [container]);
     useEffect(() => { saveJSONinStorage('units', units) }, [units]);
