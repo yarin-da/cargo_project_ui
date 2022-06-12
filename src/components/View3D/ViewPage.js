@@ -43,9 +43,13 @@ const initializeColors = (packages) => {
 
 const MAX_HISTORY = 50;
 
-const ViewPage = ({ solution, setSolution, units, setUnits, originalSolution }) => {
-    const [historyIndex, setHistoryIndex] = useState(0);
-    const [historyActions, setHistoryActions] = useState([]);
+const ViewPage = ({ 
+    historyIndex, setHistoryIndex,
+    historyActions, setHistoryActions,
+    solution, setSolution, 
+    units, setUnits, 
+    originalSolution,
+}) => {
     const [selectedPackages, setSelectedPackages] = useState([]);
     const [colorMap, setColorMap] = useState(initializeColors(solution ? (solution['packages'] ?? []) : []));
     const { t } = useTranslation();
@@ -79,7 +83,6 @@ const ViewPage = ({ solution, setSolution, units, setUnits, originalSolution }) 
 
     const undoHistoryAction = () => {
         const newIndex = historyIndex + 1;
-        console.log(`${historyActions.length}: ${historyIndex}->${newIndex}`)
         if (newIndex <= historyActions.length) {
             const action = historyActions[historyIndex];
             undo(action);

@@ -20,6 +20,8 @@ const saveJSONinStorage = (key, value) => {
 }
 
 function App() {
+    const [historyIndex, setHistoryIndex] = useState(getJSONFromStorage('historyIndex', 0));
+    const [historyActions, setHistoryActions] = useState(getJSONFromStorage('historyActions', []));
     const [originalSolution, setOriginalSolution] = useState(getJSONFromStorage('originalSolution', {}));
     const [solution, setSolution] = useState(getJSONFromStorage('solution', {}));
     const [packages, setPackages] = useState(getJSONFromStorage('packages', []));
@@ -35,11 +37,13 @@ function App() {
         weight: 'kg',
     }));
 
-    useEffect(() => { saveJSONinStorage('originalSolution', originalSolution) }, [originalSolution]);
+    useEffect(() => { saveJSONinStorage('units', units) }, [units]);
     useEffect(() => { saveJSONinStorage('solution', solution) }, [solution]);
     useEffect(() => { saveJSONinStorage('packages', packages) }, [packages]);
     useEffect(() => { saveJSONinStorage('container', container) }, [container]);
-    useEffect(() => { saveJSONinStorage('units', units) }, [units]);
+    useEffect(() => { saveJSONinStorage('historyIndex', historyIndex) }, [historyIndex]);
+    useEffect(() => { saveJSONinStorage('historyActions', historyActions) }, [historyActions]);
+    useEffect(() => { saveJSONinStorage('originalSolution', originalSolution) }, [originalSolution]);
 
     return (
         <Router>
@@ -82,6 +86,10 @@ function App() {
                             units={units}
                             setUnits={setUnits}
                             originalSolution={originalSolution}
+                            historyIndex={historyIndex}
+                            setHistoryIndex={setHistoryIndex}
+                            historyActions={historyActions}
+                            setHistoryActions={setHistoryActions}
                         />
                     }
                 >
