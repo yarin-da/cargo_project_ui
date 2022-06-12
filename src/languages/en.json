@@ -79,5 +79,8 @@
   "boolean": "boolean",
   "positiveInteger": "positive integer",
   "nonNegativeNumber": "non-negative number",
-  "editSolution": "Edit the solution"
+  "editSolution": "Edit the solution",
+  "reset": "Reset",
+  "undo": "Undo",
+  "redo": "Redo"
 }

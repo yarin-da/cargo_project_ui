@@ -31,7 +31,6 @@ const Dropzone = ({ setContainer, setPackages }) => {
                 setAlertText(parsedData.error);
                 setShowAlert(true);
                 setInputError(true);
-                debugger;
             } else {
                 setInputError(false);
                 const { container, packages } = parsedData;

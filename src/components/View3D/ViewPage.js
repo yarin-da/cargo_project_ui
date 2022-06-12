@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import View3D from "./View3D";
 import { getColorsByHash } from "./Color";
 import { HexColorPicker } from "react-colorful" 
@@ -6,7 +6,7 @@ import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import EditIcon from '@mui/icons-material/Edit';
 import CustomText from "../CustomText";
 import { useTranslation } from "react-i18next";
-import { Tooltip, Fab, Modal, Dialog, DialogTitle, DialogActions, Button } from "@mui/material";
+import { Tooltip, Fab, Modal, Dialog, DialogTitle, DialogActions, Button, SpeedDial, SpeedDialAction } from "@mui/material";
 import { saveAs } from "file-saver";
 import { parseJSONtoCSV } from "../CSVParser";
 import CustomAppBar from "../CustomAppBar";
@@ -14,6 +14,9 @@ import ThreeSixtyIcon from '@mui/icons-material/ThreeSixty';
 import UndoIcon from '@mui/icons-material/Undo';
 import RedoIcon from '@mui/icons-material/Redo';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import JavascriptIcon from '@mui/icons-material/Javascript';
+import GridOnIcon from '@mui/icons-material/GridOn';
+import '../../styles/ViewPage.css';
 
 const jsonToBlob = (data) => {
     const str = JSON.stringify(data, null, 2);
@@ -99,7 +102,7 @@ const ColorMap = ({ colorMap, setColorMap }) => {
                         onClick={() => onPackageClicked(k)}
                         style={{background: colorMap[k]}} 
                     />
-                    <div className="color-type-name">{k}</div>
+                    <div className="color-type-name unselectable-text">{k}</div>
                 </li>
             )}
             <ColorPicker
@@ -124,7 +127,7 @@ const PackageControl = ({
     resetHistory,
     history,
 }) => {
-    
+    const { t } = useTranslation();
     const update = (prop, value) => {
         const newSolution = [...solution];
         selectedPackages.forEach(selectedPackage => {
@@ -140,10 +143,10 @@ const PackageControl = ({
     };
 
     const buttonStyle = {
-        borderRadius: '10px',
+        borderRadius: 10,
         border: '1px solid #446',
         background: '#ddf',
-        color: '#446',
+        color: '#223',
         width: 45,
         height: 45,
         margin: 5,
@@ -152,64 +155,115 @@ const PackageControl = ({
         cursor: 'pointer',
     };
 
-    const rowStyle = {
-        display: 'flex', 
-        alignItems: 'center', 
-        justifyContent: 'space-evenly'
-    };
-    
     return (
-        selectedPackages.length === 0 ? <></> :
         <div style={{ 
             position: 'absolute', 
             top: 10, 
             right: 10, 
-            background: '#ddd', 
-            border: '1px solid #446',
-            padding: 10,
-            borderRadius: 10,
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'center',
+            padding: 15,
+            background: 'rgba(170, 170, 200, 0.33)',
+            boxShadow: '1px 2px 0 0 rgba(0, 0, 0, 0.33)',
+            borderRadius: 25,
         }}>
-            <div style={rowStyle}>
-                <Button style={buttonStyle} onClick={() => {
-                    setSolution(originalSolution);
-                    resetHistory();
-                }}>
-                    <RestartAltIcon />
-                </Button>   
-                <Button style={buttonStyle} onClick={() => changeHistoryIndex(1)}>
-                    <UndoIcon />
-                </Button>
-                <Button style={buttonStyle} onClick={() => changeHistoryIndex(-1)}>
-                    <RedoIcon />
-                </Button>   
+            <CustomText variant="h5" text="editSolution" style={{marginBottom: 5}} />
+            <div className="control-button-group">
+                <Tooltip title={t('reset')}>
+                    <Button className="control-button" style={buttonStyle} onClick={() => {
+                        setSolution(originalSolution);
+                        resetHistory();
+                    }}>
+                        <RestartAltIcon />
+                    </Button> 
+                </Tooltip>  
+                <Tooltip title={t('undo')}>
+                    <Button className="control-button" style={buttonStyle} onClick={() => changeHistoryIndex(1)}>
+                        <UndoIcon />
+                    </Button>
+                </Tooltip>
+                <Tooltip title={t('redo')}>
+                    <Button className="control-button" style={buttonStyle} onClick={() => changeHistoryIndex(-1)}>
+                        <RedoIcon />
+                    </Button>   
+                </Tooltip>
             </div>
-            <div style={rowStyle}>
-                {/* <span style={{fontSize: 22, fontWeight: 'bold', color: 'red'}}>X</span> */}
-                <Button style={{...buttonStyle, color: 'red'}} onClick={() => update('x', -1)}>-</Button>
-                <Button style={{...buttonStyle, color: 'red'}} onClick={() => update('x', +1)}>+</Button>    
-                <Button style={{...buttonStyle, color: 'red'}} onClick={() => update('rotation-x', 90)}><ThreeSixtyIcon /></Button>
+            <div className="control-button-group">
+                <Button className="control-button" style={{...buttonStyle, background: 'rgba(255,0,0,0.15)'}} onClick={() => update('x', -1)}>-</Button>
+                <Button className="control-button" style={{...buttonStyle, background: 'rgba(255,0,0,0.15)'}} onClick={() => update('x', +1)}>+</Button>    
+                <Button className="control-button" style={{...buttonStyle, background: 'rgba(255,0,0,0.15)'}} onClick={() => update('rotation-x', 90)}><ThreeSixtyIcon /></Button>
             </div>
-            <div style={rowStyle}>
-                {/* <span style={{fontSize: 22, fontWeight: 'bold', color: 'blue'}}>Y</span> */}
-                <Button style={{...buttonStyle, color: 'blue'}} onClick={() => update('y', -1)}>-</Button>
-                <Button style={{...buttonStyle, color: 'blue'}} onClick={() => update('y', +1)}>+</Button>
-                <Button style={{...buttonStyle, color: 'blue'}} onClick={() => update('rotation-y', 90)}><ThreeSixtyIcon /></Button>
+            <div className="control-button-group">
+                <Button className="control-button" style={{...buttonStyle, background: 'rgba(0,0,255,0.15)'}} onClick={() => update('y', -1)}>-</Button>
+                <Button className="control-button" style={{...buttonStyle, background: 'rgba(0,0,255,0.15)'}} onClick={() => update('y', +1)}>+</Button>
+                <Button className="control-button" style={{...buttonStyle, background: 'rgba(0,0,255,0.15)'}} onClick={() => update('rotation-y', 90)}><ThreeSixtyIcon /></Button>
             </div>
-            <div style={rowStyle}>
-                {/* <span style={{fontSize: 22, fontWeight: 'bold', color: 'green'}}>Z</span> */}
-                <Button style={{...buttonStyle, color: 'green'}} onClick={() => update('z', -1)}>-</Button>
-                <Button style={{...buttonStyle, color: 'green'}} onClick={() => update('z', +1)}>+</Button>
-                <Button style={{...buttonStyle, color: 'green'}} onClick={() => update('rotation-z', 90)}><ThreeSixtyIcon /></Button>
+            <div className="control-button-group">
+                <Button className="control-button" style={{...buttonStyle, background: 'rgba(0,255,0,0.15)'}} onClick={() => update('z', -1)}>-</Button>
+                <Button className="control-button" style={{...buttonStyle, background: 'rgba(0,255,0,0.15)'}} onClick={() => update('z', +1)}>+</Button>
+                <Button className="control-button" style={{...buttonStyle, background: 'rgba(0,255,0,0.15)'}} onClick={() => update('rotation-z', 90)}><ThreeSixtyIcon /></Button>
             </div>
         </div>
     );
 };
 
-const MAX_HISTORY = 10;
+const Stats = ({ stats, container }) => {
+    const divStyle = {
+        position: 'absolute', 
+        top: 10, 
+        right: 10, 
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'flex-start',
+        padding: '0 0 10px 20px',
+        background: 'rgba(170, 170, 200, 0.33)',
+        boxShadow: '1px 2px 0 0 rgba(0, 0, 0, 0.33)',
+        borderRadius: 10,
+    };
+    return (
+        <div style={divStyle}>
+            <div>
+                <div className="unselectable-text" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', columnGap: 10 }}>
+                    <h4>Stats</h4>
+                    <span style={{ gridColumn: 1 }}>
+                        Profit
+                    </span>
+                    <span style={{ gridColumn: 2 }}>
+                        {stats['profit']}
+                    </span>
+                    <span style={{ gridColumn: 1 }}>
+                        Weight
+                    </span>
+                    <span style={{ gridColumn: 2 }}>
+                        {stats['weight']} / {container['maxWeight']}
+                    </span>
+                    <span style={{ gridColumn: 1 }}>
+                        Space
+                    </span>
+                    <span style={{ gridColumn: 2 }}>
+                        {100 * stats['space_usage']}%
+                    </span>
+                    <h4>Boxes Used</h4>
+                    {Object.keys(stats['box_usage']).map(t => 
+                    <React.Fragment key={`box-usage-${t}`}>
+                        <span style={{ gridColumn: 1 }}>
+                            {t}
+                        </span>
+                        <span style={{ gridColumn: 2 }}>
+                            {stats['box_usage'][t]['used']} / {stats['box_usage'][t]['total']}
+                        </span>
+                    </React.Fragment>
+                    )}
+                </div>
+            </div>
+        </div>
+    );
+};
+
+const MAX_HISTORY = 50;
 
 const ViewPage = ({ solution, setSolution, units, setUnits, originalSolution }) => {
     const [history, setHistory] = useState([]);
@@ -267,27 +321,36 @@ const ViewPage = ({ solution, setSolution, units, setUnits, originalSolution }) 
                     setSelectedPackages={setSelectedPackages} 
                 />
                 <ColorMap colorMap={colorMap} setColorMap={setColorMap} />
-                <div style={{ position: 'absolute', right: 50, bottom: 50 }}>
-                    <Tooltip title={t('editSolution')}>
+                <div style={{ position: 'absolute', right: 50, bottom: 50, display: 'flex', flexDirection: 'column' }}>
+                    <Tooltip title={t('exportSolution')} arrow>
+                        <SpeedDial 
+                            ariaLabel="export" 
+                            FabProps={{ sx: { padding: 5 } }}
+                            icon={<FileDownloadIcon fontSize="large" />}
+                        >
+                            <SpeedDialAction 
+                                icon={<JavascriptIcon fontSize="large" />} 
+                                tooltipTitle={"json"} 
+                                onClick={() => onDownload('json')} 
+                                FabProps={{ sx: { width: 60, height: 60 } }}
+                            />
+                            <SpeedDialAction 
+                                icon={<GridOnIcon fontSize="large" />} 
+                                tooltipTitle={"csv"} 
+                                onClick={() => onDownload('csv')} 
+                                FabProps={{ sx: { width: 60, height: 60 } }}
+                            />
+                        </SpeedDial>
+                    </Tooltip>
+                    <Tooltip title={t('editSolution')} arrow>
                         <Fab 
-                            sx={{ padding: 5, margin: 1 }}
+                            sx={{ padding: 5, margin: 2 }}
                             variant="circular"
                             size="large"
-                            color="primary"
+                            color={selectedPackages.length > 0 ? "secondary" : "primary"}
                             onClick={() => selectedPackages.length > 0 ? setSelectedPackages([]) : selectRandomPackage()}
                         >
                             <EditIcon fontSize="large" />
-                        </Fab>
-                    </Tooltip>
-                    <Tooltip title={t('exportSolution')}>
-                        <Fab 
-                            sx={{ padding: 5, margin: 1 }}
-                            variant="circular"
-                            size="large"
-                            color="primary"
-                            onClick={() => setShowExportDialog(curr => !curr)}
-                        >
-                            <FileDownloadIcon fontSize="large" />
                         </Fab>
                     </Tooltip>
                 </div>
@@ -301,18 +364,26 @@ const ViewPage = ({ solution, setSolution, units, setUnits, originalSolution }) 
                         <Button style={{ textTransform: 'none' }} onClick={() => onDownload('json')} autoFocus>{t("exportJSON")}</Button>
                     </DialogActions>
                 </Dialog>
-                <PackageControl 
-                    solution={solution ? solution['solution'] : []} 
-                    container={solution ? solution['container'] : {}} 
-                    packages={solution ? solution['packages'] : []} 
-                    setSolution={setSolution} 
-                    selectedPackages={selectedPackages} 
-                    addHistory={addHistory}
-                    changeHistoryIndex={changeHistoryIndex}
-                    originalSolution={originalSolution}
-                    resetHistory={resetHistory}
-                    history={history}
-                />
+                {
+                    selectedPackages.length === 0 ?
+                    <Stats 
+                        stats={solution ? solution['stats'] : {}} 
+                        container={solution ? solution['container'] : {}} 
+                    />
+                    :
+                    <PackageControl 
+                        solution={solution ? solution['solution'] : []} 
+                        container={solution ? solution['container'] : {}} 
+                        packages={solution ? solution['packages'] : []} 
+                        setSolution={setSolution} 
+                        selectedPackages={selectedPackages} 
+                        addHistory={addHistory}
+                        changeHistoryIndex={changeHistoryIndex}
+                        originalSolution={originalSolution}
+                        resetHistory={resetHistory}
+                        history={history}
+                    />
+                }
             </div>
         </div>
     );

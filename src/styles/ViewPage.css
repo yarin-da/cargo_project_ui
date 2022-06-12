@@ -1,0 +1,22 @@
+.control-button {
+    border-radius: 10px;
+    border: 1px solid #446;
+    background: #ddf;
+    color: #223;
+    width: 45px;
+    height: 45px;
+    margin: 5px;
+    font-weight: bold;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.control-button:hover {
+    filter: contrast(50%);
+}
+
+.control-button-group {
+    display: flex;
+    align-items: center; 
+    justify-content: space-evenly;
+}

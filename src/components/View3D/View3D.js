@@ -323,7 +323,7 @@ const View3D = ({ solution, packages, container, colorMap, selectedPackages, set
         backgroundColor: BACKGROUND_COLOR,
     };
 
-    const maxContainerDim = Object.values(container).reduce((a, b) => a > b ? a : b, 0);
+    const maxContainerDim = Math.max(container['width'], container['height'], container['depth']);
 
     const updateControlsTarget = (index) => {
         if (index !== -1) {
