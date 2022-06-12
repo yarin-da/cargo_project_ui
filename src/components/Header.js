@@ -1,6 +1,5 @@
-import "../styles/Header.css";
 import { useNavigate } from "react-router-dom";
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState } from "react";
 import CustomText from "./CustomText";
 import CustomAppBar from "./CustomAppBar";
 import { Button } from "@mui/material";
@@ -8,6 +7,7 @@ import { Typography } from "@material-ui/core";
 import { Snackbar } from "@material-ui/core";
 import { Alert } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import "../styles/Header.css";
 
 const isValidSolution = (input) => {
     return true;

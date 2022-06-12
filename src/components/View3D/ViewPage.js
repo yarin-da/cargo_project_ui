@@ -1,21 +1,20 @@
-import React, { useEffect, useState } from "react";
-import View3D from "./View3D";
+import React, { useState } from "react";
+import { Tooltip, Box, Typography, Fab, Modal, Button, SpeedDial, SpeedDialAction, LinearProgress } from "@mui/material";
 import { getColorsByHash } from "./Color";
 import { HexColorPicker } from "react-colorful" 
-import FileDownloadIcon from '@mui/icons-material/FileDownload';
-import EditIcon from '@mui/icons-material/Edit';
-import CustomText from "../CustomText";
 import { useTranslation } from "react-i18next";
-import { Tooltip, Box, Typography, Fab, Modal, Dialog, DialogTitle, DialogActions, Button, SpeedDial, SpeedDialAction, LinearProgress } from "@mui/material";
-import { saveAs } from "file-saver";
 import { parseJSONtoCSV } from "../CSVParser";
-import CustomAppBar from "../CustomAppBar";
+import FileDownloadIcon from '@mui/icons-material/FileDownload';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import JavascriptIcon from '@mui/icons-material/Javascript';
 import ThreeSixtyIcon from '@mui/icons-material/ThreeSixty';
 import UndoIcon from '@mui/icons-material/Undo';
 import RedoIcon from '@mui/icons-material/Redo';
-import RestartAltIcon from '@mui/icons-material/RestartAlt';
-import JavascriptIcon from '@mui/icons-material/Javascript';
-import GridOnIcon from '@mui/icons-material/GridOn';
+import EditIcon from '@mui/icons-material/Edit';
+import CustomAppBar from "../CustomAppBar";
+import CustomText from "../CustomText";
+import { saveAs } from "file-saver";
+import View3D from "./View3D";
 import '../../styles/ViewPage.css';
 
 function LinearProgressWithLabel(props) {
@@ -25,9 +24,9 @@ function LinearProgressWithLabel(props) {
                 <LinearProgress sx={{ filter: 'brightness(85%)', height: 5 }} color="secondary" variant="determinate" {...props} />
             </Box>
             <Box sx={{ minWidth: 35 }}>
-                <Typography variant="body2" color="text.secondary">{`${Math.round(
-                    props.value,
-                )}%`}</Typography>
+                <Typography variant="body2" color="text.secondary">
+                    {`${Math.round(props.value,)}%`}
+                </Typography>
             </Box>
         </Box>
     );
@@ -294,7 +293,7 @@ const ViewPage = ({ solution, setSolution, units, setUnits, originalSolution }) 
 
     const addHistory = (h) => {
         const currIndex = Math.max(historyIndex, 0);
-        setHistory(curr => [h, ...curr.slice(currIndex, Math.min(curr.length, historyIndex + MAX_HISTORY - 1))]);
+        setHistory(curr => [h, ...curr.slice(currIndex, Math.min(curr.length, currIndex + MAX_HISTORY - 1))]);
         setHistoryIndex(0);
     };
 

@@ -2,7 +2,6 @@ import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import CustomText from "./CustomText";
 import "../styles/UnitsOfMeasurement.css";
 
-
 const UnitsOfMeasurement = ({ units, setUnits }) => {
     const textStyle = {textTransform: 'none'}
     return (

@@ -46,7 +46,6 @@ const isInputValid = (data) => {
         const tester = typeTesters[keyType];
         const value = container[key];
         if (tester && !tester(value)) {
-            debugger;
             return t('inputError', { object: 'container', key, type: keyType, value: value });
         }
     }

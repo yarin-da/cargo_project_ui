@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FormControl,InputLabel, Input, Button, Grid } from "@mui/material";
 import ToggleButton from "@mui/material/ToggleButton";
-import "../styles/AddPackage.css";
-import CrossIcon from '@mui/icons-material/ClearRounded';
 import CustomText from "./CustomText";
 import Package from "./Package";
 import { parseValue } from "./Type";
+import CrossIcon from '@mui/icons-material/ClearRounded';
+import "../styles/AddPackage.css";
 
 const CustomBooleanInput = ({ value, setValue, inputId }) => {
     const onClick = () => setValue(curr => !curr);
