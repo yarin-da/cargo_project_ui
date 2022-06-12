@@ -83,3 +83,7 @@
     justify-content: space-evenly;
     height: 100%;
 }
+
+.settings-button:hover {
+    filter: contrast(75%);
+}

@@ -4,10 +4,11 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import SettingsPage from './SettingsPage';
 import Logo from '../images/logo.png';
 import { useNavigate } from "react-router-dom";
+import "../styles/Header.css";
 
 const SettingsButton = ({ onClick }) => {
     return (
-        <Button onClick={onClick}>
+        <Button className="settings-button" onClick={onClick}>
             <SettingsIcon htmlColor="black" fontSize={"medium"} />
         </Button>
     );
