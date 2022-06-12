@@ -13,7 +13,7 @@ const isValidSolution = (input) => {
     return true;
 };
 
-const Header = ({ units, setUnits, setSolution }) => {
+const Header = ({ units, setUnits, setSolution, setOriginalSolution }) => {
     const { t } = useTranslation();
     const [alertType, setAlertType] = useState('info');
     const [alertText, setAlertText] = useState('');
@@ -35,6 +35,7 @@ const Header = ({ units, setUnits, setSolution }) => {
                 setInputError(true);
             } else {
                 setInputError(false);
+                setOriginalSolution(solution);
                 setSolution(solution);
                 navigate('/view');
             }

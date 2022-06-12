@@ -49,7 +49,12 @@ function App() {
                     exact 
                     path="/"
                     element={
-                        <Header units={units} setUnits={setUnits} setSolution={setSolution} />
+                        <Header 
+                            units={units} 
+                            setUnits={setUnits} 
+                            setSolution={setSolution} 
+                            setOriginalSolution={setOriginalSolution} 
+                        />
                     }
                 >
                 </Route>
