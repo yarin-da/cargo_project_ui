@@ -9,8 +9,8 @@ import { Alert } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import "../styles/Header.css";
 
-const isValidSolution = (input) => {
-    return true;
+const checkSolution = (input) => {
+    return '';
 };
 
 const Header = ({ units, setUnits, setSolution, setOriginalSolution }) => {
@@ -18,7 +18,6 @@ const Header = ({ units, setUnits, setSolution, setOriginalSolution }) => {
     const [alertType, setAlertType] = useState('info');
     const [alertText, setAlertText] = useState('');
     const [showAlert, setShowAlert] = useState(false);
-    const [inputError, setInputError] = useState(false);
     const navigate = useNavigate();
     const fileInputRef = useRef();
 
@@ -28,13 +27,12 @@ const Header = ({ units, setUnits, setSolution, setOriginalSolution }) => {
         reader.readAsText(file);
         reader.onload = () => {
             const solution = JSON.parse(reader.result);
-            if (!isValidSolution(solution)) {
+            const error = checkSolution(solution);
+            if (error) {
                 setAlertType('error');
-                setAlertText(solution.error);
+                setAlertText(error);
                 setShowAlert(true);
-                setInputError(true);
             } else {
-                setInputError(false);
                 setOriginalSolution(solution);
                 setSolution(solution);
                 navigate('/view');

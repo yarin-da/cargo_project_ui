@@ -117,18 +117,6 @@ function parseCSV(file, handler) {
     }
 };
 
-function parseArrayToCSV(array) {
-    let ret = '';
-    if (array.length > 0) {
-        const keys = Object.keys(array[0]);
-        ret += keys.join(',') + '\n';
-        array.forEach(element => {
-            ret += keys.map(key => element[key]).join(',') + '\n';
-        });
-    }
-    return ret;
-}
-
 export {
     parseCSV,
     parseCSVFile,

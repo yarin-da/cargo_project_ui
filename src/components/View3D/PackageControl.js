@@ -12,25 +12,19 @@ const PackageControl = ({
     packages,
     setSolution, 
     selectedPackages, 
-    addHistory, 
-    changeHistoryIndex, 
     originalSolution,
-    resetHistory,
-    history,
+    historyFunctions,
 }) => {
+    const { addHistoryAction, resetHistory, undoHistoryAction, redoHistoryAction } = historyFunctions;
     const { t } = useTranslation();
     const update = (prop, value) => {
+        addHistoryAction({ packages: selectedPackages, prop, value });
         const newSolution = [...solution];
         selectedPackages.forEach(selectedPackage => {
             const newPackage = {...solution[selectedPackage]};
             newPackage[prop] += value;
             newSolution[selectedPackage] = newPackage;  
         });
-        debugger;
-        if (history.length === 0) {
-            addHistory(selectedPackages.map(idx => ({index: idx, pkg: solution[idx]})));
-        }
-        addHistory(selectedPackages.map(idx => ({index: idx, pkg: newSolution[idx]})));
         setSolution(curr => ({...curr, solution: newSolution}));
     };
 
@@ -72,12 +66,12 @@ const PackageControl = ({
                     </Button> 
                 </Tooltip>  
                 <Tooltip title={t('undo')}>
-                    <Button className="control-button" style={buttonStyle} onClick={() => changeHistoryIndex(1)}>
+                    <Button className="control-button" style={buttonStyle} onClick={() => undoHistoryAction()}>
                         <UndoIcon />
                     </Button>
                 </Tooltip>
                 <Tooltip title={t('redo')}>
-                    <Button className="control-button" style={buttonStyle} onClick={() => changeHistoryIndex(-1)}>
+                    <Button className="control-button" style={buttonStyle} onClick={() => redoHistoryAction()}>
                         <RedoIcon />
                     </Button>   
                 </Tooltip>

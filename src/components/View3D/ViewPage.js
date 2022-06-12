@@ -44,41 +44,66 @@ const initializeColors = (packages) => {
 const MAX_HISTORY = 50;
 
 const ViewPage = ({ solution, setSolution, units, setUnits, originalSolution }) => {
-    const [history, setHistory] = useState([]);
     const [historyIndex, setHistoryIndex] = useState(0);
+    const [historyActions, setHistoryActions] = useState([]);
     const [selectedPackages, setSelectedPackages] = useState([]);
     const [colorMap, setColorMap] = useState(initializeColors(solution ? (solution['packages'] ?? []) : []));
     const { t } = useTranslation();
 
-    const onDownload = (exportType) => {
-        downloadSolutionFile(exportType, solution);
+    const redo = (action) => {
+        const newSolution = {...solution};
+        action.packages.forEach(pkg => {
+            newSolution['solution'][pkg][action.prop] += action.value;
+        });
+        setSolution(newSolution);
+    };
+    
+    const undo = (action) => {
+        const newSolution = {...solution};
+        action.packages.forEach(pkg => {
+            newSolution['solution'][pkg][action.prop] -= action.value;
+        });
+        setSolution(newSolution);
     };
 
-    const addHistory = (h) => {
-        const currIndex = Math.max(historyIndex, 0);
-        setHistory(curr => [h, ...curr.slice(currIndex, Math.min(curr.length, currIndex + MAX_HISTORY - 1))]);
+    const resetHistory = () => {
+        setHistoryActions([]);
         setHistoryIndex(0);
-    };
+    }
 
-    const changeHistoryIndex = (step) => {
-        const currIndex = historyIndex;
-        const newIndex = currIndex + step;
-        if (0 <= newIndex && newIndex < history.length) {
-            const newSolution = {...solution};
-            history[newIndex].forEach(hist => newSolution['solution'][hist['index']] = hist['pkg']);
-            setSolution(newSolution);
+    const addHistoryAction = (action) => {
+        const start = historyIndex;
+        const end = Math.min(historyActions.length, start + MAX_HISTORY - 1);
+        setHistoryActions(curr => [action, ...curr.slice(start, end)]);
+    }
+
+    const undoHistoryAction = () => {
+        const newIndex = historyIndex + 1;
+        console.log(`${historyActions.length}: ${historyIndex}->${newIndex}`)
+        if (newIndex <= historyActions.length) {
+            const action = historyActions[historyIndex];
+            undo(action);
             setHistoryIndex(newIndex);
         }
+    }
+
+    const redoHistoryAction = () => {
+        const newIndex = historyIndex - 1;
+        if (newIndex >= 0) {
+            const action = historyActions[newIndex];
+            redo(action);
+            setHistoryIndex(newIndex);
+        }
+    }
+
+    const onDownload = (exportType) => {
+        downloadSolutionFile(exportType, solution);
     };
 
     const selectRandomPackage = () => {
         if (!solution) return;
         const randIndex = Math.floor(Math.random() * (solution['solution'].length));
         setSelectedPackages([randIndex]);
-    };
-
-    const resetHistory = () => {
-        setHistory([]);
     };
 
     return (
@@ -135,11 +160,8 @@ const ViewPage = ({ solution, setSolution, units, setUnits, originalSolution }) 
                         packages={solution ? solution['packages'] : []} 
                         setSolution={setSolution} 
                         selectedPackages={selectedPackages} 
-                        addHistory={addHistory}
-                        changeHistoryIndex={changeHistoryIndex}
                         originalSolution={originalSolution}
-                        resetHistory={resetHistory}
-                        history={history}
+                        historyFunctions={{ addHistoryAction, resetHistory, undoHistoryAction, redoHistoryAction }}
                     />
                 }
             </div>
