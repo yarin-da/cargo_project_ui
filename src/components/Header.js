@@ -9,18 +9,8 @@ import { Snackbar } from "@material-ui/core";
 import { Alert } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
-const isValidCSVSolution = (json) => {
+const isValidSolution = (input) => {
     return true;
-};
-
-const isValidJSONSolution = (json) => {
-    return true;
-};
-
-const isValidSolution = (type, input) => {
-    if (type === 'json') return isValidJSONSolution(input);
-    if (type === 'csv') return isValidCSVSolution(input);
-    return false;
 };
 
 const Header = ({ units, setUnits, setSolution }) => {
@@ -37,9 +27,8 @@ const Header = ({ units, setUnits, setSolution }) => {
         let reader = new FileReader();
         reader.readAsText(file);
         reader.onload = () => {
-            // TODO: parse (also csv if extension is 'csv')
             const solution = JSON.parse(reader.result);
-            if (!isValidSolution('json', solution)) {
+            if (!isValidSolution(solution)) {
                 setAlertType('error');
                 setAlertText(solution.error);
                 setShowAlert(true);
@@ -107,7 +96,7 @@ const Header = ({ units, setUnits, setSolution }) => {
                                 type="file" 
                                 ref={fileInputRef} 
                                 onChange={uploadFile} 
-                                accept=".json, .csv, text/csv, application/vnd.ms-excel, application/csv, text/x-csv, application/x-csv, text/comma-separated-values, text/x-comma-separated-values" 
+                                accept=".json" 
                             />
                         </Button>
                     </div>

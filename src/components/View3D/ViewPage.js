@@ -6,7 +6,7 @@ import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import EditIcon from '@mui/icons-material/Edit';
 import CustomText from "../CustomText";
 import { useTranslation } from "react-i18next";
-import { Tooltip, Fab, Modal, Dialog, DialogTitle, DialogActions, Button, SpeedDial, SpeedDialAction } from "@mui/material";
+import { Tooltip, Box, Typography, Fab, Modal, Dialog, DialogTitle, DialogActions, Button, SpeedDial, SpeedDialAction, LinearProgress } from "@mui/material";
 import { saveAs } from "file-saver";
 import { parseJSONtoCSV } from "../CSVParser";
 import CustomAppBar from "../CustomAppBar";
@@ -17,6 +17,21 @@ import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import JavascriptIcon from '@mui/icons-material/Javascript';
 import GridOnIcon from '@mui/icons-material/GridOn';
 import '../../styles/ViewPage.css';
+
+function LinearProgressWithLabel(props) {
+    return (
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Box sx={{ width: '100%', mr: 1 }}>
+                <LinearProgress sx={{ filter: 'brightness(85%)', height: 5 }} color="secondary" variant="determinate" {...props} />
+            </Box>
+            <Box sx={{ minWidth: 35 }}>
+                <Typography variant="body2" color="text.secondary">{`${Math.round(
+                    props.value,
+                )}%`}</Typography>
+            </Box>
+        </Box>
+    );
+}
 
 const jsonToBlob = (data) => {
     const str = JSON.stringify(data, null, 2);
@@ -238,13 +253,14 @@ const Stats = ({ stats, container }) => {
                         Weight
                     </span>
                     <span style={{ gridColumn: 2 }}>
-                        {stats['weight']} / {container['maxWeight']}
+                        {/* {stats['weight']} / {container['maxWeight']} */}
+                        <LinearProgressWithLabel value={100 * stats['weight'] / container['maxWeight']} />
                     </span>
                     <span style={{ gridColumn: 1 }}>
                         Space
                     </span>
                     <span style={{ gridColumn: 2 }}>
-                        {100 * stats['space_usage']}%
+                        <LinearProgressWithLabel value={100 * stats['space_usage']} />
                     </span>
                     <h4>Boxes Used</h4>
                     {Object.keys(stats['box_usage']).map(t => 
@@ -270,13 +286,10 @@ const ViewPage = ({ solution, setSolution, units, setUnits, originalSolution }) 
     const [historyIndex, setHistoryIndex] = useState(0);
     const [selectedPackages, setSelectedPackages] = useState([]);
     const [colorMap, setColorMap] = useState(initializeColors(solution ? (solution['packages'] ?? []) : []));
-    const [showExportDialog, setShowExportDialog] = useState(false);
     const { t } = useTranslation();
 
-    const onClose = () => setShowExportDialog(false);
     const onDownload = (exportType) => {
         downloadSolutionFile(exportType, solution);
-        onClose();
     };
 
     const addHistory = (h) => {
@@ -290,7 +303,6 @@ const ViewPage = ({ solution, setSolution, units, setUnits, originalSolution }) 
         const newIndex = currIndex + step;
         if (0 <= newIndex && newIndex < history.length) {
             const newSolution = {...solution};
-            console.log(`${history.length}: ${currIndex} -> ${newIndex}`);
             history[newIndex].forEach(hist => newSolution['solution'][hist['index']] = hist['pkg']);
             setSolution(newSolution);
             setHistoryIndex(newIndex);
@@ -334,12 +346,6 @@ const ViewPage = ({ solution, setSolution, units, setUnits, originalSolution }) 
                                 onClick={() => onDownload('json')} 
                                 FabProps={{ sx: { width: 60, height: 60 } }}
                             />
-                            <SpeedDialAction 
-                                icon={<GridOnIcon fontSize="large" />} 
-                                tooltipTitle={"csv"} 
-                                onClick={() => onDownload('csv')} 
-                                FabProps={{ sx: { width: 60, height: 60 } }}
-                            />
                         </SpeedDial>
                     </Tooltip>
                     <Tooltip title={t('editSolution')} arrow>
@@ -354,16 +360,6 @@ const ViewPage = ({ solution, setSolution, units, setUnits, originalSolution }) 
                         </Fab>
                     </Tooltip>
                 </div>
-                <Dialog open={showExportDialog} onClose={onClose}>
-                    <DialogTitle>
-                        <CustomText text="exportSolution" />
-                    </DialogTitle>
-                    <DialogActions>
-                        <Button style={{ textTransform: 'none' }} onClick={onClose}>{t("cancel")}</Button>
-                        <Button style={{ textTransform: 'none' }} onClick={() => onDownload('csv')} autoFocus>{t("exportCSV")}</Button>
-                        <Button style={{ textTransform: 'none' }} onClick={() => onDownload('json')} autoFocus>{t("exportJSON")}</Button>
-                    </DialogActions>
-                </Dialog>
                 {
                     selectedPackages.length === 0 ?
                     <Stats 
