@@ -129,18 +129,8 @@ function parseArrayToCSV(array) {
     return ret;
 }
 
-function parseJSONtoCSV(json) {
-    // is 'json' an array?
-    if (!!json && json.constructor === Array) return parseArrayToCSV(json);
-    // is 'json' an object?
-    if (json === Object(json)) return Object.keys(json).map(prop => `\n${prop}\n` + parseJSONtoCSV(json[prop])).join('\n');
-    // 'json' is primitive
-    return json;
-};
-
 export {
     parseCSV,
-    parseJSONtoCSV,
     parseCSVFile,
 }
 

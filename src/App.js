@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import Header from './components/Header';
 import Config from "./components/Config";
 import ViewPage from "./components/View3D/ViewPage";
-import "./App.css";
 import {
     BrowserRouter as Router,
     Routes,
