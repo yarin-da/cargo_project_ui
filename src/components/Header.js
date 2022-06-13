@@ -14,13 +14,10 @@ import Package from "./Package";
 
 
 function containerFields(containerObject) {
-    const container = {};
     for (const [key, value] of Object.entries(containerObject)) {
         const type = types[key];
         const tester = stringTypeTesters[type];
-        if (tester(value)) {
-            container[key] = parseValue(key, value);
-        } else {
+        if (!tester(value)) {
             return {error: t('inputError', {object: t('container'), key: t(key), type: t(type), value})}
         }
     }
@@ -32,35 +29,27 @@ function packagesFields(packagesObjects) {
         return {error: t('packagesFormat')};
     }
 
-    const packages = [];
     for (let i = 0; i < packagesObjects.length; i++) {
-        const p = new Package();
         for (const [key, value] of Object.entries(packagesObjects[i])) {
             if (key === 'id') {
                 continue;
             }
             const type = types[key];
             const tester = stringTypeTesters[type];
-            if (tester(value)) {
-                p[key] = parseValue(key, value);
-            } else {
+            if (!tester(value)) {
                 return {error: t('inputError', {object: t('package'), key: t(key), type: t(type), value})}
             }
         }
-        packages.push(p);
     }
     return '';
 }
 
 function checkSolutionObject(solutionObj) {
     for (const [key, value] of Object.entries(solutionObj)) {
-        const obj = {}
         for (const [k, v] of Object.entries(value)) {
             const type = types[k];
             const tester = typeTesters[type];
-            if (tester(v)) {
-                obj[k] = parseValue(k, v);
-            } else {
+            if (!tester(v)) {
                 return {error: t('inputError', {object: t('solution'), key: t(k), type: t(type), v})}
             }
         }
@@ -69,7 +58,6 @@ function checkSolutionObject(solutionObj) {
 }
 
 function checkStatsObject(statsObj) {
-    let stats = {};
     for (const [key, value] of Object.entries(statsObj)) {
         if (key === 'box_usage') {
             for (const [k, v] of Object.entries(value)) {
@@ -101,9 +89,7 @@ function checkStatsObject(statsObj) {
 
         const type = types[key];
         const tester = typeTesters[type];
-        if (tester(value)) {
-            stats[key] = parseValue(key, value);
-        } else {
+        if (!tester(value)) {
             return {error: t('inputError', {object: t('stats'), key: t(key), type: t(type), value})}
         }
     }
@@ -140,8 +126,6 @@ const checkSolution = (input) => {
     if (statsRet.error) return {...statsRet}
 
     return ''
-
-
 };
 
 const Header = ({units, setUnits, setSolution, setOriginalSolution}) => {
