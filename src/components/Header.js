@@ -24,10 +24,14 @@ function containerFields(containerObject) {
             return {error: t('inputError', {object: t('container'), key: t(key), type: t(type), value})}
         }
     }
-    return {container};
+    return '';
 }
 
 function packagesFields(packagesObjects) {
+    if (!Array.isArray(packagesObjects)) {
+        return {error: t('packagesFormat')};
+    }
+
     const packages = [];
     for (let i = 0; i < packagesObjects.length; i++) {
         const p = new Package();
@@ -45,11 +49,10 @@ function packagesFields(packagesObjects) {
         }
         packages.push(p);
     }
-    return {packages};
+    return '';
 }
 
 function checkSolutionObject(solutionObj) {
-    let solution = {};
     for (const [key, value] of Object.entries(solutionObj)) {
         const obj = {}
         for (const [k, v] of Object.entries(value)) {
@@ -61,9 +64,8 @@ function checkSolutionObject(solutionObj) {
                 return {error: t('inputError', {object: t('solution'), key: t(k), type: t(type), v})}
             }
         }
-        solution = {...obj}
     }
-    return {solution};
+    return '';
 }
 
 function checkStatsObject(statsObj) {
@@ -94,7 +96,6 @@ function checkStatsObject(statsObj) {
                     }
                 }
             }
-            stats = {...statsObj['box_usage']}
             continue;
         }
 
@@ -106,7 +107,7 @@ function checkStatsObject(statsObj) {
             return {error: t('inputError', {object: t('stats'), key: t(key), type: t(type), value})}
         }
     }
-    return {stats};
+    return '';
 
 }
 
@@ -134,22 +135,11 @@ const checkSolution = (input) => {
     const statsRet = checkStatsObject(statsObj)
 
     if (containerRet.error) return {...containerRet};
-    console.log('hi1')
     if (packagesRet.error) return {...packagesRet};
-    console.log('hi2')
     if (solutionRet.error) return {...solutionRet}
-    console.log('hi3')
     if (statsRet.error) return {...statsRet}
-    console.log('hi4')
 
-
-    const {container} = containerRet
-    const {packages} = packagesRet
-    const {solution} = solutionRet
-    const {stats} = statsRet
-
-    console.log({container, packages, solution, stats})
-    return {container, packages, solution, stats}
+    return ''
 
 
 };
@@ -169,9 +159,11 @@ const Header = ({units, setUnits, setSolution, setOriginalSolution}) => {
         reader.onload = () => {
             const solution = JSON.parse(reader.result);
             const error = checkSolution(solution);
+            console.log(error)
             if (error) {
+                console.log("oof")
                 setAlertType('error');
-                setAlertText(error);
+                setAlertText(error.error);
                 setShowAlert(true);
             } else {
                 setOriginalSolution(solution);
