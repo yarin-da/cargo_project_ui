@@ -79,9 +79,12 @@
   "boolean": "boolean",
   "positiveInteger": "positive integer",
   "nonNegativeNumber": "non-negative number",
+<<<<<<< HEAD
   "editSolution": "Edit the solution",
   "reset": "Reset",
   "undo": "Undo",
   "redo": "Redo",
+=======
+>>>>>>> 324a00c7792b1b9cc9eace45953bc389206b7522
   "help": "Help"
 }
