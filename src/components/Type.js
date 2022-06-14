@@ -1,12 +1,14 @@
-import { t } from "i18next";
+import {t} from "i18next";
 
 const testBooleanType = (value) => typeof value === 'boolean';
 const testStringType = (value) => Object.prototype.toString.call(value) === '[object String]';
 const testNonNegativeNumberType = (value) => typeof value === 'number' && value >= 0
 const testPositiveIntegerType = (value) => Number.isInteger(value) && value > 0;
+const testNonNegativeIntegerType = (value) => Number.isInteger(value) && value >= 0;
 
 const testBooleanString = (value) => /^(true)|(false)$/i.test(value);
 const testPositiveIntegerString = (value) => /^\d*[1-9]\d*$/.test(value);
+const testNonNegativeIntegerString = (value) => /^\d*[0-9]\d*$/.test(value);
 const testNonNegativeNumberString = (value) => /^(\d*\.?\d+)|(\d+\.?\d*)$/.test(value);
 
 const types = {
@@ -22,11 +24,20 @@ const types = {
     "type": 'string',
     "cost": 'nonNegativeNumber',
     "maxWeight": 'nonNegativeNumber',
+    "x": 'nonNegativeInteger',
+    "y": 'nonNegativeInteger',
+    "z": 'nonNegativeInteger',
+    "rotation-x": 'nonNegativeInteger',
+    "rotation-y": 'nonNegativeInteger',
+    "rotation-z": 'nonNegativeInteger',
+    "space_usage": 'nonNegativeNumber',
+
 };
 
 const typeTesters = {
     "positiveInteger": testPositiveIntegerType,
     "nonNegativeNumber": testNonNegativeNumberType,
+    "nonNegativeInteger": testNonNegativeIntegerType,
     "string": testStringType,
     "boolean": testBooleanType,
 };
@@ -34,19 +45,20 @@ const typeTesters = {
 const stringTypeTesters = {
     "positiveInteger": testPositiveIntegerString,
     "nonNegativeNumber": testNonNegativeNumberString,
+    "nonNegativeInteger": testNonNegativeIntegerString,
     "boolean": testBooleanString,
     "string": (value) => true,
 }
 
 const isInputValid = (data) => {
-    const { container, packages } = data;
-    
+    const {container, packages} = data;
+
     for (let key of Object.keys(container)) {
         const keyType = types[key];
         const tester = typeTesters[keyType];
         const value = container[key];
         if (tester && !tester(value)) {
-            return t('inputError', { object: 'container', key, type: keyType, value: value });
+            return t('inputError', {object: 'container', key, type: keyType, value: value});
         }
     }
 
@@ -56,9 +68,9 @@ const isInputValid = (data) => {
             const tester = typeTesters[keyType];
             const value = pkg[key];
             if (tester && !tester(value)) {
-                return t('inputError', { object: 'package', key, type: keyType, value: value });
+                return t('inputError', {object: 'package', key, type: keyType, value: value});
             }
-        }    
+        }
     }
 
     return undefined;
@@ -74,13 +86,15 @@ function parseBool(str) {
 
 function parseValue(field, value) {
     const type = types[field];
-    switch(type) {
+    switch (type) {
         case 'boolean':
             return parseBool(value);
         case 'positiveInteger':
             return parseInt(value);
         case 'nonNegativeNumber':
             return parseFloat(value);
+        case 'nonNegativeInteger':
+            return parseInt(value);
         default:
             return value;
     }
