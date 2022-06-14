@@ -82,5 +82,6 @@
   "editSolution": "Edit the solution",
   "reset": "Reset",
   "undo": "Undo",
-  "redo": "Redo"
+  "redo": "Redo",
+  "help": "Help"
 }
