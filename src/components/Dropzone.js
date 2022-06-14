@@ -2,6 +2,7 @@ import { useState } from "react";
 import { DropzoneArea } from "material-ui-dropzone";
 import { useTranslation } from "react-i18next";
 import { parseCSVFile } from "./CSVParser";
+import {parseJSONFile} from "./JSONParser";
 import { Snackbar } from "@material-ui/core";
 import { Alert } from "@mui/material";
 
@@ -25,7 +26,14 @@ const Dropzone = ({ setContainer, setPackages }) => {
         let reader = new FileReader();
         reader.readAsText(droppedFiles[0]);
         reader.onload = () => {
-            const parsedData = parseCSVFile(reader.result);
+            let parsedData;
+            const fileName = droppedFiles[0].name;
+            if (fileName.substring(fileName.length - 5) === ".json") {
+                parsedData = parseJSONFile(reader.result)
+            } else {
+                parsedData = parseCSVFile(reader.result);
+            }
+
             if (parsedData.error) {
                 setAlertType('error');
                 setAlertText(parsedData.error);
@@ -45,7 +53,7 @@ const Dropzone = ({ setContainer, setPackages }) => {
             <DropzoneArea
                 dropzoneText={t("dropOrClick")}
                 filesLimit={1}
-                acceptedFiles={[".csv, text/csv, application/vnd.ms-excel, application/csv, text/x-csv, application/x-csv, text/comma-separated-values, text/x-comma-separated-values"]}
+                acceptedFiles={[".csv, text/csv, application/vnd.ms-excel, application/csv, text/x-csv, application/x-csv, text/comma-separated-values, text/x-comma-separated-values, .json"]}
                 showPreviewsInDropzone={false}
                 showFileNames={true}
                 previewGridProps={{container: {spacing: 1, direction: 'row'}}}
