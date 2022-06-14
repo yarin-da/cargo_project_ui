@@ -7,6 +7,8 @@ import {
     Routes,
     Route,
 } from "react-router-dom";
+import {createTheme} from "@material-ui/core";
+import {ThemeProvider} from "@emotion/react";
 
 // TODO: delete all console.logs, debuggers and unused variables/imports
 
@@ -18,6 +20,18 @@ const getJSONFromStorage = (key, defaultValue) => {
 const saveJSONinStorage = (key, value) => {
     localStorage.setItem(key, JSON.stringify(value));
 }
+
+const theme = createTheme({
+    palette: {
+        primary: {
+            // Purple and green play nicely together.
+            main: '#42A5F5',
+            light: '#42A5F5',
+            dark: '#42A5F5'
+        },
+    },
+});
+
 
 function App() {
     const [historyIndex, setHistoryIndex] = useState(getJSONFromStorage('historyIndex', 0));
@@ -46,56 +60,58 @@ function App() {
     useEffect(() => { saveJSONinStorage('originalSolution', originalSolution) }, [originalSolution]);
 
     return (
-        <Router>
-            <Routes>
-                <Route 
-                    exact 
-                    path="/"
-                    element={
-                        <Header 
-                            units={units} 
-                            setUnits={setUnits} 
-                            setSolution={setSolution} 
-                            setOriginalSolution={setOriginalSolution} 
-                        />
-                    }
-                >
-                </Route>
-                <Route 
-                    path="/config"
-                    element={
-                        <Config 
-                            units={units}
-                            setUnits={setUnits}
-                            packages={packages}
-                            setPackages={setPackages}
-                            container={container} 
-                            setContainer={setContainer}
-                            setSolution={setSolution}
-                            setOriginalSolution={setOriginalSolution}
-                        />
-                    }
-                >
-                </Route>
-                <Route 
-                    path="/view" 
-                    element={
-                        <ViewPage 
-                            solution={solution}
-                            setSolution={setSolution}
-                            units={units}
-                            setUnits={setUnits}
-                            originalSolution={originalSolution}
-                            historyIndex={historyIndex}
-                            setHistoryIndex={setHistoryIndex}
-                            historyActions={historyActions}
-                            setHistoryActions={setHistoryActions}
-                        />
-                    }
-                >
-                </Route>
-            </Routes>
-        </Router>
+        <ThemeProvider theme={theme}>
+            <Router>
+                <Routes>
+                    <Route 
+                        exact 
+                        path="/"
+                        element={
+                            <Header 
+                                units={units} 
+                                setUnits={setUnits} 
+                                setSolution={setSolution} 
+                                setOriginalSolution={setOriginalSolution} 
+                            />
+                        }
+                    >
+                    </Route>
+                    <Route 
+                        path="/config"
+                        element={
+                            <Config 
+                                units={units}
+                                setUnits={setUnits}
+                                packages={packages}
+                                setPackages={setPackages}
+                                container={container} 
+                                setContainer={setContainer}
+                                setSolution={setSolution}
+                                setOriginalSolution={setOriginalSolution}
+                            />
+                        }
+                    >
+                    </Route>
+                    <Route 
+                        path="/view" 
+                        element={
+                            <ViewPage 
+                                solution={solution}
+                                setSolution={setSolution}
+                                units={units}
+                                setUnits={setUnits}
+                                originalSolution={originalSolution}
+                                historyIndex={historyIndex}
+                                setHistoryIndex={setHistoryIndex}
+                                historyActions={historyActions}
+                                setHistoryActions={setHistoryActions}
+                            />
+                        }
+                    >
+                    </Route>
+                </Routes>
+            </Router>
+        </ThemeProvider>
     );
 };
 

@@ -19,8 +19,8 @@ const CustomAppBar = ({ units, setUnits }) => {
     const toggleSettingsModal = () => setShowSettings(curr => !curr);
     const navigate = useNavigate();
     return (
-        <div style={{ boxShadow: '10px 3px 10px rgba(0,0,0,0.25)' }}>
-            <AppBar position="static">
+        <div style={{ boxShadow: '10px 3px 10px rgba(0,0,0,0.25)', zIndex: 1 }}>
+            <AppBar position="static" style={{backgroundColor: '#42A5F5'}}>
                 <Toolbar style={{display: 'flex', justifyContent: 'space-between'}}>
                     <Box
                         onClick={() => navigate('/')}

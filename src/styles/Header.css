@@ -1,20 +1,15 @@
-.image {
+.header-background-image {
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    background: no-repeat center center fixed;
-    width: 100%;
-    height: auto;
+    background-image: url(../images/new-XDbackground.png);
 }
 
 .head {
     display: flex;
-    flex-direction: column;
     padding: 40px;
     flex: 1;
-    background-repeat: no-repeat;
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../images/background.jpeg);
 }
 
 .header-nav {
@@ -50,7 +45,7 @@
 
 .start-button {
     font-size: 50px;
-    font-weight: 700px;
+    /*font-weight: 700px;*/
     color: #445;
     border: 2px solid black;
     border-radius: 20px;
@@ -80,7 +75,7 @@
 .header {
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: flex-end;
     height: 100%;
 }
 
