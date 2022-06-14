@@ -19,7 +19,7 @@ const SettingsButton = ({onClick}) => {
 
 const Information = ({onClick}) => {
     return (
-        <Button onClick={onClick}>
+        <Button className="settings-button" onClick={onClick}>
             <InfoSharpIcon htmlColor="black" fontSize={"medium"}/>
         </Button>
     );
