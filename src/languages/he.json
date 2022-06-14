@@ -79,12 +79,9 @@
   "boolean": "בוליאני",
   "positiveInteger": "מספר שלם חיובי",
   "nonNegativeNumber": "מספר אי-שלילי",
-<<<<<<< HEAD
   "editSolution": "עריכת הפתרון",
   "reset": "אפס",
   "undo": "שינוי אחורה",
   "redo": "שינוי קדימה",
-=======
->>>>>>> 324a00c7792b1b9cc9eace45953bc389206b7522
   "help": "עזרה"
 }

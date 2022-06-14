@@ -1,36 +1,19 @@
-<<<<<<< HEAD
 import { useState } from "react";
 import { Button, AppBar, Toolbar, Box, Modal, Tooltip } from "@mui/material";
-=======
-import {useState} from "react";
-import {Button, AppBar, Toolbar, Box, Modal} from "@mui/material";
->>>>>>> 324a00c7792b1b9cc9eace45953bc389206b7522
 import SettingsIcon from '@mui/icons-material/Settings';
 import InfoSharpIcon from "@mui/icons-material/InfoSharp";
 import SettingsPage from './SettingsPage';
 import InfoSharpIcon from "@mui/icons-material/InfoSharp";
 import Logo from '../images/logo.png';
-<<<<<<< HEAD
 import { useNavigate } from "react-router-dom";
 import ShowInfo from "./ShowInfo";
 import {useTranslation} from "react-i18next";
 import "../styles/Header.css";
-=======
-import {useNavigate} from "react-router-dom";
-import ShowInfo from "./ShowInfo";
-import {Tooltip} from "@material-ui/core";
-import {useTranslation} from "react-i18next";
->>>>>>> 324a00c7792b1b9cc9eace45953bc389206b7522
 
 const SettingsButton = ({onClick}) => {
     return (
-<<<<<<< HEAD
         <Button className="settings-button" onClick={onClick}>
             <SettingsIcon htmlColor="black" fontSize={"medium"} />
-=======
-        <Button onClick={onClick}>
-            <SettingsIcon htmlColor="black" fontSize={"medium"}/>
->>>>>>> 324a00c7792b1b9cc9eace45953bc389206b7522
         </Button>
     );
 };
@@ -43,13 +26,8 @@ const Information = ({onClick}) => {
     );
 };
 
-<<<<<<< HEAD
 const CustomAppBar = ({ units, setUnits }) => {
     const { t } = useTranslation();
-=======
-const CustomAppBar = ({units, setUnits}) => {
-    const {t} = useTranslation();
->>>>>>> 324a00c7792b1b9cc9eace45953bc389206b7522
     const [showSettings, setShowSettings] = useState(false);
     const [showInfo, setShowInfo] = useState(false);
     const toggleSettingsModal = () => setShowSettings(curr => !curr);
@@ -70,7 +48,6 @@ const CustomAppBar = ({units, setUnits}) => {
                         alt="Your logo."
                         src={Logo}
                     />
-<<<<<<< HEAD
                    <Box sx={{ display: 'flex' }}>
                         <Tooltip title={t("help")}>
                             <Toolbar>
@@ -83,18 +60,6 @@ const CustomAppBar = ({units, setUnits}) => {
                             </Toolbar>
                         </Tooltip>
                    </Box>
-=======
-                    <Tooltip title={t("settings")}>
-                        <Toolbar>
-                            <SettingsButton onClick={toggleSettingsModal}/>
-                        </Toolbar>
-                    </Tooltip>
-                    <Tooltip title={t("help")}>
-                        <Toolbar>
-                            <Information onClick={toggleInformationModal}/>
-                        </Toolbar>
-                    </Tooltip>
->>>>>>> 324a00c7792b1b9cc9eace45953bc389206b7522
                 </Toolbar>
             </AppBar>
             <Modal
