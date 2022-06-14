@@ -78,5 +78,6 @@
   "invalidColumn": "{{column}} הקלט מכיל עמודה שגויה",
   "boolean": "בוליאני",
   "positiveInteger": "מספר שלם חיובי",
-  "nonNegativeNumber": "מספר אי-שלילי"
+  "nonNegativeNumber": "מספר אי-שלילי",
+  "help": "עזרה"
 }

@@ -5,8 +5,9 @@ import InfoSharpIcon from "@mui/icons-material/InfoSharp";
 import SettingsPage from './SettingsPage';
 import Logo from '../images/logo.png';
 import {useNavigate} from "react-router-dom";
-import CustomText from "./CustomText";
 import ShowInfo from "./ShowInfo";
+import {Tooltip} from "@material-ui/core";
+import {useTranslation} from "react-i18next";
 
 const SettingsButton = ({onClick}) => {
     return (
@@ -25,6 +26,7 @@ const Information = ({onClick}) => {
 };
 
 const CustomAppBar = ({units, setUnits}) => {
+    const {t} = useTranslation();
     const [showSettings, setShowSettings] = useState(false);
     const [showInfo, setShowInfo] = useState(false);
     const toggleSettingsModal = () => setShowSettings(curr => !curr);
@@ -45,12 +47,16 @@ const CustomAppBar = ({units, setUnits}) => {
                         alt="Your logo."
                         src={Logo}
                     />
-                    <Toolbar>
-                        <SettingsButton onClick={toggleSettingsModal}/>
-                    </Toolbar>
-                    <Toolbar>
-                        <Information onClick={toggleInformationModal}/>
-                    </Toolbar>
+                    <Tooltip title={t("settings")}>
+                        <Toolbar>
+                            <SettingsButton onClick={toggleSettingsModal}/>
+                        </Toolbar>
+                    </Tooltip>
+                    <Tooltip title={t("help")}>
+                        <Toolbar>
+                            <Information onClick={toggleInformationModal}/>
+                        </Toolbar>
+                    </Tooltip>
                 </Toolbar>
             </AppBar>
             <Modal
@@ -67,9 +73,9 @@ const CustomAppBar = ({units, setUnits}) => {
                 open={showInfo}
                 onClose={toggleInformationModal}
             >
-               <div>
-                   <ShowInfo/>
-               </div>
+                <div>
+                    <ShowInfo/>
+                </div>
             </Modal>
         </div>
     );

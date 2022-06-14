@@ -78,5 +78,6 @@
   "invalidColumn": "The input contains an invalid column {{column}}",
   "boolean": "boolean",
   "positiveInteger": "positive integer",
-  "nonNegativeNumber": "non-negative number"
+  "nonNegativeNumber": "non-negative number",
+  "help": "Help"
 }
