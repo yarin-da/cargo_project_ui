@@ -10,10 +10,23 @@ import {useTranslation} from "react-i18next";
 import "../styles/Header.css";
 import {t} from "i18next";
 import {parseValue, stringTypeTesters, types, typeTesters} from "./Type";
-import Package from "./Package";
 
 
 function containerFields(containerObject) {
+    const containerKeys = ['width', 'height', 'depth', 'maxWeight']
+    const inputKeys = Object.keys(containerObject)
+
+    if (inputKeys.length !== 4) {
+        return {error: t('invalidContainer')};
+    }
+
+    for (const k of inputKeys) {
+        if (!containerKeys.includes(k)) {
+            console.log(k)
+            return {error: t('invalidContainer')};
+        }
+    }
+
     for (const [key, value] of Object.entries(containerObject)) {
         const type = types[key];
         const tester = stringTypeTesters[type];
@@ -29,10 +42,18 @@ function packagesFields(packagesObjects) {
         return {error: t('packagesFormat')};
     }
 
+    const packagesKeys = ['type', 'width', 'height', 'depth']
     for (let i = 0; i < packagesObjects.length; i++) {
+        if (Object.keys(packagesObjects[i]).length !== 4) {
+            return {error: t('packagesFormat')};
+        }
+
         for (const [key, value] of Object.entries(packagesObjects[i])) {
             if (key === 'id') {
                 continue;
+            }
+            if (!packagesKeys.includes(key)) {
+                return {error: t('packagesFormat')};
             }
             const type = types[key];
             const tester = stringTypeTesters[type];
@@ -45,8 +66,16 @@ function packagesFields(packagesObjects) {
 }
 
 function checkSolutionObject(solutionObj) {
+    const solKeys = ['type', 'x', 'y', 'z', 'rotation-x', 'rotation-y', 'rotation-z']
+
     for (const [key, value] of Object.entries(solutionObj)) {
         for (const [k, v] of Object.entries(value)) {
+            if (Object.keys(value).length !== 7) {
+                return {error: t('invalidSolution')};
+            }
+            if (!solKeys.includes(k)) {
+                return {error: t('invalidSolution')};
+            }
             const type = types[k];
             const tester = typeTesters[type];
             if (!tester(v)) {
@@ -58,7 +87,17 @@ function checkSolutionObject(solutionObj) {
 }
 
 function checkStatsObject(statsObj) {
+    const statsKeys = ['profit', 'weight', 'box_usage', 'space_usage']
+
+    if (Object.keys(statsObj).length !== 4) {
+        return {error: t('invalidStats')};
+    }
+
     for (const [key, value] of Object.entries(statsObj)) {
+        if (!statsKeys.includes(key)) {
+            return {error: t('invalidStats')};
+        }
+
         if (key === 'box_usage') {
             for (const [k, v] of Object.entries(value)) {
                 if (!Number.isInteger(v['used'])) {
@@ -68,7 +107,7 @@ function checkStatsObject(statsObj) {
                             object: t('stats'),
                             key: 'box_usage',
                             type: t("nonNegativeInteger"),
-                            val
+                            value: val
                         })
                     }
                 }
@@ -79,7 +118,7 @@ function checkStatsObject(statsObj) {
                             object: t('stats'),
                             key: 'box_usage',
                             type: t("nonNegativeInteger"),
-                            val
+                            value: val
                         })
                     }
                 }
@@ -143,9 +182,7 @@ const Header = ({units, setUnits, setSolution, setOriginalSolution}) => {
         reader.onload = () => {
             const solution = JSON.parse(reader.result);
             const error = checkSolution(solution);
-            console.log(error)
             if (error) {
-                console.log("oof")
                 setAlertType('error');
                 setAlertText(error.error);
                 setShowAlert(true);
