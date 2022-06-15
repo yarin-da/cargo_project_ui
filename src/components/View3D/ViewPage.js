@@ -19,7 +19,7 @@ const validateSolution = (solution) => {
         rotation.forEach((r, i) => {
             const [a, b] = [0, 1, 2].filter(a => a !== i);
             let angle = 0;
-            const rot = r % 180;
+            const rot = r % 360;
             while (angle < rot) {
                 angle += 90;
                 const temp = newScale[a];
@@ -31,24 +31,9 @@ const validateSolution = (solution) => {
     }
 
     const { width, depth, height } = solution['container'];
-    const space = (() => {
-        const arr = new Array(width);
-        for (let w in arr) {
-            arr[w] = new Array(depth);
-            for (let d in arr[w]) {
-                arr[w][d] = new Array(height);
-                for (let h in arr[w][d]) {
-                    arr[w][d][h] = false;
-                };
-            };
-        };
-        // TODO: not working
-        console.log(arr);
-        return arr;
-    })();
-
+    const space = new Array(width).fill(new Array(depth).fill(new Array(height).fill(false)));
     const packageSize = {};
-    return solution['solution'].some(pkg => {
+    const hasInvalidPackage = solution['solution'].some(pkg => {
         const pkgType = pkg['type'];
         if (!(pkgType in packageSize)) {
             const {width:w, depth:d, height:h} = solution['packages'].find(x => x['type'] === pkgType);
@@ -59,16 +44,21 @@ const validateSolution = (solution) => {
         const [w, d, h] = rotate(packageSize[pkgType], rotation);
         const { x, y, z } = pkg;
 
-        if (x < 0 || y < 0 || z < 0 || x+w >= width || y+d >= depth || z+h >= height) return true;
+        if (x < 0 || y < 0 || z < 0 || x+w >= width || y+d >= depth || z+h >= height) {
+            return true;
+        }
         for (let i = x; i < x + w; i++) {
             for (let j = y; j < y + d; j++) {
                 for (let k = z; k < z + h; k++) {
-                    if (space[i][j][k]) return true;
+                    if (space[i][j][k]) {
+                        return true;
+                    }
                     space[i][j][k] = true;
                 }
             }
         }
     });
+    return !hasInvalidPackage;
 };
 
 const jsonToBlob = (data) => {
@@ -159,6 +149,7 @@ const ViewPage = ({
 
     const onDownload = (exportType) => {
         if (validateSolution(solution)) {
+            console.log('legal solution!');
             downloadSolutionFile(exportType, solution);
         } else {
             console.log('illegal solution!');
