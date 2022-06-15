@@ -19,6 +19,7 @@ import CustomAppBar from "./CustomAppBar";
 import '../styles/Config.css';
 import ConfigPackageList from "./ConfigPackageList";
 import { isInputValid } from "./Type";
+import saveJson from "./SaveJson";
 
 const tabs = [
     {
@@ -178,6 +179,9 @@ const Config = ({
                         open={openConfirmDialog}
                         onConfirm={() => { setOpenConfirmDialog(false); uploadDataToServer(); }} 
                         onCancel={() => setOpenConfirmDialog(false)}
+                        extraButtons={[
+                            { title: 'exportInput', onClick: () => { saveJson('user_input', {container, packages}) } }
+                        ]}
                     />
                     <Fab 
                         disabled={currentPage === 0}

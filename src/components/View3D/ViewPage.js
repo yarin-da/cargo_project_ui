@@ -6,27 +6,15 @@ import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import JavascriptIcon from '@mui/icons-material/Javascript';
 import EditIcon from '@mui/icons-material/Edit';
 import CustomAppBar from "../CustomAppBar";
-import { saveAs } from "file-saver";
+import saveJson from "../SaveJson";
 import View3D from "./View3D";
 import Stats from "./Stats";
 import ColorMap from "./ColorMap";
 import PackageControl from "./PackageControl";
 import '../../styles/ViewPage.css';
 
-const jsonToBlob = (data) => {
-    const str = JSON.stringify(data, null, 2);
-    const bytes = new TextEncoder().encode(str);
-    const blob = new Blob([bytes], { type: "application/json;charset=utf-8" });
-    return blob;
-};
-
-const getSolutionBlob = (exportType, solution) => {
-    return jsonToBlob(solution);
-};
-
-function downloadSolutionFile(exportType, solution){
-    let blob = getSolutionBlob(exportType, solution);
-    saveAs(blob, `packing_solution.${exportType}`);
+function downloadSolutionFile(solution){
+    saveJson('packing_solution', solution);
 }
 
 const initializeColors = (packages) => {  
@@ -100,7 +88,7 @@ const ViewPage = ({
     }
 
     const onDownload = (exportType) => {
-        downloadSolutionFile(exportType, solution);
+        downloadSolutionFile(solution);
     };
 
     const selectRandomPackage = () => {

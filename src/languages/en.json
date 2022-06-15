@@ -92,5 +92,7 @@
   "reset": "Reset",
   "undo": "Undo",
   "redo": "Redo",
-  "help": "Help"
+  "help": "Help",
+  "exportInput": "Export Input",
+  "finishDialogContent": "Confirm to view the solution, export to save your input for later use"
 }

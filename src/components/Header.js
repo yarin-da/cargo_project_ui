@@ -7,9 +7,10 @@ import {Typography} from "@material-ui/core";
 import {Snackbar} from "@material-ui/core";
 import {Alert} from "@mui/material";
 import {useTranslation} from "react-i18next";
-import "../styles/Header.css";
 import {t} from "i18next";
-import {parseValue, stringTypeTesters, types, typeTesters} from "./Type";
+import {stringTypeTesters, types, typeTesters} from "./Type";
+import { ReactComponent as HeaderWorldSvg } from '../images/header-world.svg';
+import "../styles/Header.css";
 
 
 function containerFields(containerObject) {
@@ -194,9 +195,15 @@ const Header = ({units, setUnits, setSolution, setOriginalSolution}) => {
         }
     };
 
+    const imageStyle = {
+        position: 'absolute',
+        right: 0,
+    };
+
     return (
         <div style={{ display: 'flex', flexDirection: 'column-reverse', width: '100vw', height: '100vh' }}>
             <div className="head header-background-image">
+                <HeaderWorldSvg style={imageStyle} />
                 <div className="header">
                     <div className="header-title">
                         <Typography
