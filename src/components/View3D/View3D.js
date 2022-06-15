@@ -12,7 +12,7 @@ const VISIBILITY_DIST = 15;
 const VISIBILITY_DIST2 = VISIBILITY_DIST * VISIBILITY_DIST;
 const CONTAINER_COLOR = 0x777777;
 const CONTAINER_THICKNESS = 0.1;
-const BACKGROUND_COLOR = '#d4d4e4';
+const BACKGROUND_COLOR = '#ffffff';//'#d4d4e4';
 const SELECTED_BOX_COLOR = 0x004477;
 const SELECTED_EDGE_COLOR = 0x00aadd;
 const SELECTED_TEXT_COLOR = 0xffffff;
@@ -332,7 +332,6 @@ const View3D = ({ solution, packages, container, colorMap, selectedPackages, set
         }
     }
 
-    // TODO: let the user know somehow about these features
     const onPackageClick = (e, pkgIndex) => {
         e.stopPropagation();
         // focus on package when alt is pressed

@@ -9,6 +9,7 @@ import viewSolution from '../images/viewSolution.png'
 import * as React from 'react';
 import editColors from '../images/typeColor.png'
 import editButton from '../images/editButton.png'
+import emptyContainer from "../images/empty_container_axes.png";
 import exportButton from '../images/exportButton.png'
 import moveButtons from '../images/moveButtons.png'
 import Box from "@mui/material/Box";
@@ -39,60 +40,54 @@ const ViewHelp = () => {
                 <TabContext value={value}>
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                         <TabList onChange={handleChange}>
-                            <Tab label="Edit packages colors" value="1" />
-                            <Tab label="Edit solution" value="2" />
-                            <Tab label="Export solution" value="3" />
+                            <Tab style={{textTransform: 'none'}} label="Edit packages colors" value="1" />
+                            <Tab style={{textTransform: 'none'}} label="Edit solution" value="2" />
+                            <Tab style={{textTransform: 'none'}} label="Export solution" value="3" />
                         </TabList>
                     </Box>
-
-                    <TabPanel value="1" style={{display: "flex", flexDirection: "column"}}>
+                    <TabPanel value="1">
                         <CustomText text="If you want to change the color of the packages (by type) click on the color circle in the map on the left." />
-                        <img src={editColors} alt={editColors} style={{
-                            display: "flex",
-                            alignItems: "center",
-                            alignSelf: "center",
-                            height: 100,
-                            width: 160
-                        }}/> <br/>
-                    </TabPanel>
-                    <TabPanel value="2" style={{display: "flex", flexDirection: "column"}}>
-                        <CustomText text="To change the resulting solution, click the edit button and then the package you want to edit." />
-                        <img src={editButton} alt={editButton} style={{
-                            display: "flex",
-                            alignItems: "center",
-                            alignSelf: "center",
-                            height: 60,
-                            width: 70
-                        }}/><br/>
-                        <CustomText text="The buttons on the right menu are the same colors as the arrows next to the container - this indicates the direction of movement according to the color of the button." />
-                        <br/>
-                        <div style={{display: "flex", flexDirection: "row", alignItems: "center", alignSelf: "center"}}>
-                            <img src={moveButtons} alt={moveButtons} style={{
-                                display: "flex",
-                                alignItems: "center",
-                                alignSelf: "center",
-                                height: 220,
-                                width: 195
-                            }}/>
-                            <img src={moveButtons} alt={moveButtons} style={{
-                                display: "flex",
-                                alignItems: "center",
-                                alignSelf: "center",
-                                height: 220,
-                                width: 195
+                        <div style={{ display: 'flex', justifyContent: 'center' }}>
+                            <img src={editColors} alt={editColors} style={{
+                                height: 100,
+                                width: 160,
+                                marginTop: 5,
                             }}/>
                         </div>
-                        <br/>
                     </TabPanel>
-                    <TabPanel value="3" style={{display: "flex", flexDirection: "column"}}>
+                    <TabPanel value="2">
+                        <CustomText text="To change the resulting solution, click the edit button and then the package you want to edit." />
+                        <div style={{ display: 'flex', justifyContent: 'center' }}>
+                            <img src={editButton} alt={editButton} style={{
+                                height: 60,
+                                width: 70,
+                                marginBottom: 5,
+                            }}/>
+                        </div>
+                        <CustomText text="The buttons on the right menu are the same colors as the arrows next to the container - this indicates the direction of movement according to the color of the button." />
+                        <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+                            <img src={moveButtons} alt={moveButtons} style={{
+                                height: 242,
+                                width: 215,
+                                marginTop: 5,
+                            }}/>
+                            <img src={emptyContainer} alt={moveButtons} style={{
+                                height: 242,
+                                width: 215,
+                                marginTop: 5,
+                            }}/>
+                        </div>
+                    </TabPanel>
+                    <TabPanel value="3">
                         <CustomText text="If you want to export the solution, click the download button." />
-                        <img src={exportButton} alt={exportButton} style={{
-                            display: "flex",
-                            alignItems: "center",
-                            alignSelf: "center",
-                            height: 70,
-                            width: 60
-                        }}/><br/>
+                        <div style={{display: 'flex', flexDirection: 'column'}}>
+                            <img src={exportButton} alt={exportButton} style={{
+                                alignSelf: "center",
+                                height: 70,
+                                width: 60,
+                                marginBottom: 5
+                            }}/>
+                        </div>
                         <CustomText text="You can insert the downloaded file as input on the home page after clicking on View solution and immediately switch to the 3D screen." />
                     </TabPanel>
                 </TabContext>
@@ -142,7 +137,7 @@ const HomeHelp = () => {
                 alignSelf: "center",
                 height: 60,
                 width: 150
-            }}/><br/>
+            }}/>
             <CustomText
                 text="If you want to insert a solution file to go directly to the 3D screen, click View Solution."/>
             <img src={viewSolution} alt={viewSolution} style={{
@@ -177,7 +172,7 @@ const ShowInfo = () => {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center'
-            }}/><br/>
+            }}/>
             {help}
         </div>
     )

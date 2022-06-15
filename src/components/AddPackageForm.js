@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FormControl,InputLabel, Input, Button, Grid } from "@mui/material";
 import ToggleButton from "@mui/material/ToggleButton";
 import CustomText from "./CustomText";
@@ -11,7 +11,7 @@ const CustomBooleanInput = ({ value, setValue, inputId }) => {
     const onClick = () => setValue(curr => !curr);
     return (
         <FormControl style={{width:'100%'}}>
-            <ToggleButton htmlFor={inputId} onClick={onClick} selected={value}>
+            <ToggleButton value={"none"} selected={value} htmlFor={inputId} onClick={onClick}>
                 <CustomText text={inputId} style={{textTransform: 'none'}} />
             </ToggleButton>
             <Input id={inputId} type="hidden" value={value} />
@@ -35,10 +35,12 @@ const CustomInput = ({ initialValue, inputId, inputType }) => {
 const CustomNumberInput = ({ initialValue, inputId }) => 
     <CustomInput initialValue={initialValue} inputId={inputId} inputType={'number'} />;
 
-const AddPackageForm = ({ values, onSubmit, onClose }) => {
+const AddPackageForm = ({ values:inputValues, onSubmit, onClose }) => {
+    const values = Object.keys(inputValues).length === 0 ? new Package() : inputValues;
     const [error, setError] = useState(null);
     const [canRotate, setCanRotate] = useState(values['canRotate']);
     const [canStackAbove, setCanStackAbove] = useState(values['canStackAbove']);
+
     return (
         <form 
             onSubmit={(e) => { 
@@ -63,7 +65,7 @@ const AddPackageForm = ({ values, onSubmit, onClose }) => {
         >
             <Grid container spacing={1} columns={12} direction="row" justifyContent="center">
                 <Grid item xs={6}>
-                    <CustomInput initialValue={values['type']} inputId={'type'} inputType={'text'} />
+                    <CustomInput initialValue={values['type'] ?? ''} inputId={'type'} inputType={'text'} />
                 </Grid>
                 <Grid item xs={6}>
                     <CustomNumberInput initialValue={values['width']} inputId={'width'} />

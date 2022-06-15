@@ -38,7 +38,6 @@ const ColorMap = ({ colorMap, setColorMap }) => {
         setColorMap(curr => ({ ...curr, [clickedPkg]: newColor }));
     };
 
-    // TODO: add some indication for the user that he can change the colors by clicking the circles
     return (
         <div className="color-map">
             {Object.keys(colorMap).map(k => 
