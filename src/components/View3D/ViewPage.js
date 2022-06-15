@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Tooltip, Fab, SpeedDial, SpeedDialAction } from "@mui/material";
+import { Tooltip, Fab, SpeedDial, SpeedDialAction, Snackbar, Alert } from "@mui/material";
 import { getColorsByHash } from "./Color";
 import { useTranslation } from "react-i18next";
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
@@ -11,55 +11,8 @@ import View3D from "./View3D";
 import Stats from "./Stats";
 import ColorMap from "./ColorMap";
 import PackageControl from "./PackageControl";
+import outputSolutionTester from "../OutputSolutionTester";
 import '../../styles/ViewPage.css';
-
-const validateSolution = (solution) => {
-    const rotate = (scale, rotation) => {
-        const newScale = [...scale];
-        rotation.forEach((r, i) => {
-            const [a, b] = [0, 1, 2].filter(a => a !== i);
-            let angle = 0;
-            const rot = r % 360;
-            while (angle < rot) {
-                angle += 90;
-                const temp = newScale[a];
-                newScale[a] = newScale[b];
-                newScale[b] = temp;
-            }
-        });
-        return newScale;
-    }
-
-    const { width, depth, height } = solution['container'];
-    const space = new Array(width).fill(new Array(depth).fill(new Array(height).fill(false)));
-    const packageSize = {};
-    const hasInvalidPackage = solution['solution'].some(pkg => {
-        const pkgType = pkg['type'];
-        if (!(pkgType in packageSize)) {
-            const {width:w, depth:d, height:h} = solution['packages'].find(x => x['type'] === pkgType);
-            packageSize[pkgType] = [w, d, h];
-        }
-        const { 'rotation-x':rx, 'rotation-y':ry, 'rotation-z':rz } = pkg;
-        const rotation = [rx, ry, rz];
-        const [w, d, h] = rotate(packageSize[pkgType], rotation);
-        const { x, y, z } = pkg;
-
-        if (x < 0 || y < 0 || z < 0 || x+w >= width || y+d >= depth || z+h >= height) {
-            return true;
-        }
-        for (let i = x; i < x + w; i++) {
-            for (let j = y; j < y + d; j++) {
-                for (let k = z; k < z + h; k++) {
-                    if (space[i][j][k]) {
-                        return true;
-                    }
-                    space[i][j][k] = true;
-                }
-            }
-        }
-    });
-    return !hasInvalidPackage;
-};
 
 const jsonToBlob = (data) => {
     const str = JSON.stringify(data, null, 2);
@@ -98,6 +51,8 @@ const ViewPage = ({
     units, setUnits, 
     originalSolution,
 }) => {
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [snackbarTitle, setSnackbarTitle] = useState(false);
     const [selectedPackages, setSelectedPackages] = useState([]);
     const [colorMap, setColorMap] = useState(initializeColors(solution ? (solution['packages'] ?? []) : []));
     const { t } = useTranslation();
@@ -148,11 +103,12 @@ const ViewPage = ({
     }
 
     const onDownload = (exportType) => {
-        if (validateSolution(solution)) {
-            console.log('legal solution!');
+        const ret = outputSolutionTester(solution);
+        if (!ret.error) {
             downloadSolutionFile(exportType, solution);
         } else {
-            console.log('illegal solution!');
+            setSnackbarOpen(true);
+            setSnackbarTitle(ret.error);
         }
     };
 
@@ -221,6 +177,16 @@ const ViewPage = ({
                     />
                 }
             </div>
+            <Snackbar 
+                open={snackbarOpen} 
+                autoHideDuration={5000} 
+                onClose={() => setSnackbarOpen(false)}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            >
+                <Alert onClose={() => setSnackbarOpen(false)} severity={'error'} sx={{ width: '100%' }}>
+                    {t(snackbarTitle)}
+                </Alert>
+            </Snackbar>
         </div>
     );
 };

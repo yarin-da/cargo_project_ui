@@ -82,5 +82,7 @@
   "editSolution": "עריכת הפתרון",
   "reset": "אפס",
   "undo": "שינוי אחורה",
-  "redo": "שינוי קדימה"
+  "redo": "שינוי קדימה",
+  "packageOutOfBounds": "נמצאת מחוץ למכולה {{pkgType}} חבילה",
+  "packageCollision": "נמצאת בתוך חבילה אחרת {{pkgType}} חבילה"
 }

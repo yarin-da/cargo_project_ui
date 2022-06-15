@@ -82,5 +82,7 @@
   "editSolution": "Edit the solution",
   "reset": "Reset",
   "undo": "Undo",
-  "redo": "Redo"
+  "redo": "Redo",
+  "packageOutOfBounds": "Package {{pkgType}} is not fully inside the container",
+  "packageCollision": "Package {{pkgType}} is inside another package"
 }
