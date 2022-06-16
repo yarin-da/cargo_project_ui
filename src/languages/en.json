@@ -94,5 +94,17 @@
   "redo": "Redo",
   "help": "Help",
   "exportInput": "Export Input",
-  "finishDialogContent": "Confirm to view the solution, export to save your input for later use"
+  "finishDialogContent": "Confirm to view the solution, export to save your input for later use",
+  "editPackagesColors": "Edit packages colors",
+  "editSolutionInfo": "Edit solution",
+  "exportSolutionInfo": "Export solution",
+  "enterInput": "If you want to enter input, click on Find packing.",
+  "insertSolutionFile": "If you want to insert a solution file to go directly to the 3D screen, click View Solution.",
+  "packagesColor": "If you want to change the color of the packages (by type) click on the color circle in the map on the left.",
+  "clickEditButton": "To change the resulting solution, click the edit button and then the package you want to edit.",
+  "rightMenu": "The buttons on the right menu are the same colors as the arrows next to the container - this indicates the direction of movement according to the color of the button.",
+  "multiplePackages": "You can select multiple packages by click on:",
+  "focusCamera": "You can focus the camera on the clicked package. The camera will then rotate around that package by click on:",
+  "exportInfo": "If you want to export the solution, click the download button.",
+  "insertFileInHome" : "You can insert the downloaded file as input on the home page after clicking on View solution and immediately switch to the 3D screen."
 }

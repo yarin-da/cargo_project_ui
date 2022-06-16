@@ -4,7 +4,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import InfoSharpIcon from "@mui/icons-material/InfoSharp";
 import SettingsPage from './SettingsPage';
 import Logo from '../images/logo.png';
-import { useNavigate } from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import ShowInfo from "./ShowInfo";
 import {useTranslation} from "react-i18next";
 import "../styles/Header.css";
@@ -19,7 +19,7 @@ const SettingsButton = ({onClick}) => {
 
 const Information = ({onClick}) => {
     return (
-        <Button className="settings-button" onClick={onClick}>
+        <Button className="info-button" onClick={onClick}>
             <InfoSharpIcon htmlColor="black" fontSize={"medium"}/>
         </Button>
     );
@@ -32,6 +32,7 @@ const CustomAppBar = ({ units, setUnits }) => {
     const toggleSettingsModal = () => setShowSettings(curr => !curr);
     const toggleInformationModal = () => setShowInfo(curr => !curr);
     const navigate = useNavigate();
+    const isConfig =  (useLocation().pathname === '/config')
     return (
         <div style={{boxShadow: '10px 3px 10px rgba(0,0,0,0.25)', zIndex: 1}}>
             <AppBar position="static" style={{backgroundColor: '#42A5F5'}}>
@@ -48,11 +49,12 @@ const CustomAppBar = ({ units, setUnits }) => {
                         src={Logo}
                     />
                    <Box sx={{ display: 'flex' }}>
-                        <Tooltip title={t("help")}>
-                            <Toolbar>
-                                <Information onClick={toggleInformationModal}/>
-                            </Toolbar>
-                        </Tooltip>
+                       {!isConfig ? <Tooltip title={t("help")}>
+                           <Toolbar>
+                               <Information onClick={toggleInformationModal}/>
+                           </Toolbar>
+                       </Tooltip> : <div></div>}
+
                         <Tooltip title={t("settings")}>
                             <Toolbar>
                                 <SettingsButton onClick={toggleSettingsModal}/>

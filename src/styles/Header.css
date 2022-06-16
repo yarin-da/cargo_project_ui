@@ -25,3 +25,7 @@
 .settings-button:hover {
     filter: contrast(75%);
 }
+
+.info-button:hover {
+    filter: contrast(75%);
+}
