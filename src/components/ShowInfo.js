@@ -10,8 +10,8 @@ import editButton from '../images/editButton.png'
 import emptyContainer from "../images/empty_container_axes.png";
 import exportButton from '../images/exportButton.png'
 import moveButtons from '../images/moveButtons.png'
-import ctrl from '../images/ctrl.PNG'
-import alt from '../images/alt.PNG'
+import ctrl from '../images/ctrl.png'
+import alt from '../images/alt.png'
 import Box from "@mui/material/Box";
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
