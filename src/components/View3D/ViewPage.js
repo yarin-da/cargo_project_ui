@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Tooltip, Fab, SpeedDial, SpeedDialAction } from "@mui/material";
-import { getColorsByHash } from "./Color";
+import {getColors} from "./Color";
 import { useTranslation } from "react-i18next";
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import JavascriptIcon from '@mui/icons-material/Javascript';
@@ -22,7 +22,7 @@ const initializeColors = (packages) => {
     if (packages) {
         packages.forEach(pkg => {
             const pkgType = pkg['type'];
-            const pkgColor = getColorsByHash(pkgType);
+            const pkgColor = getColors();
             colorMap[pkgType] = pkgColor;
         });    
     }
