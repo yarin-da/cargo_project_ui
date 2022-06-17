@@ -106,5 +106,7 @@
   "multiplePackages": "You can select multiple packages by click on:",
   "focusCamera": "You can focus the camera on the clicked package. The camera will then rotate around that package by click on:",
   "exportInfo": "If you want to export the solution, click the download button.",
-  "insertFileInHome" : "You can insert the downloaded file as input on the home page after clicking on View solution and immediately switch to the 3D screen."
+  "insertFileInHome" : "You can insert the downloaded file as input on the home page after clicking on View solution and immediately switch to the 3D screen.",
+  "packageOutOfBounds": "Package {{pkgType}} is not fully inside the container",
+  "packageCollision": "Package {{pkgType}} is inside another package"
 }

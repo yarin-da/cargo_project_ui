@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Tooltip, Fab, SpeedDial, SpeedDialAction } from "@mui/material";
-import {getColors} from "./Color";
+import { getColors } from "./Color";
+import { Tooltip, Fab, SpeedDial, SpeedDialAction, Snackbar, Alert } from "@mui/material";
+import { getColorsByHash } from "./Color";
 import { useTranslation } from "react-i18next";
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import JavascriptIcon from '@mui/icons-material/Javascript';
@@ -11,6 +12,7 @@ import View3D from "./View3D";
 import Stats from "./Stats";
 import ColorMap from "./ColorMap";
 import PackageControl from "./PackageControl";
+import outputSolutionTester from "../OutputSolutionTester";
 import '../../styles/ViewPage.css';
 
 function downloadSolutionFile(solution){
@@ -38,6 +40,8 @@ const ViewPage = ({
     units, setUnits, 
     originalSolution,
 }) => {
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [snackbarTitle, setSnackbarTitle] = useState(false);
     const [selectedPackages, setSelectedPackages] = useState([]);
     const [colorMap, setColorMap] = useState(initializeColors(solution ? (solution['packages'] ?? []) : []));
     const { t } = useTranslation();
@@ -88,7 +92,13 @@ const ViewPage = ({
     }
 
     const onDownload = (exportType) => {
-        downloadSolutionFile(solution);
+        const ret = outputSolutionTester(solution);
+        if (!ret.error) {
+            downloadSolutionFile(exportType, solution);
+        } else {
+            setSnackbarOpen(true);
+            setSnackbarTitle(ret.error);
+        }
     };
 
     const selectRandomPackage = () => {
@@ -156,6 +166,16 @@ const ViewPage = ({
                     />
                 }
             </div>
+            <Snackbar 
+                open={snackbarOpen} 
+                autoHideDuration={5000} 
+                onClose={() => setSnackbarOpen(false)}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            >
+                <Alert onClose={() => setSnackbarOpen(false)} severity={'error'} sx={{ width: '100%' }}>
+                    {t(snackbarTitle)}
+                </Alert>
+            </Snackbar>
         </div>
     );
 };
