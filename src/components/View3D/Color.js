@@ -1,19 +1,18 @@
 const kellyColors = [
-    '#6495ED',
     '#C0C0C0',
     '#99badd',
     '#00BFFF',
     '#ADD8E6',
     '#4682B4',
-    '#6495ED',
-    '#abcdef',
-    '#817066', // Medium Gray
-    '#A6BDD7', // Very Light Blue
-    '#1E90FF',
+    '#1dacd6',
+    '#93ccea',
+    '#bcd4e6',
+    '#5d89ba',
     '#73c2fb',
     '#b0e0e6',
     '#4169E1',
-    '#87CEEB'
+    '#87CEEB',
+    '#a2add0'
     // '#FFB300', // Vivid Yellow
     // '#803E75', // Strong Purple
     // '#FF6800', // Vivid Orange
@@ -41,8 +40,6 @@ function mod(n, m) {
 }
 
 const getColors = (indexValue = -1) => {
-    console.log(counter)
-    console.log(indexValue)
     const r = (indexValue === -1) ?
             mod(counter++, kellyColors.length)
                 : mod(indexValue, kellyColors.length);

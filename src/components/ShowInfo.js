@@ -31,88 +31,88 @@ const style = {
 // TODO: Add images/graphics/spacing/etc.
 // TODO: Add keypress combination images (CTRL+LEFTCLICK, ALT+LEFTCLICK)
 const ViewHelp = () => {
-    const { t } = useTranslation();
+    const {t} = useTranslation();
     const [value, setValue] = React.useState("1");
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
 
     return (
-            <Box sx={{ width: '100%', typography: 'body1', maxHeight: "50vh", overflowY: "scroll"}}>
-                <TabContext value={value}>
-                    <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                        <TabList onChange={handleChange}>
-                            <Tab style={{textTransform: 'none'}} label={t("editPackagesColors")} value="1" />
-                            <Tab style={{textTransform: 'none'}} label={t("editSolutionInfo")} value="2" />
-                            <Tab style={{textTransform: 'none'}} label={t("exportSolution")} value="3" />
-                        </TabList>
-                    </Box>
-                    <TabPanel value="1">
-                        <CustomText text={t("packagesColor")} />
-                        <div style={{ display: 'flex', justifyContent: 'center' }}>
-                            <img src={editColors} alt={editColors} style={{
-                                height: 100,
-                                width: 160,
-                                marginTop: 5,
-                            }}/>
-                        </div>
-                    </TabPanel>
-                    <TabPanel value="2">
-                        <CustomText text={t("clickEditButton")} />
-                        <div style={{ display: 'flex', justifyContent: 'center' }}>
-                            <img src={editButton} alt={editButton} style={{
-                                height: 60,
-                                width: 70,
-                                marginBottom: 5,
-                            }}/>
-                        </div>
-                        <CustomText text={"rightMenu"} />
-                        <div style={{ display: "flex", justifyContent: "space-evenly" }}>
-                            <img src={moveButtons} alt={moveButtons} style={{
-                                height: 242,
-                                width: 215,
-                                marginTop: 5,
-                                marginBottom: 10
-                            }}/>
-                            <img src={emptyContainer} alt={moveButtons} style={{
-                                height: 242,
-                                width: 215,
-                                marginTop: 5,
-                                marginBottom: 10
-                            }}/>
-                        </div>
-                        <CustomText text={t("multiplePackages")}/>
-                        <div style={{ display: "flex", justifyContent: "space-evenly" }}>
-                            <img src={ctrl} alt={ctrl}/>
-                        </div>
-                        <CustomText text={t("focusCamera")}/>
-                        <div style={{ display: "flex", justifyContent: "space-evenly" }}>
-                            <img src={alt} alt={alt}/>
-                        </div>
-                    </TabPanel>
-                    <TabPanel value="3">
-                        <CustomText text={t("exportInfo")} />
-                        <div style={{display: 'flex', flexDirection: 'column'}}>
-                            <img src={exportButton} alt={exportButton} style={{
-                                alignSelf: "center",
-                                height: 70,
-                                width: 60,
-                                marginBottom: 5
-                            }}/>
-                        </div>
-                        <CustomText text={t("insertFileInHome")} />
-                    </TabPanel>
-                </TabContext>
-            </Box>
+        <Box sx={{width: '100%', typography: 'body1', maxHeight: "50vh", overflowY: "scroll"}}>
+            <TabContext value={value}>
+                <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
+                    <TabList onChange={handleChange}>
+                        <Tab style={{textTransform: 'none'}} label={t("editPackagesColors")} value="1"/>
+                        <Tab style={{textTransform: 'none'}} label={t("editSolutionInfo")} value="2"/>
+                        <Tab style={{textTransform: 'none'}} label={t("exportSolution")} value="3"/>
+                    </TabList>
+                </Box>
+                <TabPanel value="1">
+                    <CustomText text="packagesColor"/>
+                    <div style={{display: 'flex', justifyContent: 'center'}}>
+                        <img src={editColors} alt={editColors} style={{
+                            height: 100,
+                            width: 160,
+                            marginTop: 5,
+                        }}/>
+                    </div>
+                </TabPanel>
+                <TabPanel value="2">
+                    <CustomText text="clickEditButton"/>
+                    <div style={{display: 'flex', justifyContent: 'center'}}>
+                        <img src={editButton} alt={editButton} style={{
+                            height: 60,
+                            width: 70,
+                            marginBottom: 5,
+                        }}/>
+                    </div>
+                    <CustomText text="rightMenu"/>
+                    <div style={{display: "flex", justifyContent: "space-evenly"}}>
+                        <img src={moveButtons} alt={moveButtons} style={{
+                            height: 242,
+                            width: 215,
+                            marginTop: 5,
+                            marginBottom: 10
+                        }}/>
+                        <img src={emptyContainer} alt={moveButtons} style={{
+                            height: 242,
+                            width: 215,
+                            marginTop: 5,
+                            marginBottom: 10
+                        }}/>
+                    </div>
+                    <CustomText text="multiplePackages"/>
+                    <div style={{display: "flex", justifyContent: "space-evenly"}}>
+                        <img src={ctrl} alt={ctrl}/>
+                    </div>
+                    <CustomText text="focusCamera"/>
+                    <div style={{display: "flex", justifyContent: "space-evenly"}}>
+                        <img src={alt} alt={alt}/>
+                    </div>
+                </TabPanel>
+                <TabPanel value="3">
+                    <CustomText text="exportInfo"/>
+                    <div style={{display: 'flex', flexDirection: 'column'}}>
+                        <img src={exportButton} alt={exportButton} style={{
+                            alignSelf: "center",
+                            height: 70,
+                            width: 60,
+                            marginBottom: 5
+                        }}/>
+                    </div>
+                    <CustomText text="insertFileInHome"/>
+                </TabPanel>
+            </TabContext>
+        </Box>
     );
 };
 
 
 const HomeHelp = () => {
-    const { t } = useTranslation();
+    const {t} = useTranslation();
     return (
         <div style={{display: "flex", flexDirection: "column"}}>
-            <CustomText text={t("enterInput")}/>
+            <CustomText text="enterInput"/>
             <img src={findPacking} alt={findPacking} style={{
                 display: "flex",
                 alignItems: "center",
@@ -120,7 +120,7 @@ const HomeHelp = () => {
                 height: 60,
                 width: 150
             }}/>
-            <CustomText text={t("insertSolutionFile")}/>
+            <CustomText text="insertSolutionFile"/>
             <img src={viewSolution} alt={viewSolution} style={{
                 display: "flex",
                 alignItems: "center",
@@ -148,7 +148,7 @@ const ShowInfo = () => {
 
     return (
         <div style={style}>
-            <CustomText text={t("help")} style={{
+            <CustomText text="help" style={{
                 fontSize: 30,
                 display: 'flex',
                 justifyContent: 'center',
