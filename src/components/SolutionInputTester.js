@@ -57,7 +57,7 @@ function packagesFields(packagesObjects) {
 function checkSolutionObject(solutionObj) {
     const solKeys = ['type', 'x', 'y', 'z', 'rotation-x', 'rotation-y', 'rotation-z']
 
-    for (const [key, value] of Object.entries(solutionObj)) {
+    for (const value of Object.values(solutionObj)) {
         for (const [k, v] of Object.entries(value)) {
             if (Object.keys(value).length !== 7) {
                 return {error: t('invalidSolution')};
@@ -88,7 +88,7 @@ function checkStatsObject(statsObj) {
         }
 
         if (key === 'box_usage') {
-            for (const [k, v] of Object.entries(value)) {
+            for (const v of Object.values(value)) {
                 if (!Number.isInteger(v['used'])) {
                     const val = v['used']
                     return {
@@ -138,20 +138,20 @@ export const checkSolution = (input) => {
         }
     }
 
-    const containerObj = input['container']
-    const packagesObj = input['packages']
-    const solutionObj = input['solution']
-    const statsObj = input['stats']
+    const containerObj = input['container'];
+    const packagesObj = input['packages'];
+    const solutionObj = input['solution'];
+    const statsObj = input['stats'];
 
-    const containerRet = containerFields(containerObj)
-    const packagesRet = packagesFields(packagesObj)
-    const solutionRet = checkSolutionObject(solutionObj)
-    const statsRet = checkStatsObject(statsObj)
+    const containerRet = containerFields(containerObj);
+    const packagesRet = packagesFields(packagesObj);
+    const solutionRet = checkSolutionObject(solutionObj);
+    const statsRet = checkStatsObject(statsObj);
 
     if (containerRet.error) return {...containerRet};
     if (packagesRet.error) return {...packagesRet};
-    if (solutionRet.error) return {...solutionRet}
-    if (statsRet.error) return {...statsRet}
+    if (solutionRet.error) return {...solutionRet};
+    if (statsRet.error) return {...statsRet};
 
-    return ''
+    return '';
 };

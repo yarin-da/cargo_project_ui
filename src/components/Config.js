@@ -131,7 +131,7 @@ const Config = ({
             setOriginalSolution(solution);
             navigate("/view");
         } catch (e) {
-            await notifyError(e);
+            await notifyError(e.message);
         } finally {
             await setLoading(false);
         }

@@ -15,10 +15,11 @@ const getSolution = async (data) => {
         };
         const response = await fetch(request, options);
         const jsonData =  await response.json();
-        if (jsonData['error']) throw "failedToOrganizeYourPackages";
+        if (jsonData['error']) throw Error("failedToOrganizeYourPackages");
         return jsonData;
     } catch (e) {
-        throw "failedToOrganizeYourPackages";
+        const error = new Error();
+        throw Object.assign(error, { message: "failedToOrganizeYourPackages" });
     }
 };
 

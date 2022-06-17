@@ -16,7 +16,7 @@ import Box from "@mui/material/Box";
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-import {Tab, Tabs, Typography} from "@material-ui/core";
+import {Tab} from "@material-ui/core";
 
 
 const style = {
@@ -27,9 +27,6 @@ const style = {
     padding: 20
 }
 
-// TODO: Add translations
-// TODO: Add images/graphics/spacing/etc.
-// TODO: Add keypress combination images (CTRL+LEFTCLICK, ALT+LEFTCLICK)
 const ViewHelp = () => {
     const {t} = useTranslation();
     const [value, setValue] = React.useState("1");
@@ -109,7 +106,6 @@ const ViewHelp = () => {
 
 
 const HomeHelp = () => {
-    const {t} = useTranslation();
     return (
         <div style={{display: "flex", flexDirection: "column"}}>
             <CustomText text="enterInput"/>
@@ -138,7 +134,6 @@ const helpComponent = {
 };
 
 const ShowInfo = () => {
-    const {t} = useTranslation();
     const location = useLocation();
     const [help, setHelp] = useState('/');
 
