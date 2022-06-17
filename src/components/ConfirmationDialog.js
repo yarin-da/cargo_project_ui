@@ -8,7 +8,7 @@ const ConfirmationDialog = ({ open, title, text, onConfirm, onCancel, extraButto
     return (
         <Dialog open={open} onClose={onCancel}>
             <DialogTitle>
-                {t(title)}
+                <CustomText text={title} variant="h5"/>
             </DialogTitle>
             <DialogContent>
                 <CustomText text="finishDialogContent" />
