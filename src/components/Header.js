@@ -7,13 +7,9 @@ import {Typography} from "@material-ui/core";
 import {Snackbar} from "@material-ui/core";
 import {Alert} from "@mui/material";
 import {useTranslation} from "react-i18next";
-import {t} from "i18next";
-import {stringTypeTesters, types, typeTesters} from "./Type";
 import { ReactComponent as HeaderWorldSvg } from '../images/header-world.svg';
 import "../styles/Header.css";
 import {checkSolution} from "./SolutionInputTester";
-
-
 
 const Header = ({units, setUnits, setSolution, setOriginalSolution}) => {
     const {t} = useTranslation();
@@ -45,10 +41,17 @@ const Header = ({units, setUnits, setSolution, setOriginalSolution}) => {
     const imageStyle = {
         position: 'absolute',
         right: 0,
+        top: 0,
     };
+    const divStyle = {
+        display: 'flex', 
+        flexDirection: 'column-reverse', 
+        width: '100vw', 
+        height: '100vh', 
+    }
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column-reverse', width: '100vw', height: '100vh' }}>
+        <div style={divStyle}>
             <div className="head header-background-image">
                 <HeaderWorldSvg style={imageStyle} />
                 <div className="header">

@@ -54,13 +54,14 @@ const Dropzone = ({ setContainer, setPackages }) => {
             <DropzoneArea
                 dropzoneText={t("dropOrClick")}
                 filesLimit={1}
-                acceptedFiles={[".csv, text/csv, application/vnd.ms-excel, application/csv, text/x-csv, application/x-csv, text/comma-separated-values, text/x-comma-separated-values, .json"]}
+                acceptedFiles={[".json, application/json, text/json, .csv, text/csv, application/vnd.ms-excel, application/csv, text/x-csv, application/x-csv, text/comma-separated-values, text/x-comma-separated-values"]}
                 showPreviewsInDropzone={false}
                 showFileNames={true}
                 previewGridProps={{container: {spacing: 1, direction: 'row'}}}
                 showAlerts={false}
                 onAlert={(_, variant) => onAlert(variant)}
                 onDrop={onDrop}
+                
             />
             <Snackbar 
                 open={showAlert} 

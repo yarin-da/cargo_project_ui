@@ -4,7 +4,6 @@
     -o-background-size: cover;
     background-size: cover;
     background-image: url(../images/header-background.png);
-    scrollbar-width: none;
 }
 
 .head {

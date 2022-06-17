@@ -23,7 +23,7 @@
     "react-i18next": "^11.17.2",
     "react-id-generator": "^3.0.2",
     "react-router-dom": "^6.3.0",
-    "react-scripts": "5.0.0",
+    "react-scripts": "^5.0.0",
     "swiper": "^8.2.4",
     "three-stdlib": "^2.10.2",
     "troika-three-text": "^0.46.4",
