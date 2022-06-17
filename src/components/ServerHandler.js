@@ -1,4 +1,5 @@
 // TODO: environment variable? we may want to chooose different port if already taken
+//const SERVER_URL = 'http://63.32.25.120/api/solve';
 const SERVER_URL = 'http://localhost:8080';
 
 const getSolution = async (data) => {
@@ -13,7 +14,9 @@ const getSolution = async (data) => {
             body: JSON.stringify(data),
         };
         const response = await fetch(request, options);
-        return await response.json();
+        const jsonData =  await response.json();
+        if (jsonData['error']) throw "failedToOrganizeYourPackages";
+        return jsonData;
     } catch (e) {
         throw "failedToOrganizeYourPackages";
     }
