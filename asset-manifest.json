@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/cargo_project_ui/static/css/main.7e5daa11.css",
+    "main.js": "/cargo_project_ui/static/js/main.6e6a8f6a.js",
+    "static/media/background.jpeg": "/cargo_project_ui/static/media/background.550c3834bbf35176d1ec.jpeg",
+    "static/media/container.png": "/cargo_project_ui/static/media/container.71fc25cd13f94ec54603.png",
+    "static/media/american_flag.png": "/cargo_project_ui/static/media/american_flag.fd966429b18c65d6a5c0.png",
+    "index.html": "/cargo_project_ui/index.html",
+    "static/media/demo.csv": "/cargo_project_ui/static/media/demo.08eef8f2e451a3fe5040.csv",
+    "main.7e5daa11.css.map": "/cargo_project_ui/static/css/main.7e5daa11.css.map",
+    "main.6e6a8f6a.js.map": "/cargo_project_ui/static/js/main.6e6a8f6a.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7e5daa11.css",
+    "static/js/main.6e6a8f6a.js"
+  ]
+}
