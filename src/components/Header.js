@@ -2,7 +2,7 @@ import {useNavigate} from "react-router-dom";
 import React, {useRef, useState} from "react";
 import CustomText from "./CustomText";
 import CustomAppBar from "./CustomAppBar";
-import {Button} from "@mui/material";
+import {Button, Box} from "@mui/material";
 import {Typography} from "@material-ui/core";
 import {Snackbar} from "@material-ui/core";
 import {Alert} from "@mui/material";
@@ -53,7 +53,9 @@ const Header = ({units, setUnits, setSolution, setOriginalSolution}) => {
     return (
         <div style={divStyle}>
             <div className="head header-background-image">
-                <HeaderWorldSvg style={imageStyle} />
+                <Box style={imageStyle}>
+                    <HeaderWorldSvg />
+                </Box>
                 <div className="header">
                     <div className="header-title">
                         <Typography
@@ -61,14 +63,14 @@ const Header = ({units, setUnits, setSolution, setOriginalSolution}) => {
                             variant="h2"
                             style={{ color: 'black', fontWeight: 'bold' }}
                         >
-                            LET YOUR SUCCESS
+                            LET US 
                         </Typography>
                         <Typography
                             className="header-title-text"
                             variant="h2"
                             style={{ color: 'black', fontWeight: 'bold' }}
                         >
-                            RIDE WITH US.
+                            DO THE PACKING.
                         </Typography>
                     </div>
                     <div style={{alignSelf: 'flex-start', display: 'flex', flexDirection: 'row'}}>

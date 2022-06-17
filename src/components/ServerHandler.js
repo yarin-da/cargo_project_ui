@@ -1,5 +1,4 @@
-// TODO: environment variable? we may want to chooose different port if already taken
-//const SERVER_URL = 'http://63.32.25.120/api/solve';
+// TODO: environment variable? we may want to choose different port if already taken
 const SERVER_URL = 'http://localhost:8080';
 
 const getSolution = async (data) => {
