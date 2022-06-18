@@ -8,8 +8,9 @@ import {Snackbar} from "@material-ui/core";
 import {Alert} from "@mui/material";
 import {useTranslation} from "react-i18next";
 import { ReactComponent as HeaderWorldSvg } from '../images/header-world.svg';
-import "../styles/Header.css";
 import {checkSolution} from "./SolutionInputTester";
+import "../styles/Header.css";
+import "../styles/Util.css";
 
 const Header = ({units, setUnits, setSolution, setOriginalSolution}) => {
     const {t} = useTranslation();
@@ -57,18 +58,18 @@ const Header = ({units, setUnits, setSolution, setOriginalSolution}) => {
                     <HeaderWorldSvg />
                 </Box>
                 <div className="header">
-                    <div className="header-title">
+                    <div className="header-title" style={{ marginBottom: 25 }}>
                         <Typography
-                            className="header-title-text"
+                            className="header-title-text unselectable-text"
                             variant="h2"
-                            style={{ color: 'black', fontWeight: 'bold' }}
+                            style={{ color: '#aaa' }}
                         >
                             LET US 
                         </Typography>
                         <Typography
-                            className="header-title-text"
+                            className="header-title-text unselectable-text"
                             variant="h2"
-                            style={{ color: 'black', fontWeight: 'bold' }}
+                            style={{ color: '#aaa' }}
                         >
                             DO THE PACKING.
                         </Typography>
@@ -93,7 +94,7 @@ const Header = ({units, setUnits, setSolution, setOriginalSolution}) => {
                             }}
                             onClick={() => navigate('/config')}
                         >
-                            <CustomText text="findPacking" variant="h3"/>
+                            <CustomText text="findPacking" variant="h4"/>
                         </Button>
                         <Button
                             variant="contained"
@@ -114,7 +115,7 @@ const Header = ({units, setUnits, setSolution, setOriginalSolution}) => {
                             }}
                             onClick={() => fileInputRef.current.click()}
                         >
-                            <CustomText text="viewSolution" variant="h3"/>
+                            <CustomText text="viewSolution" variant="h4"/>
                             <input
                                 hidden
                                 type="file"
