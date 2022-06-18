@@ -1,9 +1,12 @@
-.header-background-image {
+.cover {
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    background-image: url(../images/header-background.png);
+}
+
+.header-background-image {
+    background-image: url(../images/new-XDbackground.png);
 }
 
 .head {

@@ -39,11 +39,6 @@ const Header = ({units, setUnits, setSolution, setOriginalSolution}) => {
         }
     };
 
-    const imageStyle = {
-        position: 'absolute',
-        right: 0,
-        top: 0,
-    };
     const divStyle = {
         display: 'flex', 
         flexDirection: 'column-reverse', 
@@ -53,10 +48,7 @@ const Header = ({units, setUnits, setSolution, setOriginalSolution}) => {
 
     return (
         <div style={divStyle}>
-            <div className="head header-background-image">
-                <Box style={imageStyle}>
-                    <HeaderWorldSvg />
-                </Box>
+            <div className="head header-background-image cover">
                 <div className="header">
                     <div className="header-title" style={{ marginBottom: 25 }}>
                         <Typography
