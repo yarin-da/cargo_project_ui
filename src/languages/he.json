@@ -106,5 +106,6 @@
   "exportInfo": "לייצוא הפתרון לחץ על כפתור ההורדה",
   "insertFileInHome": "ניתן להכניס את הקובץ שירד בדף הבית לאחר לחיצה על הכפתור לצפייה בפתרון, ועל ידי כך לעבור ישירות לתלת מימד",
   "packageOutOfBounds": "נמצאת מחוץ למכולה {{pkgType}} חבילה",
-  "packageCollision": "נמצאת בתוך חבילה אחרת {{pkgType}} חבילה"
+  "packageCollision": "נמצאת בתוך חבילה אחרת {{pkgType}} חבילה",
+  "emptyFormValue": "{{varType}} הכנס ערך עבור"
 }

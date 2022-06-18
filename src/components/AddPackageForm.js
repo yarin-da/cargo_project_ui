@@ -3,9 +3,10 @@ import { FormControl,InputLabel, Input, Button, Grid } from "@mui/material";
 import ToggleButton from "@mui/material/ToggleButton";
 import CustomText from "./CustomText";
 import Package from "./Package";
-import { parseValue } from "./Type";
+import { parseValue, typeTesters } from "./Type";
 import CrossIcon from '@mui/icons-material/ClearRounded';
 import "../styles/AddPackage.css";
+import { useTranslation } from "react-i18next";
 
 const CustomBooleanInput = ({ value, setValue, inputId }) => {
     const onClick = () => setValue(curr => !curr);
@@ -27,7 +28,7 @@ const CustomInput = ({ initialValue, inputId, inputType }) => {
             <InputLabel htmlFor={inputId}>
                 {<CustomText text={inputId} />}
             </InputLabel>
-            <Input id={inputId} type={inputType} value={value} onChange={onChange} />
+            <Input id={inputId} type={inputType} value={value ?? ''} onChange={onChange} />
         </FormControl>
     );
 };
@@ -36,6 +37,7 @@ const CustomNumberInput = ({ initialValue, inputId }) =>
     <CustomInput initialValue={initialValue} inputId={inputId} inputType={'number'} />;
 
 const AddPackageForm = ({ values:inputValues, onSubmit, onClose }) => {
+    const { t } = useTranslation();
     const values = Object.keys(inputValues).length === 0 ? new Package() : inputValues;
     const [error, setError] = useState(null);
     const [canRotate, setCanRotate] = useState(values['canRotate']);
@@ -48,7 +50,13 @@ const AddPackageForm = ({ values:inputValues, onSubmit, onClose }) => {
                 const formValues = new Package();
                 for (let i = 0; i < 8; i++) {
                     const curr = e.target[i];
-                    const value = parseValue(curr['id'], curr['value'])
+                    const varType = curr['id'];
+                    const value = parseValue(curr['id'], curr['value']);
+                    if (value == null || (!typeTesters['string'](value) && isNaN(value))) {
+                        setError(t('emptyFormValue', { varType: t(varType) }));
+                        return;
+                    }
+
                     formValues[curr['id']] = value;
                 }
                 

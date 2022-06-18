@@ -108,5 +108,6 @@
   "exportInfo": "If you want to export the solution, click the download button.",
   "insertFileInHome" : "You can insert the downloaded file as input on the home page after clicking on View solution and immediately switch to the 3D screen.",
   "packageOutOfBounds": "Package {{pkgType}} is not fully inside the container",
-  "packageCollision": "Package {{pkgType}} is inside another package"
+  "packageCollision": "Package {{pkgType}} is inside another package",
+  "emptyFormValue": "Enter a value for {{varType}}"
 }

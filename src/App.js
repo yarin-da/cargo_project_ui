@@ -7,7 +7,7 @@ import {
     Routes,
     Route,
 } from "react-router-dom";
-import {createTheme} from "@material-ui/core";
+import {createTheme} from "@mui/material";
 import {ThemeProvider} from "@emotion/react";
 
 // TODO: delete all console.logs, debuggers and unused variables/imports
@@ -24,7 +24,6 @@ const saveJSONinStorage = (key, value) => {
 const theme = createTheme({
     palette: {
         primary: {
-            // Purple and green play nicely together.
             main: '#42A5F5',
             light: '#42A5F5',
             dark: '#42A5F5'

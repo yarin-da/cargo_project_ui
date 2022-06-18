@@ -11,7 +11,7 @@ const NonNegativeNumberField = ({name, style, value, onChange}) =>
         label={name}
         type="number"
         style={style}
-        value={value}
+        value={value ?? ''}
         InputProps={{
             inputProps: {min: 0}
         }}
