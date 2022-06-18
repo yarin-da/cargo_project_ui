@@ -162,7 +162,7 @@ const Config = ({
                         {
                             (currentPage === 0 && <UploadFile setContainer={setContainer} setPackages={setPackages} />)
                             ||
-                            (currentPage === 1 && <AddContainer container={container} setContainer={setContainer} />)
+                            (currentPage === 1 && <AddContainer units={units} container={container} setContainer={setContainer} />)
                             ||
                             (currentPage === 2 &&
                                 <ConfigPackageList
