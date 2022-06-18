@@ -74,21 +74,18 @@ const StandardContainerButtons = ({ onContainerSizeChosen, units }) => {
             height: getLength(200),
             depth: getLength(400),
             maxWeight: getWeight(1240000),
-            cost: 500,
         },
         medium: {
             width: getLength(200),
             height: getLength(200),
             depth: getLength(800),
             maxWeight: getWeight(2480000),
-            cost: 600,
         },
         large: {
             width: getLength(200),
             height: getLength(200),
             depth: getLength(1200),
             maxWeight: getWeight(3720000),
-            cost: 700,
         },
     };
 

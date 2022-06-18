@@ -22,7 +22,6 @@ const types = {
     "canRotate": 'boolean',
     "canStackAbove": 'boolean',
     "type": 'string',
-    "cost": 'nonNegativeNumber',
     "maxWeight": 'nonNegativeNumber',
     "x": 'nonNegativeInteger',
     "y": 'nonNegativeInteger',

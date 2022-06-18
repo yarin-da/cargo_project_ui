@@ -44,7 +44,6 @@ function App() {
         height: null,
         depth: null,
         maxWeight: null,
-        cost: null,
     }));    
     const [units, setUnits] = useState(getJSONFromStorage('units', {
         length: 'm',
