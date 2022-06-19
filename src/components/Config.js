@@ -157,6 +157,7 @@ const Config = ({
             flexDirection: 'column', 
             width: '100vw', 
             height: '100vh',
+            overflow: 'hidden',
         }}>
             <CustomAppBar units={units} setUnits={setUnits} />
             <div style={{ width: '100%', height: '100%' }}>

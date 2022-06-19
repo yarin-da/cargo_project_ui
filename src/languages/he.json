@@ -109,5 +109,7 @@
   "packageCollision": "נמצאת בתוך חבילה אחרת {{pkgType}} חבילה",
   "emptyFormValue": "{{varType}} הכנס ערך עבור",
   "saveInput": "שמירת הקלט בקובץ",
-  "pack": "סידור החבילות"
+  "pack": "סידור החבילות",
+  "boxesUsed": "חבילות בשימוש",
+  "stats": "נתונים"
 }

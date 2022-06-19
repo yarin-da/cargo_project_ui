@@ -105,8 +105,17 @@ const ViewPage = ({
         setSelectedPackages([randIndex]);
     };
 
+    const divStyle = {
+        position: 'relative', 
+        width: '100vw', 
+        height: '100vh', 
+        display: 'flex', 
+        flexDirection: 'column', 
+        overflow: 'hidden',
+    };
+
     return (
-        <div style={{ position: 'relative', width: '100vw', height: '100vh', display: 'flex', flexDirection: 'column' }}>
+        <div style={divStyle}>
             <CustomAppBar units={units} setUnits={setUnits} />
             <div style={{ position: 'relative', width: '100%', height: '100%' }}>
                 <View3D 

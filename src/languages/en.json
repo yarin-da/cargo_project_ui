@@ -82,7 +82,7 @@
   "invalidStats": "The stats format invalid",
   "missingData": "Missing data",
   "solution": "solution",
-  "stats": "stats",
+  "stats": "Stats",
   "boolean": "boolean",
   "packagesFormat": "The packages format invalid",
   "positiveInteger": "positive integer",
@@ -111,5 +111,6 @@
   "packageCollision": "Package {{pkgType}} is inside another package",
   "emptyFormValue": "Enter a value for {{varType}}",
   "saveInput": "Save your input",
-  "pack": "Pack your packages"
+  "pack": "Pack your packages",
+  "boxesUsed": "Boxes Used"
 }

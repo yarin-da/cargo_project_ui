@@ -1,5 +1,6 @@
 import React from "react";
 import { Box, Typography, LinearProgress } from "@mui/material";
+import CustomText from "../CustomText";
 
 function LinearProgressWithLabel(props) {
     return (
@@ -25,47 +26,44 @@ const Stats = ({ stats, container }) => {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'flex-start',
-        padding: '0 0 10px 20px',
         background: 'rgba(170, 170, 200, 0.33)',
         boxShadow: '1px 2px 0 0 rgba(0, 0, 0, 0.33)',
         borderRadius: 10,
     };
     return (
         <div style={divStyle}>
-            <div>
-                <div className="unselectable-text" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', columnGap: 10 }}>
-                    <h4>Stats</h4>
+            <div className="unselectable-text" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', columnGap: 10, padding: 20 }}>
+                <CustomText text="stats" variant="h6" style={{ gridColumnStart: 1, gridColumnEnd: 3 }} />
+                <span style={{ gridColumn: 1 }}>
+                    Profit
+                </span>
+                <span style={{ gridColumn: 2 }}>
+                    {stats['profit']}
+                </span>
+                <span style={{ gridColumn: 1 }}>
+                    Weight
+                </span>
+                <span style={{ gridColumn: 2 }}>
+                    {/* {stats['weight']} / {container['maxWeight']} */}
+                    <LinearProgressWithLabel value={100 * stats['weight'] / container['maxWeight']} />
+                </span>
+                <span style={{ gridColumn: 1 }}>
+                    Space
+                </span>
+                <span style={{ gridColumn: 2, marginBottom: 20 }}>
+                    <LinearProgressWithLabel value={100 * stats['space_usage']} />
+                </span>
+                <CustomText text="boxesUsed" variant="h6" style={{ gridColumnStart: 1, gridColumnEnd: 3 }}/>
+                {Object.keys(stats['box_usage']).map(t => 
+                <React.Fragment key={`box-usage-${t}`}>
                     <span style={{ gridColumn: 1 }}>
-                        Profit
+                        {t}
                     </span>
                     <span style={{ gridColumn: 2 }}>
-                        {stats['profit']}
+                        {stats['box_usage'][t]['used']} / {stats['box_usage'][t]['total']}
                     </span>
-                    <span style={{ gridColumn: 1 }}>
-                        Weight
-                    </span>
-                    <span style={{ gridColumn: 2 }}>
-                        {/* {stats['weight']} / {container['maxWeight']} */}
-                        <LinearProgressWithLabel value={100 * stats['weight'] / container['maxWeight']} />
-                    </span>
-                    <span style={{ gridColumn: 1 }}>
-                        Space
-                    </span>
-                    <span style={{ gridColumn: 2 }}>
-                        <LinearProgressWithLabel value={100 * stats['space_usage']} />
-                    </span>
-                    <h4>Boxes Used</h4>
-                    {Object.keys(stats['box_usage']).map(t => 
-                    <React.Fragment key={`box-usage-${t}`}>
-                        <span style={{ gridColumn: 1 }}>
-                            {t}
-                        </span>
-                        <span style={{ gridColumn: 2 }}>
-                            {stats['box_usage'][t]['used']} / {stats['box_usage'][t]['total']}
-                        </span>
-                    </React.Fragment>
-                    )}
-                </div>
+                </React.Fragment>
+                )}
             </div>
         </div>
     );
