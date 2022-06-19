@@ -2,13 +2,13 @@ import {useNavigate} from "react-router-dom";
 import React, {useRef, useState} from "react";
 import CustomText from "./CustomText";
 import CustomAppBar from "./CustomAppBar";
-import {Button, Box} from "@mui/material";
+import {Button} from "@mui/material";
 import {Typography} from "@material-ui/core";
 import {Snackbar} from "@material-ui/core";
 import {Alert} from "@mui/material";
 import {useTranslation} from "react-i18next";
-import { ReactComponent as HeaderWorldSvg } from '../images/header-world.svg';
 import {checkSolution} from "./SolutionInputTester";
+import {scaledSolution} from "./Util";
 import "../styles/Header.css";
 import "../styles/Util.css";
 
@@ -19,6 +19,13 @@ const Header = ({units, setUnits, setSolution, setOriginalSolution}) => {
     const [showAlert, setShowAlert] = useState(false);
     const navigate = useNavigate();
     const fileInputRef = useRef();
+
+    const updateSolution = (solution) => {
+        const scalar = solution['scalar'];
+        const scaled = (scalar && scalar !== 0) ? scaledSolution(solution, 1 / scalar) : solution;
+        setOriginalSolution(scaled);
+        setSolution(scaled);
+    };
 
     const uploadFile = (event) => {
         const file = event.target.files[0];
@@ -32,8 +39,7 @@ const Header = ({units, setUnits, setSolution, setOriginalSolution}) => {
                 setAlertText(error.error);
                 setShowAlert(true);
             } else {
-                setOriginalSolution(solution);
-                setSolution(solution);
+                updateSolution(solution);
                 navigate('/view');
             }
         }

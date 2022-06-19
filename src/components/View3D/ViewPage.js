@@ -11,36 +11,12 @@ import Stats from "./Stats";
 import ColorMap from "./ColorMap";
 import PackageControl from "./PackageControl";
 import outputSolutionTester from "../OutputSolutionTester";
+import { scaledSolution } from "../Util";
 import '../../styles/ViewPage.css';
 
-const scaledSolution = (solution) => {
-    const scalar = solution['scalar'];
-    if (!scalar || scalar == 1) return solution;
-    
-    const dims = ['width', 'depth', 'height'];
-    const pos = ['x', 'y', 'z'];
-    const newSolution = {...solution};
-
-    dims.forEach(dim => {
-        newSolution['container'][dim] *= scalar;
-    });
-    for (let idx in newSolution['packages']) {
-        dims.forEach(dim => {
-            newSolution['packages'][idx][dim] *= scalar;
-        });
-    }
-    
-    for (let idx in newSolution['solution']) {
-        pos.forEach(p => {
-            newSolution['solution'][idx][p] *= scalar;
-        });
-    }
-
-    return newSolution;
-};
-
 function downloadSolutionFile(exportType, solution){
-    const scaled = scaledSolution(solution);
+    const scalar = solution['scalar'];
+    const scaled = scaledSolution(solution, scalar);
     saveJson('packing_solution', scaled);
 }
 
