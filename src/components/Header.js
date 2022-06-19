@@ -21,8 +21,8 @@ const Header = ({units, setUnits, setSolution, setOriginalSolution}) => {
     const fileInputRef = useRef();
 
     const updateSolution = (solution) => {
-        const scalar = solution['scalar'];
-        const scaled = (scalar && scalar !== 0) ? scaledSolution(solution, 1 / scalar) : solution;
+        const scalar = solution['scalar'] ?? 1;
+        const scaled = (scalar !== 0) ? scaledSolution(solution, 1 / scalar) : solution;
         setOriginalSolution(scaled);
         setSolution(scaled);
     };
