@@ -1,6 +1,8 @@
+const REQUEST_URL = 'https://cargo-optimizer-server.herokuapp.com/api/solve';
+
 const getSolution = async (data) => {
     try {
-        const request = process.env.SERVER_REQUEST_URL;
+        const request = REQUEST_URL;
         const options = {
             method: 'POST',
             headers: {
