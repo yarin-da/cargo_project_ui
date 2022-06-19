@@ -107,5 +107,7 @@
   "insertFileInHome": "ניתן להכניס את הקובץ שירד בדף הבית לאחר לחיצה על הכפתור לצפייה בפתרון, ועל ידי כך לעבור ישירות לתלת מימד",
   "packageOutOfBounds": "נמצאת מחוץ למכולה {{pkgType}} חבילה",
   "packageCollision": "נמצאת בתוך חבילה אחרת {{pkgType}} חבילה",
-  "emptyFormValue": "{{varType}} הכנס ערך עבור"
+  "emptyFormValue": "{{varType}} הכנס ערך עבור",
+  "saveInput": "שמירת הקלט בקובץ",
+  "pack": "סידור החבילות"
 }

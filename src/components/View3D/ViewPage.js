@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { getColors } from "./Color";
-import { Tooltip, Fab, SpeedDial, SpeedDialAction, Snackbar, Alert } from "@mui/material";
-import { getColorsByHash } from "./Color";
+import { Tooltip, Fab, Snackbar, Alert } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
-import JavascriptIcon from '@mui/icons-material/Javascript';
 import EditIcon from '@mui/icons-material/Edit';
 import CustomAppBar from "../CustomAppBar";
 import saveJson from "../SaveJson";
@@ -123,18 +121,9 @@ const ViewPage = ({
                 <ColorMap colorMap={colorMap} setColorMap={setColorMap} />
                 <div style={{ position: 'absolute', right: 50, bottom: 50, display: 'flex', flexDirection: 'column' }}>
                     <Tooltip title={t('exportSolution')} arrow>
-                        <SpeedDial 
-                            ariaLabel="export" 
-                            FabProps={{ sx: { padding: 5 } }}
-                            icon={<FileDownloadIcon fontSize="large" />}
-                        >
-                            <SpeedDialAction 
-                                icon={<JavascriptIcon fontSize="large" />} 
-                                tooltipTitle={"json"} 
-                                onClick={() => onDownload('json')} 
-                                FabProps={{ sx: { width: 60, height: 60 } }}
-                            />
-                        </SpeedDial>
+                        <Fab sx={{ padding: 5, margin: 2 }} onClick={() => onDownload('json')} color="primary">
+                            <FileDownloadIcon fontSize="large" />
+                        </Fab>
                     </Tooltip>
                     <Tooltip title={t('editSolution')} arrow>
                         <Fab 

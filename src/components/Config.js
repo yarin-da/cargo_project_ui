@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {LocalShipping} from "@material-ui/icons";
-import {Stepper, Step, StepLabel, Box, Fab, Snackbar, Alert} from "@mui/material";
+import {Stepper, Step, StepLabel, Box, Fab, Snackbar, Alert, SpeedDial, SpeedDialAction} from "@mui/material";
 import {Upload} from "@mui/icons-material";
 import CustomText from "./CustomText";
 import UploadFile from './UploadFile';
@@ -11,15 +11,17 @@ import { useTranslation } from "react-i18next";
 import { styled } from '@mui/material/styles';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import StepConnector, { stepConnectorClasses } from '@mui/material/StepConnector';
-import ConfirmationDialog from "./ConfirmationDialog";
 import { useNavigate } from "react-router-dom";
 import { getSolution } from "./ServerHandler";
 import CircularProgress from '@mui/material/CircularProgress';
 import CustomAppBar from "./CustomAppBar";
-import '../styles/Config.css';
 import ConfigPackageList from "./ConfigPackageList";
+import SaveIcon from '@mui/icons-material/Save';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import DoneIcon from '@mui/icons-material/Done';
 import { isInputValid } from "./Type";
 import saveJson from "./SaveJson";
+import '../styles/Config.css';
 
 const tabs = [
     {
@@ -131,7 +133,7 @@ const Config = ({
             setOriginalSolution(solution);
             navigate("/view");
         } catch (e) {
-            await notifyError(e.message);
+            await notifyError(e.message ?? e);
         } finally {
             await setLoading(false);
         }
@@ -173,16 +175,6 @@ const Config = ({
                             )
                         }
                     </div>
-                    <ConfirmationDialog 
-                        title="viewSolution" 
-                        text=""
-                        open={openConfirmDialog}
-                        onConfirm={() => { setOpenConfirmDialog(false); uploadDataToServer(); }} 
-                        onCancel={() => setOpenConfirmDialog(false)}
-                        extraButtons={[
-                            { title: 'exportInput', onClick: () => { saveJson('user_input', {container, packages}) } }
-                        ]}
-                    />
                     <Fab 
                         disabled={currentPage === 0}
                         color="primary"
@@ -194,31 +186,54 @@ const Config = ({
                         <ArrowBackRoundedIcon fontSize="large" />
                         <CustomText text="back" style={{ textTransform: 'none' }} />
                     </Fab>
-                    <Fab 
-                        color={currentPage === tabs.length - 1 ? "secondary" : "primary"}
-                        size="large"
-                        variant="extended"
-                        style={{ position: 'fixed', right: 50, bottom: 50, minWidth: 100 }}
-                        onClick={() => {
-                            if (currentPage === tabs.length - 1) {
-                                setOpenConfirmDialog(true);
-                            } else {
-                                setCurrentPage(curr => curr + 1);
-                            }
-                        }
-                        }
-                    >
-                        {loading ? 
-                            <CircularProgress size={25} /> :
-                            <CustomText 
-                                text={currentPage === tabs.length - 1 ? "finish" : "next"} 
-                                style={{ textTransform: 'none' }} 
+                    {
+                        currentPage === tabs.length - 1 ?
+                        <SpeedDial 
+                            ariaLabel="exportInput" 
+                            FabProps={{
+                                color: "secondary",
+                                size: "large",
+                                variant: "extended",
+                                style: {minWidth: 100},
+                            }}
+                            icon={<DoneIcon fontSize="large" />}
+                            style={{ position: 'fixed', right: 50, bottom: 50 }}
+                            onClick={() => setOpenConfirmDialog(true)}
+                        >
+                            <SpeedDialAction 
+                                icon={<SaveIcon fontSize="large" />} 
+                                tooltipTitle={"saveInput"} 
+                                onClick={() => saveJson('user_input', {container, packages})} 
+                                FabProps={{ sx: { width: 60, height: 60 } }}
+                                TooltipClasses=""
+                                tooltipOpen
                             />
-                        }
-                        {currentPage !== tabs.length - 1 && <ArrowForwardRoundedIcon fontSize="large" />}
-                    </Fab>
+                            <SpeedDialAction 
+                                icon={<LocalShippingIcon fontSize="large" />} 
+                                tooltipTitle={"pack"} 
+                                onClick={() => uploadDataToServer()} 
+                                FabProps={{ sx: { width: 60, height: 60 } }}
+                                tooltipOpen
+                            />
+                        </SpeedDial>
+                        :
+                        <Fab 
+                            color="primary"
+                            size="large"
+                            variant="extended"
+                            style={{ position: 'fixed', right: 50, bottom: 50, minWidth: 100 }}
+                            onClick={() => setCurrentPage(curr => curr + 1)}
+                        >
+                            <ArrowForwardRoundedIcon fontSize="large" />
+                        </Fab>
+                    }
                 </div>
             </div>
+            {loading && 
+                <CircularProgress 
+                    style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }} 
+                    size={50} />
+            }
             <Snackbar 
                 open={snackbarOpen} 
                 autoHideDuration={5000} 

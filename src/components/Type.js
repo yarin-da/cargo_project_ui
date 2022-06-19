@@ -57,7 +57,7 @@ const isInputValid = (data) => {
         const tester = typeTesters[keyType];
         const value = container[key];
         if (tester && !tester(value)) {
-            return t('inputError', {object: 'container', key, type: keyType, value: value});
+            return t('inputError', {object: 'container', key, type: t(keyType), value: value ?? 'null'});
         }
     }
 
@@ -67,7 +67,7 @@ const isInputValid = (data) => {
             const tester = typeTesters[keyType];
             const value = pkg[key];
             if (tester && !tester(value)) {
-                return t('inputError', {object: 'package', key, type: keyType, value: value});
+                return t('inputError', {object: 'package', key, type: t(keyType), value: value ?? 'null'});
             }
         }
     }
