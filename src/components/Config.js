@@ -20,6 +20,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import DoneIcon from '@mui/icons-material/Done';
 import { isInputValid } from "./Type";
+import { createStyles, makeStyles } from '@mui/styles';
 import saveJson from "./SaveJson";
 import '../styles/Config.css';
 
@@ -89,6 +90,15 @@ function ColorlibStepIcon(props) {
     );
 }
 
+const useStyles = makeStyles((theme) =>
+  createStyles({
+    StaticTooltipLabel: {
+        whiteSpace: "nowrap",
+        maxWidth: "none",
+    },
+  }),
+);
+
 const Config = ({
                     units,
                     setUnits,
@@ -138,6 +148,8 @@ const Config = ({
             await setLoading(false);
         }
     };
+
+    const classes = useStyles();
 
     return (
         <div style={{ 
@@ -201,16 +213,17 @@ const Config = ({
                             onClick={() => setOpenConfirmDialog(true)}
                         >
                             <SpeedDialAction 
+                                classes={{ staticTooltipLabel: classes.StaticTooltipLabel }}
                                 icon={<SaveIcon fontSize="large" />} 
-                                tooltipTitle={"saveInput"} 
+                                tooltipTitle={t("saveInput")} 
                                 onClick={() => saveJson('user_input', {container, packages})} 
                                 FabProps={{ sx: { width: 60, height: 60 } }}
-                                TooltipClasses=""
                                 tooltipOpen
                             />
                             <SpeedDialAction 
+                                classes={{ staticTooltipLabel: classes.StaticTooltipLabel }}
                                 icon={<LocalShippingIcon fontSize="large" />} 
-                                tooltipTitle={"pack"} 
+                                tooltipTitle={t("pack")} 
                                 onClick={() => uploadDataToServer()} 
                                 FabProps={{ sx: { width: 60, height: 60 } }}
                                 tooltipOpen
