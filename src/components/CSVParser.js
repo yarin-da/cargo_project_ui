@@ -2,8 +2,8 @@ import { parseValue, types, stringTypeTesters } from "./Type";
 import Package from "./Package";
 import { t } from "i18next";
 
-const headers = "width,height,depth,cost,maxWeight,type,amount,priority,weight,profit,canRotate,canStackAbove".split(',');
-const cargoHeaders = "width,height,depth,cost,maxWeight".split(',');
+const headers = "width,height,depth,maxWeight,type,amount,priority,weight,profit,canRotate,canStackAbove".split(',');
+const cargoHeaders = "width,height,depth,maxWeight".split(',');
 const packageHeaders = "width,height,depth,type,amount,priority,weight,profit,canRotate,canStackAbove".split(',');
 
 function splitRowsToArrays(rows) {
@@ -35,7 +35,7 @@ function containerFields(containerRow, map) {
         if (cargoHeaders.includes(col)) {
             const type = types[col];
             const tester = stringTypeTesters[type];
-            const value = containerRow[index]
+            const value = containerRow[index];
             if (tester(value)) {
                 container[col] = parseValue(col, value);
             } else {
