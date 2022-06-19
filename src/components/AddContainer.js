@@ -77,16 +77,16 @@ const StandardContainerButtons = ({ standard, onStandardChosen, units, standardS
             <CustomText text="standardSize" variant="h6" />
             <div style={{display: "flex", justifyContent: "space-evenly"}}>
                 {Object.keys(standardSizes).map(
-                    (size, i) => 
+                    size => 
                         <StandardContainerSize 
-                            key={`standard-container-size-button-${i}`}
+                            key={`standard-container-size-button-${size}`}
                             units={units}
                             image={containerPhoto} 
-                            imageSize={50 + 10 * i} 
-                            title={size} 
+                            imageSize={50 + 10 * size} 
+                            title={standardSizes[size]['size']} 
                             standard={standardSizes[size]}
-                            isChosen={i === standard}
-                            onClick={() => onStandardChosen(i)}
+                            isChosen={size === standard}
+                            onClick={() => onStandardChosen(size)}
                         />
                 )}
             </div>
@@ -105,18 +105,21 @@ const ContainerForm = ({container, setContainer, units}) => {
 
     const standardSizes = [
         {
+            size: 'small',
             width: 200,
             height: 200,
             depth: 400,
             maxWeight: 1240000,
         },
         {
+            size: 'medium',
             width: 200,
             height: 200,
             depth: 800,
             maxWeight: 2480000,
         },
         {
+            size: 'large',
             width: 200,
             height: 200,
             depth: 1200,
@@ -132,7 +135,6 @@ const ContainerForm = ({container, setContainer, units}) => {
             depth: getLength(standardSizes[standard]['depth'], units),
             maxWeight: getWeight(standardSizes[standard]['maxWeight'], units)
         };
-        debugger;
         setContainer(newContainer);
     }, [units, standard]);
 
