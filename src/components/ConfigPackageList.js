@@ -126,7 +126,10 @@ const ConfigPackageList = ({ units, packages, setPackages }) => {
             <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
                 <CustomText text="addPackagesTab" variant="h4" />
             </div>
-            <div style={{ width: '100%', display: 'flex', justifyContent: 'flex-end' }}>
+            <div style={{ width: '100%', display: 'flex', justifyContent: 'flex-start' }}>
+                <Button variant="contained" sx={{ margin: 1 }} onClick={deleteSelected}>
+                    <CustomText text="deleteChecked" style={{textTransform: 'none'}} />
+                </Button>
                 <Button 
                     variant="contained" 
                     sx={{ margin: 1 }} 
@@ -137,9 +140,6 @@ const ConfigPackageList = ({ units, packages, setPackages }) => {
                     }}
                 >
                     <CustomText text="add" style={{textTransform: 'none'}} />
-                </Button>
-                <Button variant="contained" sx={{ margin: 1 }} onClick={deleteSelected}>
-                    <CustomText text="deleteChecked" style={{textTransform: 'none'}} />
                 </Button>
             </div>
             <DataGrid
