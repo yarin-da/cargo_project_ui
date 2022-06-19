@@ -28,6 +28,11 @@ const theme = createTheme({
             light: '#42A5F5',
             dark: '#42A5F5'
         },
+        secondary: {
+            main: '#F70057',
+            light: '#F70057',
+            dark: '#F70057'
+        }
     },
 });
 

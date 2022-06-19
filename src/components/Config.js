@@ -238,6 +238,7 @@ const Config = ({
                             style={{ position: 'fixed', right: 50, bottom: 50, minWidth: 100 }}
                             onClick={() => setCurrentPage(curr => curr + 1)}
                         >
+                            <CustomText text="next" style={{ textTransform: 'none' }} />
                             <ArrowForwardRoundedIcon fontSize="large" />
                         </Fab>
                     }

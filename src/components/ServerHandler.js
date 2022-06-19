@@ -1,5 +1,5 @@
 // TODO: environment variable? we may want to choose different port if already taken
-const SERVER_URL = 'http://localhost:8080';
+const SERVER_URL = 'http://localhost:8080/api/solve';
 
 const getSolution = async (data) => {
     try {
