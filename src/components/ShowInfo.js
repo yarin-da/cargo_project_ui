@@ -12,16 +12,8 @@ import exportButton from '../images/exportButton.png'
 import moveButtons from '../images/moveButtons.png'
 import ctrl from '../images/ctrl.png'
 import alt from '../images/alt.png'
-import { TabContext, TabPanel, TabList } from '@mui/lab';
-import { Tab, Box } from "@mui/material";
-
-const style = {
-    width: 500,
-    border: "1 solid black",
-    borderRadius: 15,
-    backgroundColor: "white",
-    padding: 20
-}
+import {TabContext, TabPanel, TabList} from '@mui/lab';
+import {Tab, Box} from "@mui/material";
 
 const ViewHelp = () => {
     const {t} = useTranslation();
@@ -42,7 +34,7 @@ const ViewHelp = () => {
                 </Box>
                 <TabPanel value="1">
                     <CustomText text="packagesColor"/>
-                    <div style={{display: 'flex', justifyContent: 'center'}}>
+                    <div className="show-info">
                         <img src={editColors} alt={editColors} style={{
                             height: 100,
                             width: 160,
@@ -52,7 +44,7 @@ const ViewHelp = () => {
                 </TabPanel>
                 <TabPanel value="2">
                     <CustomText text="clickEditButton"/>
-                    <div style={{display: 'flex', justifyContent: 'center'}}>
+                    <div className="show-info">
                         <img src={editButton} alt={editButton} style={{
                             height: 60,
                             width: 70,
@@ -60,7 +52,7 @@ const ViewHelp = () => {
                         }}/>
                     </div>
                     <CustomText text="rightMenu"/>
-                    <div style={{display: "flex", justifyContent: "space-evenly"}}>
+                    <div className="show-info-img">
                         <img src={moveButtons} alt={moveButtons} style={{
                             height: 242,
                             width: 215,
@@ -75,17 +67,17 @@ const ViewHelp = () => {
                         }}/>
                     </div>
                     <CustomText text="multiplePackages"/>
-                    <div style={{display: "flex", justifyContent: "space-evenly"}}>
+                    <div className="show-info-img">
                         <img src={ctrl} alt={ctrl}/>
                     </div>
                     <CustomText text="focusCamera"/>
-                    <div style={{display: "flex", justifyContent: "space-evenly"}}>
+                    <div className="show-info-img">
                         <img src={alt} alt={alt}/>
                     </div>
                 </TabPanel>
                 <TabPanel value="3">
                     <CustomText text="exportInfo"/>
-                    <div style={{display: 'flex', flexDirection: 'column'}}>
+                    <div className="show-info-tab3">
                         <img src={exportButton} alt={exportButton} style={{
                             alignSelf: "center",
                             height: 70,
@@ -103,7 +95,7 @@ const ViewHelp = () => {
 
 const HomeHelp = () => {
     return (
-        <div style={{display: "flex", flexDirection: "column"}}>
+        <div className="show-info-home-page">
             <CustomText text="enterInput"/>
             <img src={findPacking} alt={findPacking} style={{
                 display: "flex",
@@ -138,7 +130,7 @@ const ShowInfo = () => {
     }, [location]);
 
     return (
-        <div style={style}>
+        <div className="help-popup">
             <CustomText text="help" style={{
                 fontSize: 30,
                 display: 'flex',

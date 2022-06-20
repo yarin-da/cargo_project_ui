@@ -58,3 +58,9 @@
     padding: 25px;
     border-radius: 25px;
 }
+
+.example-input-file {
+    display: flex;
+    justify-content: center;
+    margin: 15px;
+}

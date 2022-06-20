@@ -67,6 +67,7 @@ const Header = ({units, setUnits, setSolution, setOriginalSolution}) => {
                     </div>
                     <div style={{alignSelf: 'flex-start', display: 'flex', flexDirection: 'row'}}>
                         <Button
+                            className="find-packing-button"
                             variant="contained"
                             size="small"
                             sx={{
