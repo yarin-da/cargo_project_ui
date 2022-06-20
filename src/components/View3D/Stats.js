@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Typography, LinearProgress } from "@mui/material";
 import CustomText from "../CustomText";
+import '../../styles/Stats.css'
 
 function LinearProgressWithLabel(props) {
     return (
@@ -18,21 +19,9 @@ function LinearProgressWithLabel(props) {
 }
 
 const Stats = ({ stats, container }) => {
-    const divStyle = {
-        position: 'absolute', 
-        top: 10, 
-        right: 10, 
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'flex-start',
-        background: 'rgba(170, 170, 200, 0.33)',
-        boxShadow: '1px 2px 0 0 rgba(0, 0, 0, 0.33)',
-        borderRadius: 10,
-    };
     return (
-        <div style={divStyle}>
-            <div className="unselectable-text" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', columnGap: 10, padding: 20 }}>
+        <div className="stats-div">
+            <div className="unselectable-text data">
                 <CustomText text="stats" variant="h6" style={{ gridColumnStart: 1, gridColumnEnd: 3 }} />
                 <span style={{ gridColumn: 1 }}>
                     Profit
@@ -44,7 +33,6 @@ const Stats = ({ stats, container }) => {
                     Weight
                 </span>
                 <span style={{ gridColumn: 2 }}>
-                    {/* {stats['weight']} / {container['maxWeight']} */}
                     <LinearProgressWithLabel value={100 * stats['weight'] / container['maxWeight']} />
                 </span>
                 <span style={{ gridColumn: 1 }}>

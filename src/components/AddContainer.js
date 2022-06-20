@@ -44,7 +44,7 @@ const StandardContainerSize = ({image, imageSize, title, standard, isChosen, onC
 
     return (
         <Button className="hover-effect" component="span" style={buttonStyle} onClick={onClick}>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100%' }}>
+            <div className="container-buttons-div" >
                 <small className="no-text-transform">
                     {getLength(standard['width'], units)}
                     &times;
@@ -57,15 +57,15 @@ const StandardContainerSize = ({image, imageSize, title, standard, isChosen, onC
                     {getWeight(standard['maxWeight'], units)}
                     {units['weight']}
                 </small>
-                <div style={{ flex: 1, display: 'flex', alignItems: 'center' }}>
-                    <img 
+                <div className="container-images" >
+                    <img
                         src={image}
                         alt={t(title)}
                         width={imageRatio * imageSize}
                         height={imageSize}
                     />
                 </div>
-                <CustomText style={{ textTransform: 'none' }} text={title} />
+                <CustomText className="no-text-transform" text={title} />
             </div>
         </Button>
     );
@@ -73,9 +73,9 @@ const StandardContainerSize = ({image, imageSize, title, standard, isChosen, onC
 
 const StandardContainerButtons = ({ standard, onStandardChosen, units, standardSizes }) => {
     return (
-        <div style={{display: "flex", flexDirection: 'column', alignItems: 'center'}}>
+        <div className="standard-containers-div">
             <CustomText text="standardSize" variant="h6" />
-            <div style={{display: "flex", justifyContent: "space-evenly"}}>
+            <div className="standard-containers-buttons">
                 {Object.keys(standardSizes).map(
                     size => 
                         <StandardContainerSize 

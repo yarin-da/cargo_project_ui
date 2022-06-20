@@ -1,0 +1,17 @@
+.edit-solution-popup {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    background: rgba(170, 170, 200, 0.33);
+    box-shadow: 1px 2px 0 0 rgba(0, 0, 0, 0.33);
+    border-radius: 25px;
+}
+
+.edit-solution-title {
+    margin-bottom: 5px;
+}

@@ -5,6 +5,7 @@ import UndoIcon from '@mui/icons-material/Undo';
 import RedoIcon from '@mui/icons-material/Redo';
 import CustomText from "../CustomText";
 import { useTranslation } from "react-i18next";
+import '../../styles/PackageControl.css'
 
 const PackageControl = ({ 
     solution, 
@@ -42,20 +43,8 @@ const PackageControl = ({
     };
 
     return (
-        <div style={{ 
-            position: 'absolute', 
-            top: 10, 
-            right: 10, 
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            padding: 15,
-            background: 'rgba(170, 170, 200, 0.33)',
-            boxShadow: '1px 2px 0 0 rgba(0, 0, 0, 0.33)',
-            borderRadius: 25,
-        }}>
-            <CustomText variant="h5" text="editSolution" style={{marginBottom: 5}} />
+        <div className="edit-solution-popup">
+            <CustomText className="edit-solution-title" variant="h5" text="editSolution" />
             <div className="control-button-group">
                 <Tooltip title={t('reset')}>
                     <Button className="control-button" style={buttonStyle} onClick={() => {
@@ -78,7 +67,7 @@ const PackageControl = ({
             </div>
             <div className="control-button-group">
                 <Button className="control-button" style={{...buttonStyle, background: 'rgba(255,0,0,0.15)'}} onClick={() => update('x', -1)}>-</Button>
-                <Button className="control-button" style={{...buttonStyle, background: 'rgba(255,0,0,0.15)'}} onClick={() => update('x', +1)}>+</Button>    
+                <Button className="control-button" style={{...buttonStyle, background: 'rgba(255,0,0,0.15)'}} onClick={() => update('x', +1)}>+</Button>
                 <Button className="control-button" style={{...buttonStyle, background: 'rgba(255,0,0,0.15)'}} onClick={() => update('rotation-x', 90)}><ThreeSixtyIcon /></Button>
             </div>
             <div className="control-button-group">

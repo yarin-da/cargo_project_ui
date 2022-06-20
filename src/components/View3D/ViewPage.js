@@ -108,19 +108,10 @@ const ViewPage = ({
         setSelectedPackages([randIndex]);
     };
 
-    const divStyle = {
-        position: 'relative', 
-        width: '100vw', 
-        height: '100vh', 
-        display: 'flex', 
-        flexDirection: 'column', 
-        overflow: 'hidden',
-    };
-
     return (
-        <div style={divStyle}>
+        <div className="view-page">
             <CustomAppBar units={units} setUnits={setUnits} />
-            <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+            <div className="view-div">
                 <View3D 
                     solution={solution ? (solution['solution'] ?? []) : []} 
                     setSolution={setSolution} 
@@ -131,7 +122,7 @@ const ViewPage = ({
                     setSelectedPackages={setSelectedPackages} 
                 />
                 <ColorMap colorMap={colorMap} setColorMap={setColorMap} />
-                <div style={{ position: 'absolute', right: 50, bottom: 50, display: 'flex', flexDirection: 'column' }}>
+                <div className="buttons-div" >
                     <Tooltip title={t('exportSolution')} arrow>
                         <Fab sx={{ padding: 5, margin: 2 }} onClick={() => onDownload('json')} color="primary">
                             <FileDownloadIcon fontSize="large" />

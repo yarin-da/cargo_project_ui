@@ -23,6 +23,7 @@ import { isInputValid } from "./Type";
 import { createStyles, makeStyles } from '@mui/styles';
 import saveJson from "./SaveJson";
 import '../styles/Config.css';
+import '../styles/Util.css'
 
 const tabs = [
     {
@@ -152,16 +153,10 @@ const Config = ({
     const classes = useStyles();
 
     return (
-        <div style={{ 
-            display: 'flex', 
-            flexDirection: 'column', 
-            width: '100vw', 
-            height: '100vh',
-            overflow: 'hidden',
-        }}>
+        <div className="config-div">
             <CustomAppBar units={units} setUnits={setUnits} />
             <div style={{ width: '100%', height: '100%' }}>
-                <div style={{ display: 'flex',  flexDirection: 'column', width: '100%', height: '100%', alignItems: 'center' }}>
+                <div className="stepper-div" >
                     <Box sx={{ margin: 5, width: '100%' }}>
                         <Stepper activeStep={currentPage} alternativeLabel connector={<ColorlibConnector />}>
                             {tabs.map((tab) => (
@@ -173,7 +168,7 @@ const Config = ({
                             ))}
                         </Stepper>
                     </Box>
-                    <div style={{ display: 'flex', justifyContent: 'center', width: '100%', height: '100%' }}>
+                    <div className="pages" >
                         {
                             (currentPage === 0 && <UploadFile setContainer={setContainer} setPackages={setPackages} />)
                             ||
@@ -197,7 +192,7 @@ const Config = ({
                         onClick={() => setCurrentPage(curr => curr - 1)}
                     >
                         <ArrowBackRoundedIcon fontSize="large" />
-                        <CustomText text="back" style={{ textTransform: 'none' }} />
+                        <CustomText text="back" className="no-text-transform" />
                     </Fab>
                     {
                         currentPage === tabs.length - 1 ?
@@ -238,7 +233,7 @@ const Config = ({
                             style={{ position: 'fixed', right: 50, bottom: 50, minWidth: 100 }}
                             onClick={() => setCurrentPage(curr => curr + 1)}
                         >
-                            <CustomText text="next" style={{ textTransform: 'none' }} />
+                            <CustomText text="next" className="no-text-transform" />
                             <ArrowForwardRoundedIcon fontSize="large" />
                         </Fab>
                     }

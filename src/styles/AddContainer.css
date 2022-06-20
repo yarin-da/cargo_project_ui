@@ -11,12 +11,28 @@
 .cargo-text-field {
     display: flex;
     flex-wrap: wrap;
-    /* display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    column-gap: 10px;
-    row-gap: 30px; */
+}
 
-    /*justify-content: space-evenly;*/
-    /*grid-template-columns: repeat(2, 1fr);*/
-    /*width: 100%;*/
+.container-buttons-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+
+.container-images {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.standard-containers-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.standard-containers-buttons {
+    display: flex;
+    justify-content: space-evenly;
 }
