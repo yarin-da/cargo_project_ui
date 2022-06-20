@@ -27,7 +27,7 @@ const ViewHelp = () => {
             <TabContext value={value}>
                 <Box sx={{borderBottom: 1, borderColor: 'divider', display: 'flex', justifyContent: 'space-evenly'}}>
                     <TabList onChange={handleChange}>
-                        <Tab style={{textTransform: 'none'}} label={t("editPackagesColors")} value="1"/>
+                        <Tab style={{textTransform: 'none'}} label={t("viewControl")} value="1"/>
                         <Tab style={{textTransform: 'none'}} label={t("editSolutionInfo")} value="2"/>
                         <Tab style={{textTransform: 'none'}} label={t("exportSolution")} value="3"/>
                     </TabList>
@@ -39,8 +39,12 @@ const ViewHelp = () => {
                             height: 100,
                             width: 160,
                             marginTop: 5,
+                            marginButtom: 15,
                         }}/>
                     </div>
+                    <CustomText text="differentAngels"/>
+                    <CustomText text="differentLocations"/>
+                    <CustomText text="zoom"/>
                 </TabPanel>
                 <TabPanel value="2">
                     <CustomText text="clickEditButton"/>
