@@ -9,6 +9,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import CheckIcon from '@mui/icons-material/CheckRounded';
 import CrossIcon from '@mui/icons-material/ClearRounded';
 import { makeStyles } from '@material-ui/core/styles';
+import '../styles/Config.css'
+import '../styles/Util.css'
 
 const useStyles = makeStyles({
     root: {
@@ -122,13 +124,13 @@ const ConfigPackageList = ({ units, packages, setPackages }) => {
     const locale = i18n.language === 'he' ? heIL : enUS;
     const classes = useStyles();
     return (
-        <div style={{ width: '90%' }}>
-            <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+        <div className="config-package-list">
+            <div className="add-packages-tab">
                 <CustomText text="addPackagesTab" variant="h4" />
             </div>
-            <div style={{ width: '100%', display: 'flex', justifyContent: 'flex-start' }}>
+            <div className="packages-buttons">
                 <Button variant="contained" sx={{ margin: 1 }} onClick={deleteSelected}>
-                    <CustomText text="deleteChecked" style={{textTransform: 'none'}} />
+                    <CustomText text="deleteChecked" className="no-text-transform" />
                 </Button>
                 <Button 
                     variant="contained" 
@@ -139,7 +141,7 @@ const ConfigPackageList = ({ units, packages, setPackages }) => {
                         setShowEdit(true); 
                     }}
                 >
-                    <CustomText text="add" style={{textTransform: 'none'}} />
+                    <CustomText text="add" className="no-text-transform" />
                 </Button>
             </div>
             <DataGrid
@@ -169,20 +171,12 @@ const ConfigPackageList = ({ units, packages, setPackages }) => {
                 }}
             />
             {/* add spacing so that the buttons won't overshadow the table's values */}
-            <div style={{height: 125}}></div>
+            <div className="packages-modal"></div>
             <Modal 
                 open={showEdit} 
                 onClose={() => setShowEdit(false)}
             >
-                <div style={{
-                    background: 'white',
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    padding: 25,
-                    borderRadius: 25,
-                }}>
+                <div className="modal-popup" >
                     <AddPackageForm 
                         values={{...editedPackage}} 
                         onSubmit={onSave} 

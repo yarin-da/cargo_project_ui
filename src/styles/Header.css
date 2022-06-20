@@ -9,6 +9,13 @@
     background-image: url(../images/new-XDbackground-cropped.png);
 }
 
+.header-div {
+    display: flex;
+    flex-direction: column-reverse;
+    width: 100vw;
+    height: 100vh;
+}
+
 .head {
     display: flex;
     padding: 40px;
