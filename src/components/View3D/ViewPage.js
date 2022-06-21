@@ -132,7 +132,7 @@ const ViewPage = ({
                     units={units}
                 />
                 <ColorMap colorMap={colorMap} setColorMap={setColorMap} />
-                <div style={{ position: 'absolute', right: 50, bottom: 50, display: 'flex', flexDirection: 'column' }}>
+                <div style={{ position: 'absolute', right: 50, bottom: 50, display: 'flex' }}>
                     <Tooltip title={t('exportSolution')} arrow>
                         <Fab sx={{ padding: 5, margin: 2 }} onClick={() => onDownload('json')} color="primary">
                             <FileDownloadIcon fontSize="large" />
