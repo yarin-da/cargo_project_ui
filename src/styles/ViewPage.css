@@ -41,5 +41,5 @@
     right: 50px;
     bottom: 50px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
 }
