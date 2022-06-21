@@ -187,7 +187,7 @@ const CustomBox = ({
     );
 };
 
-const Package = ({ solution, packages, colorMap, index, selected, onSelect, parseLength }) => {
+const Package = ({ solution, packages, colorMap, index, selected, onSelect }) => {
     const sol = solution[index];
     const pkg = packages.find(pkg => pkg['type'] === sol['type']);
     return (
@@ -196,14 +196,14 @@ const Package = ({ solution, packages, colorMap, index, selected, onSelect, pars
             onClick={(e) => onSelect(e, index)}
             text={pkg['type']}
             color={colorMap[pkg['type']]} 
-            scale={[pkg['width'], pkg['height'], pkg['depth']].map(len => parseLength(len))}
+            scale={[pkg['width'], pkg['height'], pkg['depth']]}
             rotation={[sol['rotation-x'], sol['rotation-z'], sol['rotation-y']]}
-            position={[sol['x'], sol['z'], sol['y']].map(len => parseLength(len))} 
+            position={[sol['x'], sol['z'], sol['y']]} 
         />
     );
 };
 
-const Packages = ({ packages, solution, colorMap, selected, onSelect, parseLength }) => {
+const Packages = ({ packages, solution, colorMap, selected, onSelect }) => {
     return (
         <group>
         {
@@ -217,7 +217,6 @@ const Packages = ({ packages, solution, colorMap, selected, onSelect, parseLengt
                     selected={selected} 
                     onSelect={onSelect} 
                     index={i}
-                    parseLength={parseLength}
                 />
             )
         }
@@ -225,7 +224,7 @@ const Packages = ({ packages, solution, colorMap, selected, onSelect, parseLengt
     );
 };
 
-const Container = ({ scale, parseLength }) => {
+const Container = ({ scale }) => {
     const [width, height, depth] = scale.map(s => s + CONTAINER_THICKNESS);
     const [walls, setWalls] = useState([
         {
@@ -292,8 +291,8 @@ const Container = ({ scale, parseLength }) => {
                 wall.visible &&
                 <Box 
                     key={`container-wall-${i}`} 
-                    scale={wall.scale.map(len => parseLength(len))} 
-                    position={parsePosition({ position: wall.position, scale }).map(len => parseLength(len))}
+                    scale={wall.scale} 
+                    position={parsePosition({ position: wall.position, scale })}
                 >
                     <meshStandardMaterial color={CONTAINER_COLOR} />        
                 </Box>
@@ -340,12 +339,6 @@ const View3D = ({
 
     const maxContainerDim = Math.max(container['width'], container['height'], container['depth']);
 
-    const parseLength = (length) => {
-        if (units['length'] === 'cm') return length / 100;
-        if (units['length'] === 'inch') return length / 39.37;
-        return length;
-    };
-
     const updateControlsTarget = (index) => {
         if (index !== -1) {
             const pkg = solution[index];
@@ -376,7 +369,7 @@ const View3D = ({
             style={canvasStyle} 
             dpr={[1, 2]} 
             camera={{ 
-                position: [maxContainerDim, maxContainerDim, maxContainerDim].map(len => parseLength(len)), 
+                position: [maxContainerDim, maxContainerDim, maxContainerDim], 
                 fov: 75, 
                 near: 0.1,
                 far: 1000 
@@ -390,7 +383,6 @@ const View3D = ({
                         container['height'], 
                         container['depth']
                     ]} 
-                    parseLength={parseLength}
                 />
                 <Packages 
                     solution={solution} 
@@ -399,7 +391,6 @@ const View3D = ({
                     colorMap={colorMap} 
                     selected={selectedPackages} 
                     onSelect={onPackageClick} 
-                    parseLength={parseLength}
                 />
                 {selectedPackages.length > 0 && <AxisHelpers container={container} />}
                 <pointLight position={[0, 20, -5]} />

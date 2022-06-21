@@ -1,5 +1,5 @@
 const scaledSolution = (solution, scalar) => {
-    if (!scalar || scalar == 1) return solution;
+    if (!scalar || scalar === 1) return solution;
     
     const dims = ['width', 'depth', 'height'];
     const pos = ['x', 'y', 'z'];
