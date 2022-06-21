@@ -45,15 +45,8 @@ const Header = ({units, setUnits, setSolution, setOriginalSolution}) => {
         }
     };
 
-    const divStyle = {
-        display: 'flex', 
-        flexDirection: 'column-reverse', 
-        width: '100vw', 
-        height: '100vh', 
-    }
-
     return (
-        <div style={divStyle}>
+        <div className="header-div">
             <div className="head header-background-image cover">
                 <div className="header">
                     <div className="header-title" style={{ marginBottom: 25 }}>
@@ -74,6 +67,7 @@ const Header = ({units, setUnits, setSolution, setOriginalSolution}) => {
                     </div>
                     <div style={{alignSelf: 'flex-start', display: 'flex', flexDirection: 'row'}}>
                         <Button
+                            className="find-packing-button"
                             variant="contained"
                             size="small"
                             sx={{

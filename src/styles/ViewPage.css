@@ -20,3 +20,26 @@
     align-items: center; 
     justify-content: space-evenly;
 }
+
+.view-page {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.view-div {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.buttons-div {
+    position: absolute;
+    right: 50px;
+    bottom: 50px;
+    display: flex;
+    flex-direction: column;
+}

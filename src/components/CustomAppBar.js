@@ -8,6 +8,7 @@ import {useLocation, useNavigate} from "react-router-dom";
 import ShowInfo from "./ShowInfo";
 import {useTranslation} from "react-i18next";
 import "../styles/Header.css";
+import '../styles/CustomAppBar.css'
 
 const SettingsButton = ({onClick}) => {
     return (
@@ -34,7 +35,7 @@ const CustomAppBar = ({ units, setUnits }) => {
     const navigate = useNavigate();
     const isConfig =  (useLocation().pathname === '/config')
     return (
-        <div style={{boxShadow: '10px 3px 10px rgba(0,0,0,0.25)', zIndex: 1}}>
+        <div className="app-bar">
             <AppBar position="static" style={{backgroundColor: '#42A5F5'}}>
                 <Toolbar style={{display: 'flex', justifyContent: 'space-between'}}>
                     <Box
@@ -64,7 +65,7 @@ const CustomAppBar = ({ units, setUnits }) => {
                 </Toolbar>
             </AppBar>
             <Modal
-                style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}
+                className="modal-style"
                 open={showSettings}
                 onClose={toggleSettingsModal}
             >
@@ -73,16 +74,7 @@ const CustomAppBar = ({ units, setUnits }) => {
                 </div>
             </Modal>
             <Modal
-                style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}
-                open={showInfo}
-                onClose={toggleInformationModal}
-            >
-                <div>
-                    <ShowInfo/>
-                </div>
-            </Modal>
-            <Modal
-                style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}
+                className="modal-style"
                 open={showInfo}
                 onClose={toggleInformationModal}
             >

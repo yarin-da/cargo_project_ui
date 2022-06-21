@@ -48,7 +48,6 @@ const Dropzone = ({ setContainer, setPackages }) => {
         }
     };
 
-    // TODO: Change reject background on drop for json files
     return (
         <>
             <DropzoneArea

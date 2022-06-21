@@ -5,7 +5,7 @@ import { HexColorPicker } from "react-colorful";
 const ColorPicker = ({ open, onColorPicked, initialColor, onClose }) => {
     const [color, setColor] = useState(initialColor);
     return (
-        <Modal 
+        <Modal
             style={{ position: 'absolute', top: 50, left: 50 }}
             open={open} 
             onClose={onClose}

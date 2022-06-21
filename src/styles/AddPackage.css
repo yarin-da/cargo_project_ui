@@ -1,3 +1,15 @@
+.cross-button {
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
+}
+
+.error-div {
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+}
+
 .package-list {
     display: flex;
     flex-wrap: wrap;
@@ -17,14 +29,6 @@
     justify-items: center;
     padding: 40px;
 }
-
-/*.add-package-title {*/
-/*    position: relative;*/
-/*    color: black;*/
-/*    font-weight: bold;*/
-/*    font-size: 18px;*/
-/*    align-self: center;*/
-/*}*/
 
 .package-text-field {
     display: flex;

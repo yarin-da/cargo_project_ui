@@ -7,13 +7,14 @@ import { parseValue, typeTesters } from "./Type";
 import CrossIcon from '@mui/icons-material/ClearRounded';
 import "../styles/AddPackage.css";
 import { useTranslation } from "react-i18next";
+import '../styles/Util.css'
 
 const CustomBooleanInput = ({ value, setValue, inputId }) => {
     const onClick = () => setValue(curr => !curr);
     return (
         <FormControl style={{width:'100%'}}>
             <ToggleButton value={"none"} selected={value} htmlFor={inputId} onClick={onClick}>
-                <CustomText text={inputId} style={{textTransform: 'none'}} />
+                <CustomText text={inputId}  className="no-text-transform"/>
             </ToggleButton>
             <Input id={inputId} type="hidden" value={value} />
         </FormControl>
@@ -104,11 +105,11 @@ const AddPackageForm = ({ values:inputValues, onSubmit, onClose }) => {
                 </Grid>
                 <Grid item xs={2} justifySelf="center">
                     <Button type="submit" variant="contained" sx={{ width: 85, height: 50, marginTop: 3 }}>
-                        <CustomText text="save" style={{textTransform: 'none'}} />
+                        <CustomText text="save" className="no-text-transform" />
                     </Button>
                 </Grid>
             </Grid>
-            <div style={{ display: 'flex', justifyContent: 'center', marginTop: 25 }}>
+            <div className="cross-button" >
                 <Button 
                     sx={{ position: 'absolute', top: 15, right: 5 }}
                     onClick={() => onClose()}
@@ -118,7 +119,7 @@ const AddPackageForm = ({ values:inputValues, onSubmit, onClose }) => {
             </div>
             {
                 error &&
-                <div style={{ display: 'flex', justifyContent: 'center', marginTop: 5 }}>
+                <div className="error-div" >
                     <CustomText text={error} style={{ color: 'red' }} />
                 </div>
             }
