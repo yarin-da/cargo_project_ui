@@ -1,4 +1,5 @@
-const REQUEST_URL = 'https://cargo-optimizer-server.herokuapp.com/api/solve';
+// const REQUEST_URL = 'https://cargo-optimizer-server.herokuapp.com/api/solve';
+const REQUEST_URL = 'http://localhost:8080/api/solve';
 
 const getSolution = async (data) => {
     try {
