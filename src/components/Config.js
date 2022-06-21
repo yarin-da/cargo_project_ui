@@ -18,10 +18,17 @@ import CustomAppBar from "./CustomAppBar";
 import ConfigPackageList from "./ConfigPackageList";
 import SaveIcon from '@mui/icons-material/Save';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Button from '@mui/material/Button';
 import DoneIcon from '@mui/icons-material/Done';
 import { isInputValid } from "./Type";
 import { createStyles, makeStyles } from '@mui/styles';
 import saveJson from "./SaveJson";
+import saveCSV from "./SaveCSV"
 import '../styles/Config.css';
 import '../styles/Util.css'
 
@@ -112,6 +119,7 @@ const Config = ({
                 }) => {
     const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
     const [currentPage, setCurrentPage] = useState(0);
+    const [saveInputDialog, setSaveInputDialog] = useState(false)
     const [loading, setLoading] = useState(false);
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [snackbarTitle, setSnackbarTitle] = useState(false);
@@ -212,10 +220,30 @@ const Config = ({
                                 classes={{ staticTooltipLabel: classes.StaticTooltipLabel }}
                                 icon={<SaveIcon fontSize="large" />} 
                                 tooltipTitle={t("saveInput")} 
-                                onClick={() => saveJson('user_input', {container, packages})} 
+                                onClick={() => setSaveInputDialog(true)}
                                 FabProps={{ sx: { width: 60, height: 60 } }}
                                 tooltipOpen
                             />
+                            <Dialog
+                                open={saveInputDialog}
+                                onClose={() => setSaveInputDialog(false)}
+                            >
+                                <DialogTitle id="alert-dialog-title">
+                                    <CustomText text="saveInputFile" variant="h5"/>
+                                </DialogTitle>
+                                <DialogContent>
+                                    <DialogContentText id="alert-dialog-description">
+                                        <CustomText text="saveFileDialogText"/>
+                                    </DialogContentText>
+                                </DialogContent>
+                                <DialogActions>
+                                    <Button onClick={() => saveJson('user_input', {container, packages})}>Json</Button>
+                                    <Button onClick={() => saveCSV('user_input', {container, packages})} autoFocus>
+                                        CSV
+                                    </Button>
+                                    <Button onClick={() => setSaveInputDialog(false)}>{t("cancel")}</Button>
+                                </DialogActions>
+                            </Dialog>
                             <SpeedDialAction 
                                 classes={{ staticTooltipLabel: classes.StaticTooltipLabel }}
                                 icon={<LocalShippingIcon fontSize="large" />} 
@@ -224,6 +252,7 @@ const Config = ({
                                 FabProps={{ sx: { width: 60, height: 60 } }}
                                 tooltipOpen
                             />
+
                         </SpeedDial>
                         :
                         <Fab 
