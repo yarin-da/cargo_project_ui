@@ -129,6 +129,7 @@ const ViewPage = ({
                     colorMap={colorMap} 
                     selectedPackages={selectedPackages} 
                     setSelectedPackages={setSelectedPackages} 
+                    units={units}
                 />
                 <ColorMap colorMap={colorMap} setColorMap={setColorMap} />
                 <div style={{ position: 'absolute', right: 50, bottom: 50, display: 'flex', flexDirection: 'column' }}>
