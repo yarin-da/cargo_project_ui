@@ -224,26 +224,6 @@ const Config = ({
                                 FabProps={{ sx: { width: 60, height: 60 } }}
                                 tooltipOpen
                             />
-                            <Dialog
-                                open={saveInputDialog}
-                                onClose={() => setSaveInputDialog(false)}
-                            >
-                                <DialogTitle id="alert-dialog-title">
-                                    <CustomText text="saveInputFile" variant="h5"/>
-                                </DialogTitle>
-                                <DialogContent>
-                                    <DialogContentText id="alert-dialog-description">
-                                        <CustomText text="saveFileDialogText"/>
-                                    </DialogContentText>
-                                </DialogContent>
-                                <DialogActions>
-                                    <Button onClick={() => saveJson('user_input', {container, packages})}>Json</Button>
-                                    <Button onClick={() => saveCSV('user_input', {container, packages})} autoFocus>
-                                        CSV
-                                    </Button>
-                                    <Button onClick={() => setSaveInputDialog(false)}>{t("cancel")}</Button>
-                                </DialogActions>
-                            </Dialog>
                             <SpeedDialAction 
                                 classes={{ staticTooltipLabel: classes.StaticTooltipLabel }}
                                 icon={<LocalShippingIcon fontSize="large" />} 
@@ -252,7 +232,6 @@ const Config = ({
                                 FabProps={{ sx: { width: 60, height: 60 } }}
                                 tooltipOpen
                             />
-
                         </SpeedDial>
                         :
                         <Fab 
@@ -283,6 +262,27 @@ const Config = ({
                     {t(snackbarTitle)}
                 </Alert>
             </Snackbar>
+
+            <Dialog
+                open={saveInputDialog}
+                onClose={() => setSaveInputDialog(false)}
+            >
+                <DialogTitle id="alert-dialog-title">
+                    <CustomText text="saveInputFile" variant="h5"/>
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        <CustomText text="saveFileDialogText"/>
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={() => saveJson('user_input', {container, packages})}>Json</Button>
+                    <Button onClick={() => saveCSV('user_input', {container, packages})}>
+                        CSV
+                    </Button>
+                    <Button onClick={() => setSaveInputDialog(false)}>{t("cancel")}</Button>
+                </DialogActions>
+            </Dialog>
         </div>
     );
 };
