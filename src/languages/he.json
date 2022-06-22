@@ -91,6 +91,8 @@
   "undo": "שינוי אחורה",
   "redo": "שינוי קדימה",
   "help": "עזרה",
+  "saveInputFile": "שמירת הקלט בקובץ",
+  "saveFileDialogText": "בחר את הפורמט",
   "exportInput": "ייצוא קלט",
   "finishDialogContent": "לצפייה בפתרון לחץ על אישור, לשמירת הקלט לשימושים חוזרים לחץ על ייצוא",
   "viewControl": "צפייה במכולה",
