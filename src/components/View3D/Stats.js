@@ -30,9 +30,15 @@ const Stats = ({ stats, container }) => {
         boxShadow: '1px 2px 0 0 rgba(0, 0, 0, 0.33)',
         borderRadius: 10,
     };
+    const innerDivStyle = { 
+        display: 'grid', 
+        gridTemplateColumns: '1fr 2fr', 
+        columnGap: 10, 
+        padding: 20,
+    };
     return (
         <div style={divStyle}>
-            <div className="unselectable-text" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', columnGap: 10, padding: 20 }}>
+            <div className="unselectable-text" style={innerDivStyle}>
                 <CustomText text="stats" variant="h6" style={{ gridColumnStart: 1, gridColumnEnd: 3 }} />
                 <span style={{ gridColumn: 1 }}>
                     Profit

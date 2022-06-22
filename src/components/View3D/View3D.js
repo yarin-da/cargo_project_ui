@@ -5,16 +5,13 @@ import { Text } from "troika-three-text";
 import '../../styles/ColorMap.css';
 import * as THREE from "three";
 
-// TODO: update text size and visibility distance based on units
-
 const EDGE_COLOR = 0x334444;
 const EDGE_WIDTH = 0.5;
 const TEXT_SIZE = 0.3;
-const VISIBILITY_DIST = 15;
-const VISIBILITY_DIST2 = VISIBILITY_DIST * VISIBILITY_DIST;
+const VISIBILITY_DIST = 10;
 const CONTAINER_COLOR = 0x777777;
 const CONTAINER_THICKNESS = 0.1;
-const BACKGROUND_COLOR = '#ffffff';//'#d4d4e4';
+const BACKGROUND_COLOR = '#ffffff'; 
 const SELECTED_BOX_COLOR = '#DC143C';
 const SELECTED_EDGE_COLOR = 0xffffff;
 const SELECTED_TEXT_COLOR = 0xffffff;
@@ -60,7 +57,7 @@ const BoxEdges = ({ position, scale, selected }) => {
     );
 };
 
-const CustomText = ({ position, rotation, text, selected, maxWidth }) => {
+const CustomText = ({ position, rotation, text, selected, maxWidth, parseLength }) => {
     return (
         <text
             position={position ?? [0, 0, 0]}
@@ -80,7 +77,7 @@ const CustomText = ({ position, rotation, text, selected, maxWidth }) => {
     );
 };
 
-const BoxText = ({ position, scale, text, selected }) => {
+const BoxText = ({ position, scale, text, selected, parseLength }) => {
     const offset = 0.01
     const dist = scale.map(s => s / 2);
     const texts = [
@@ -126,6 +123,7 @@ const BoxText = ({ position, scale, text, selected }) => {
                     position={position.map((p, i) => p + t.position[i])} 
                     rotation={t.rotation}
                     maxWidth={t.maxWidth}
+                    parseLength={parseLength}
                 />
             )
         }
@@ -141,16 +139,17 @@ const CustomBox = ({
     text='', 
     parseByScale=null,
     onClick,
-    selected
+    selected,
+    parseLength
 }) => {   
     const [visible, setVisible] = useState(true);
     
     useFrame(({ camera }) => {
         if (selected) return;
         const { x, z, y } = camera.position;
-        const diff2 = [x, y, z].map((p, i) => (p - position[i])*(p - position[i]));
+        const diff2 = [x, y, z].map((p, i) => (p - position[i] - scale[i]/2)*(p - position[i] - scale[i]/2));
         const dist = diff2.reduce((a, b) => a + b, 0);
-        if (visible !== (dist >= VISIBILITY_DIST2)) {
+        if (visible !== (dist >= VISIBILITY_DIST * VISIBILITY_DIST)) {
             setVisible(curr => !curr);
         }
     });
@@ -180,7 +179,13 @@ const CustomBox = ({
                 <Box scale={translatedScale} position={translatedPos}>
                     <meshStandardMaterial color={selected ? SELECTED_BOX_COLOR : color} />
                 </Box>
-                <BoxText position={translatedPos} scale={translatedScale} text={text} selected={selected} />
+                <BoxText 
+                    position={translatedPos} 
+                    scale={translatedScale} 
+                    text={text} 
+                    selected={selected} 
+                    parseLength={parseLength}
+                />
                 <BoxEdges position={position} scale={translatedScale} selected={selected} />
             </group>
         }</>
@@ -199,6 +204,7 @@ const Package = ({ solution, packages, colorMap, index, selected, onSelect, pars
             scale={[pkg['width'], pkg['height'], pkg['depth']].map(len => parseLength(len))}
             rotation={[sol['rotation-x'], sol['rotation-z'], sol['rotation-y']]}
             position={[sol['x'], sol['z'], sol['y']].map(len => parseLength(len))} 
+            parseLength={parseLength}
         />
     );
 };
@@ -311,13 +317,13 @@ const Arrow = ({ from, to, length, color }) => {
     );
 };
 
-const AxisHelpers = ({ container }) => {
+const AxisHelpers = ({ container, parseLength }) => {
     const { width, height, depth } = container;
     return (
         <group>
-            <Arrow from={new THREE.Vector3(-1, -1, -1)} to={new THREE.Vector3(1, -1, -1)} length={width + 2} color={0xFF0000} />
-            <Arrow from={new THREE.Vector3(-1, -1, -1)} to={new THREE.Vector3(-1, 1, -1)} length={height + 2} color={0x7700} />
-            <Arrow from={new THREE.Vector3(-1, -1, -1)} to={new THREE.Vector3(-1, -1, 1)} length={depth + 2} color={0xFF} />
+            <Arrow from={new THREE.Vector3(-1, -1, -1)} to={new THREE.Vector3(1, -1, -1)} length={parseLength(width) + 2} color={0xFF0000} />
+            <Arrow from={new THREE.Vector3(-1, -1, -1)} to={new THREE.Vector3(-1, 1, -1)} length={parseLength(height) + 2} color={0x7700} />
+            <Arrow from={new THREE.Vector3(-1, -1, -1)} to={new THREE.Vector3(-1, -1, 1)} length={parseLength(depth) + 2} color={0xFF} />
         </group>
     );
 };
@@ -329,7 +335,7 @@ const View3D = ({
     colorMap, 
     selectedPackages, 
     setSelectedPackages,
-    units
+    scaleDim
 }) => {
     const [controlTarget, setControlTarget] = useState([0, 0, 0]);
     const canvasStyle = {
@@ -340,11 +346,7 @@ const View3D = ({
 
     const maxContainerDim = Math.max(container['width'], container['height'], container['depth']);
 
-    const parseLength = (length) => {
-        if (units['length'] === 'cm') return length / 100;
-        if (units['length'] === 'inch') return length / 39.37;
-        return length;
-    };
+    const parseLength = (length) => length / scaleDim;
 
     const updateControlsTarget = (index) => {
         if (index !== -1) {
@@ -379,10 +381,11 @@ const View3D = ({
                 position: [maxContainerDim, maxContainerDim, maxContainerDim].map(len => parseLength(len)), 
                 fov: 75, 
                 near: 0.1,
-                far: 1000 
+                far: 5000 
             }}
         >
             <Suspense fallback={null}>
+                <fog attach="fog" color="white" near={800} far={1000} />
                 <OrbitControls enableDamping dampingFactor={0.1} rotateSpeed={0.5} target={controlTarget} />
                 <Container 
                     scale={[
@@ -401,7 +404,7 @@ const View3D = ({
                     onSelect={onPackageClick} 
                     parseLength={parseLength}
                 />
-                {selectedPackages.length > 0 && <AxisHelpers container={container} />}
+                {selectedPackages.length > 0 && <AxisHelpers container={container} parseLength={parseLength} />}
                 <pointLight position={[0, 20, -5]} />
                 <ambientLight intensity={0.4} />
                 <Environment preset="warehouse" />

@@ -8,12 +8,11 @@ import { useTranslation } from "react-i18next";
 
 const PackageControl = ({ 
     solution, 
-    container,
-    packages,
     setSolution, 
     selectedPackages, 
     originalSolution,
     historyFunctions,
+    scaleDim
 }) => {
     const { addHistoryAction, resetHistory, undoHistoryAction, redoHistoryAction } = historyFunctions;
     const { t } = useTranslation();
@@ -22,7 +21,7 @@ const PackageControl = ({
         const newSolution = [...solution];
         selectedPackages.forEach(selectedPackage => {
             const newPackage = {...solution[selectedPackage]};
-            newPackage[prop] += value;
+            newPackage[prop] += scaleDim * value;
             newSolution[selectedPackage] = newPackage;  
         });
         setSolution(curr => ({...curr, solution: newSolution}));
