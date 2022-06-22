@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { getColors } from "./Color";
 import { Tooltip, Fab, Snackbar, Alert } from "@mui/material";
 import { useTranslation } from "react-i18next";
@@ -108,6 +108,21 @@ const ViewPage = ({
         setSelectedPackages([randIndex]);
     };
 
+    const [minDim, setMinDim] = useState(1);
+
+    useEffect(() => {
+        setMinDim(Math.min(...solution['packages'].map(pkg => Math.min(pkg['width'], pkg['height'], pkg['depth']))));
+    }, []);
+
+    const divStyle = {
+        position: 'relative', 
+        width: '100vw', 
+        height: '100vh', 
+        display: 'flex', 
+        flexDirection: 'column', 
+        overflow: 'hidden',
+    };
+
     return (
         <div className="view-page">
             <CustomAppBar units={units} setUnits={setUnits} />
@@ -120,6 +135,7 @@ const ViewPage = ({
                     colorMap={colorMap} 
                     selectedPackages={selectedPackages} 
                     setSelectedPackages={setSelectedPackages} 
+                    scaleDim={minDim}
                     units={units}
                 />
                 <ColorMap colorMap={colorMap} setColorMap={setColorMap} />
@@ -156,6 +172,7 @@ const ViewPage = ({
                         selectedPackages={selectedPackages} 
                         originalSolution={originalSolution}
                         historyFunctions={{ addHistoryAction, resetHistory, undoHistoryAction, redoHistoryAction }}
+                        scaleDim={minDim}
                     />
                 }
             </div>

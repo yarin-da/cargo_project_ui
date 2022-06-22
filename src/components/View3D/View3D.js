@@ -10,11 +10,10 @@ import * as THREE from "three";
 const EDGE_COLOR = 0x334444;
 const EDGE_WIDTH = 0.5;
 const TEXT_SIZE = 0.3;
-const VISIBILITY_DIST = 15;
-const VISIBILITY_DIST2 = VISIBILITY_DIST * VISIBILITY_DIST;
+const VISIBILITY_DIST = 10;
 const CONTAINER_COLOR = 0x777777;
 const CONTAINER_THICKNESS = 0.1;
-const BACKGROUND_COLOR = '#ffffff';//'#d4d4e4';
+const BACKGROUND_COLOR = '#ffffff'; 
 const SELECTED_BOX_COLOR = '#DC143C';
 const SELECTED_EDGE_COLOR = 0xffffff;
 const SELECTED_TEXT_COLOR = 0xffffff;
@@ -60,7 +59,7 @@ const BoxEdges = ({ position, scale, selected }) => {
     );
 };
 
-const CustomText = ({ position, rotation, text, selected, maxWidth }) => {
+const CustomText = ({ position, rotation, text, selected, maxWidth, parseLength }) => {
     return (
         <text
             position={position ?? [0, 0, 0]}
@@ -80,7 +79,7 @@ const CustomText = ({ position, rotation, text, selected, maxWidth }) => {
     );
 };
 
-const BoxText = ({ position, scale, text, selected }) => {
+const BoxText = ({ position, scale, text, selected, parseLength }) => {
     const offset = 0.01
     const dist = scale.map(s => s / 2);
     const texts = [
@@ -126,6 +125,7 @@ const BoxText = ({ position, scale, text, selected }) => {
                     position={position.map((p, i) => p + t.position[i])} 
                     rotation={t.rotation}
                     maxWidth={t.maxWidth}
+                    parseLength={parseLength}
                 />
             )
         }
@@ -141,16 +141,17 @@ const CustomBox = ({
     text='', 
     parseByScale=null,
     onClick,
-    selected
+    selected,
+    parseLength
 }) => {   
     const [visible, setVisible] = useState(true);
     
     useFrame(({ camera }) => {
         if (selected) return;
         const { x, z, y } = camera.position;
-        const diff2 = [x, y, z].map((p, i) => (p - position[i])*(p - position[i]));
+        const diff2 = [x, y, z].map((p, i) => (p - position[i] - scale[i]/2)*(p - position[i] - scale[i]/2));
         const dist = diff2.reduce((a, b) => a + b, 0);
-        if (visible !== (dist >= VISIBILITY_DIST2)) {
+        if (visible !== (dist >= VISIBILITY_DIST * VISIBILITY_DIST)) {
             setVisible(curr => !curr);
         }
     });
@@ -180,14 +181,20 @@ const CustomBox = ({
                 <Box scale={translatedScale} position={translatedPos}>
                     <meshStandardMaterial color={selected ? SELECTED_BOX_COLOR : color} />
                 </Box>
-                <BoxText position={translatedPos} scale={translatedScale} text={text} selected={selected} />
+                <BoxText 
+                    position={translatedPos} 
+                    scale={translatedScale} 
+                    text={text} 
+                    selected={selected} 
+                    parseLength={parseLength}
+                />
                 <BoxEdges position={position} scale={translatedScale} selected={selected} />
             </group>
         }</>
     );
 };
 
-const Package = ({ solution, packages, colorMap, index, selected, onSelect }) => {
+const Package = ({ solution, packages, colorMap, index, selected, onSelect, parseLength }) => {
     const sol = solution[index];
     const pkg = packages.find(pkg => pkg['type'] === sol['type']);
     return (
@@ -196,14 +203,15 @@ const Package = ({ solution, packages, colorMap, index, selected, onSelect }) =>
             onClick={(e) => onSelect(e, index)}
             text={pkg['type']}
             color={colorMap[pkg['type']]} 
-            scale={[pkg['width'], pkg['height'], pkg['depth']]}
+            scale={[pkg['width'], pkg['height'], pkg['depth']].map(len => parseLength(len))}
             rotation={[sol['rotation-x'], sol['rotation-z'], sol['rotation-y']]}
-            position={[sol['x'], sol['z'], sol['y']]} 
+            position={[sol['x'], sol['z'], sol['y']].map(len => parseLength(len))} 
+            parseLength={parseLength}
         />
     );
 };
 
-const Packages = ({ packages, solution, colorMap, selected, onSelect }) => {
+const Packages = ({ packages, solution, colorMap, selected, onSelect, parseLength }) => {
     return (
         <group>
         {
@@ -217,6 +225,7 @@ const Packages = ({ packages, solution, colorMap, selected, onSelect }) => {
                     selected={selected} 
                     onSelect={onSelect} 
                     index={i}
+                    parseLength={parseLength}
                 />
             )
         }
@@ -224,7 +233,7 @@ const Packages = ({ packages, solution, colorMap, selected, onSelect }) => {
     );
 };
 
-const Container = ({ scale }) => {
+const Container = ({ scale, parseLength }) => {
     const [width, height, depth] = scale.map(s => s + CONTAINER_THICKNESS);
     const [walls, setWalls] = useState([
         {
@@ -291,8 +300,8 @@ const Container = ({ scale }) => {
                 wall.visible &&
                 <Box 
                     key={`container-wall-${i}`} 
-                    scale={wall.scale} 
-                    position={parsePosition({ position: wall.position, scale })}
+                    scale={wall.scale.map(len => parseLength(len))} 
+                    position={parsePosition({ position: wall.position, scale }).map(len => parseLength(len))}
                 >
                     <meshStandardMaterial color={CONTAINER_COLOR} />        
                 </Box>
@@ -310,13 +319,13 @@ const Arrow = ({ from, to, length, color }) => {
     );
 };
 
-const AxisHelpers = ({ container }) => {
+const AxisHelpers = ({ container, parseLength }) => {
     const { width, height, depth } = container;
     return (
         <group>
-            <Arrow from={new THREE.Vector3(-1, -1, -1)} to={new THREE.Vector3(1, -1, -1)} length={width + 2} color={0xFF0000} />
-            <Arrow from={new THREE.Vector3(-1, -1, -1)} to={new THREE.Vector3(-1, 1, -1)} length={height + 2} color={0x7700} />
-            <Arrow from={new THREE.Vector3(-1, -1, -1)} to={new THREE.Vector3(-1, -1, 1)} length={depth + 2} color={0xFF} />
+            <Arrow from={new THREE.Vector3(-1, -1, -1)} to={new THREE.Vector3(1, -1, -1)} length={parseLength(width) + 2} color={0xFF0000} />
+            <Arrow from={new THREE.Vector3(-1, -1, -1)} to={new THREE.Vector3(-1, 1, -1)} length={parseLength(height) + 2} color={0x7700} />
+            <Arrow from={new THREE.Vector3(-1, -1, -1)} to={new THREE.Vector3(-1, -1, 1)} length={parseLength(depth) + 2} color={0xFF} />
         </group>
     );
 };
@@ -328,7 +337,7 @@ const View3D = ({
     colorMap, 
     selectedPackages, 
     setSelectedPackages,
-    units
+    scaleDim
 }) => {
     const [controlTarget, setControlTarget] = useState([0, 0, 0]);
     const canvasStyle = {
@@ -338,6 +347,8 @@ const View3D = ({
     };
 
     const maxContainerDim = Math.max(container['width'], container['height'], container['depth']);
+
+    const parseLength = (length) => length / scaleDim;
 
     const updateControlsTarget = (index) => {
         if (index !== -1) {
@@ -369,13 +380,14 @@ const View3D = ({
             style={canvasStyle} 
             dpr={[1, 2]} 
             camera={{ 
-                position: [maxContainerDim, maxContainerDim, maxContainerDim], 
+                position: [maxContainerDim, maxContainerDim, maxContainerDim].map(len => parseLength(len)), 
                 fov: 75, 
                 near: 0.1,
-                far: 1000 
+                far: 5000 
             }}
         >
             <Suspense fallback={null}>
+                <fog attach="fog" color="white" near={800} far={1000} />
                 <OrbitControls enableDamping dampingFactor={0.1} rotateSpeed={0.5} target={controlTarget} />
                 <Container 
                     scale={[
@@ -383,6 +395,7 @@ const View3D = ({
                         container['height'], 
                         container['depth']
                     ]} 
+                    parseLength={parseLength}
                 />
                 <Packages 
                     solution={solution} 
@@ -391,8 +404,9 @@ const View3D = ({
                     colorMap={colorMap} 
                     selected={selectedPackages} 
                     onSelect={onPackageClick} 
+                    parseLength={parseLength}
                 />
-                {selectedPackages.length > 0 && <AxisHelpers container={container} />}
+                {selectedPackages.length > 0 && <AxisHelpers container={container} parseLength={parseLength} />}
                 <pointLight position={[0, 20, -5]} />
                 <ambientLight intensity={0.4} />
                 <Environment preset="warehouse" />
