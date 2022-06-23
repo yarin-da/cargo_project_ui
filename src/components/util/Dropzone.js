@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { DropzoneArea } from "material-ui-dropzone";
 import { useTranslation } from "react-i18next";
-import { parseCSVFile } from "./CSVParser";
-import {parseJSONFile} from "./JSONParser";
+import { parseCSVFile } from "../parsers/CSVParser";
+import { parseJSONFile } from "../parsers/JSONParser";
 import { Snackbar } from "@material-ui/core";
 import { Alert } from "@mui/material";
 

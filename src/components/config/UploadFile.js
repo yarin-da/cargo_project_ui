@@ -1,7 +1,7 @@
-import Dropzone from "./Dropzone";
-import ExampleInputFileButton from "./ExampleInputFileButton";
-import CustomText from "./CustomText";
-import '../styles/Config.css'
+import Dropzone from "../util/Dropzone";
+import ExampleInputFileButton from "../util/ExampleInputFileButton";
+import CustomText from "../util/CustomText";
+import '../../styles/Config.css';
 
 const UploadFile = ({ setContainer, setPackages }) => {
     return (

@@ -4,17 +4,17 @@ import { Tooltip, Fab, Snackbar, Alert } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import EditIcon from '@mui/icons-material/Edit';
-import CustomAppBar from "../CustomAppBar";
-import saveJson from "../SaveJson";
+import CustomAppBar from "../appbar/CustomAppBar";
+import saveJson from "../util/SaveJson";
 import View3D from "./View3D";
 import Stats from "./Stats";
 import ColorMap from "./ColorMap";
 import PackageControl from "./PackageControl";
-import outputSolutionTester from "../OutputSolutionTester";
-import { scaledSolution } from "../Util";
+import outputSolutionTester from "../parsers/OutputSolutionTester";
+import { scaledSolution } from "../util/Util";
 import '../../styles/ViewPage.css';
 
-function downloadSolutionFile(exportType, solution){
+function downloadSolutionFile(solution){
     const scalar = solution['scalar'];
     const scaled = scaledSolution(solution, scalar);
     saveJson('packing_solution', scaled);
@@ -47,6 +47,7 @@ const ViewPage = ({
     const [colorMap, setColorMap] = useState(initializeColors(solution ? (solution['packages'] ?? []) : []));
     const { t } = useTranslation();
 
+    // define history related actions
     const redo = (action) => {
         const newSolution = {...solution};
         action.packages.forEach(pkg => {
@@ -92,10 +93,10 @@ const ViewPage = ({
         }
     }
 
-    const onDownload = (exportType) => {
+    const onDownload = () => {
         const ret = outputSolutionTester(solution);
         if (!ret.error) {
-            downloadSolutionFile(exportType, solution);
+            downloadSolutionFile(solution);
         } else {
             setSnackbarOpen(true);
             setSnackbarTitle(ret.error);
@@ -132,7 +133,7 @@ const ViewPage = ({
                 <ColorMap colorMap={colorMap} setColorMap={setColorMap} />
                 <div className="buttons-div" >
                     <Tooltip title={t('exportSolution')} arrow>
-                        <Fab sx={{ padding: 5, margin: 2 }} onClick={() => onDownload('json')} color="primary">
+                        <Fab sx={{ padding: 5, margin: 2 }} onClick={() => onDownload()} color="primary">
                             <FileDownloadIcon fontSize="large" />
                         </Fab>
                     </Tooltip>
@@ -149,6 +150,7 @@ const ViewPage = ({
                     </Tooltip>
                 </div>
                 {
+                    // flip between stats and editor
                     selectedPackages.length === 0 ?
                     <Stats 
                         stats={solution ? solution['stats'] : {}} 
@@ -167,6 +169,7 @@ const ViewPage = ({
                     />
                 }
             </div>
+            {/* snackbar for errors */}
             <Snackbar 
                 open={snackbarOpen} 
                 autoHideDuration={5000} 

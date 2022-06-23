@@ -1,5 +1,5 @@
 import { parseValue, types, stringTypeTesters } from "./Type";
-import Package from "./Package";
+import Package from "../Package";
 import { t } from "i18next";
 
 const headers = "width,height,depth,maxWeight,type,amount,priority,weight,profit,canRotate,canStackAbove".split(',');

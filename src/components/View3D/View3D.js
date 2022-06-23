@@ -1,196 +1,18 @@
 import React, { Suspense, useState } from 'react'
 import { extend, Canvas, useFrame } from '@react-three/fiber'
-import { OrbitControls, Environment, Box, Line } from '@react-three/drei'
+import { OrbitControls, Environment, Box } from '@react-three/drei'
 import { Text } from "troika-three-text";
+import { dotProduct } from '../util/Util';
+import { AxisHelpers } from './AxisHelpers';
+import CustomBox from './CustomBox';
+import { parsePosition } from '../util/Util';
 import '../../styles/ColorMap.css';
-import * as THREE from "three";
 
-const EDGE_COLOR = 0x334444;
-const EDGE_WIDTH = 0.5;
-const TEXT_SIZE = 0.3;
-const VISIBILITY_DIST = 10;
-const CONTAINER_COLOR = 0x777777;
+const CONTAINER_COLOR     = 0x777777;
 const CONTAINER_THICKNESS = 0.1;
-const BACKGROUND_COLOR = '#ffffff'; 
-const SELECTED_BOX_COLOR = '#DC143C';
-const SELECTED_EDGE_COLOR = 0xffffff;
-const SELECTED_TEXT_COLOR = 0xffffff;
+const BACKGROUND_COLOR    = 0xffffff; 
 
 extend({ Text });
-
-const dotProduct = (a, b) => a.map((_, i) => a[i] * b[i]).reduce((m, n) => m + n);
-
-const parsePosition = ({ scale, position }) => {
-    return position.map((p, i) => p + scale[i]/2);
-};
-
-const BoxEdges = ({ position, scale, selected }) => {
-    const [x, y, z] = position;
-    const [w, h, d] = scale;
-    const lines = [
-        [[x,     y,     z    ], [x + w, y,     z    ]],
-        [[x,     y,     z    ], [x,     y + h, z    ]],
-        [[x,     y,     z    ], [x,     y,     z + d]],
-        [[x,     y,     z + d], [x + w, y,     z + d]],
-        [[x,     y,     z + d], [x,     y + h, z + d]],
-        [[x,     y + h, z    ], [x + w, y + h, z    ]],
-        [[x,     y + h, z    ], [x,     y + h, z + d]],
-        [[x + w, y,     z    ], [x + w, y + h, z    ]],
-        [[x + w, y,     z    ], [x + w, y,     z + d]],
-        [[x + w, y + h, z + d], [x + w, y + h, z    ]],
-        [[x + w, y + h, z + d], [x + w, y,     z + d]],
-        [[x + w, y + h, z + d], [x,     y + h, z + d]],
-    ];
-    return (
-        <group>
-        {
-            lines.map((line, i) => 
-                <Line 
-                    key={`box-edge-${i}`}
-                    points={line}
-                    lineWidth={EDGE_WIDTH}
-                    color={selected ? SELECTED_EDGE_COLOR : EDGE_COLOR} 
-                />
-            )
-        }
-        </group>
-    );
-};
-
-const CustomText = ({ position, rotation, text, selected, maxWidth, parseLength }) => {
-    return (
-        <text
-            position={position ?? [0, 0, 0]}
-            rotation={rotation ?? [0, 0, 0]}
-            text={text ?? ''}
-            fontSize={TEXT_SIZE}
-            color={selected ? SELECTED_TEXT_COLOR : "black"}
-            maxWidth={maxWidth}
-            lineHeight={1}
-            letterSpacing={0}
-            textAlign={"justify"}
-            font={'https://fonts.gstatic.com/s/roboto/v18/KFOmCnqEu92Fr1Mu4mxM.woff'}
-            anchorX="center"
-            anchorY="middle"
-            overflowWrap={'break-word'}
-        />
-    );
-};
-
-const BoxText = ({ position, scale, text, selected, parseLength }) => {
-    const offset = 0.01
-    const dist = scale.map(s => s / 2);
-    const texts = [
-        {
-            maxWidth: scale[0],
-            position: [0, 0, dist[2] + offset],
-            rotation: [0, 0, 0]
-        },
-        {
-            maxWidth: scale[0],
-            position: [0, 0, -(dist[2] + offset)],
-            rotation: [0, Math.PI, 0]
-        },
-        {
-            maxWidth: scale[2],
-            position: [dist[0] + offset, 0, 0],
-            rotation: [0, Math.PI/2, 0]
-        },
-        {
-            maxWidth: scale[2],
-            position: [-(dist[0] + offset), 0, 0],
-            rotation: [0, Math.PI + Math.PI/2, 0]
-        },
-        {
-            maxWidth: scale[0],
-            position: [0, dist[1] + 0.01, 0],
-            rotation: [-Math.PI/2, 0, 0]
-        },
-        {
-            maxWidth: scale[0],
-            position: [0, -(dist[1] + 0.01), 0],
-            rotation: [Math.PI/2, 0, 0]
-        },
-    ];
-    return (
-        <group>
-        {
-            texts.map((t, i) => 
-                <CustomText
-                    key={`text-${i}`} 
-                    selected={selected}
-                    text={text} 
-                    position={position.map((p, i) => p + t.position[i])} 
-                    rotation={t.rotation}
-                    maxWidth={t.maxWidth}
-                    parseLength={parseLength}
-                />
-            )
-        }
-        </group>
-    );
-};
-
-const CustomBox = ({ 
-    color=0xFF0000, 
-    scale=[1, 1, 1], 
-    position=[0, 0, 0], 
-    rotation=[0, 0, 0], 
-    text='', 
-    parseByScale=null,
-    onClick,
-    selected,
-    parseLength
-}) => {   
-    const [visible, setVisible] = useState(true);
-    
-    useFrame(({ camera }) => {
-        if (selected) return;
-        const { x, z, y } = camera.position;
-        const diff2 = [x, y, z].map((p, i) => (p - position[i] - scale[i]/2)*(p - position[i] - scale[i]/2));
-        const dist = diff2.reduce((a, b) => a + b, 0);
-        if (visible !== (dist >= VISIBILITY_DIST * VISIBILITY_DIST)) {
-            setVisible(curr => !curr);
-        }
-    });
-    
-    const rotate = ({scale, rotation}) => {
-        const newScale = [...scale];
-        rotation.forEach((r, i) => {
-            const [a, b] = [0, 1, 2].filter(a => a !== i);
-            let angle = 0;
-            const rot = r % 360;
-            while (angle < rot) {
-                angle += 90;
-                const temp = newScale[a];
-                newScale[a] = newScale[b];
-                newScale[b] = temp;
-            }
-        });
-        return newScale;
-    };
-
-    const translatedScale = rotate({ scale, rotation });
-    const translatedPos = parsePosition({ scale: parseByScale ?? translatedScale, position });
-    return (
-        <>{
-            visible &&
-            <group onClick={onClick}>
-                <Box scale={translatedScale} position={translatedPos}>
-                    <meshStandardMaterial color={selected ? SELECTED_BOX_COLOR : color} />
-                </Box>
-                <BoxText 
-                    position={translatedPos} 
-                    scale={translatedScale} 
-                    text={text} 
-                    selected={selected} 
-                    parseLength={parseLength}
-                />
-                <BoxEdges position={position} scale={translatedScale} selected={selected} />
-            </group>
-        }</>
-    );
-};
 
 const Package = ({ solution, packages, colorMap, index, selected, onSelect, parseLength }) => {
     const sol = solution[index];
@@ -274,11 +96,15 @@ const Container = ({ scale, parseLength }) => {
     ]);
 
     useFrame(({ camera }) => {
+        // do not display the walls that can hide the packages from the user
         const direction = camera.position;
         const [x, y, z] = direction;
         const wallsCopy = [...walls];
         let shouldUpdate = false;
         wallsCopy.forEach(w => {
+            // each wall has a direction that points inwards
+            // when the dot product of the camera's direction and the wall's direction is positive
+            // then the wall should not be visible
             const dot = dotProduct([x, y, z], w.position);
             if (w.visible !== (dot <= 0)) {
                 w.visible = !w.visible;
@@ -286,6 +112,7 @@ const Container = ({ scale, parseLength }) => {
             }
         });
 
+        // do not update unnecessarily
         if (shouldUpdate) {
             setWalls(wallsCopy);
         }
@@ -309,25 +136,6 @@ const Container = ({ scale, parseLength }) => {
     );
 }
 
-const Arrow = ({ from, to, length, color }) => {
-    const direction = to.clone().sub(from);
-    const arrow = new THREE.ArrowHelper(direction.normalize(), from, length, color, 0.5, 0.5 );
-    return (
-        <primitive object={arrow} />
-    );
-};
-
-const AxisHelpers = ({ container, parseLength }) => {
-    const { width, height, depth } = container;
-    return (
-        <group>
-            <Arrow from={new THREE.Vector3(-1, -1, -1)} to={new THREE.Vector3(1, -1, -1)} length={parseLength(width) + 2} color={0xFF0000} />
-            <Arrow from={new THREE.Vector3(-1, -1, -1)} to={new THREE.Vector3(-1, 1, -1)} length={parseLength(height) + 2} color={0x7700} />
-            <Arrow from={new THREE.Vector3(-1, -1, -1)} to={new THREE.Vector3(-1, -1, 1)} length={parseLength(depth) + 2} color={0xFF} />
-        </group>
-    );
-};
-
 const View3D = ({ 
     solution, 
     packages, 
@@ -344,8 +152,6 @@ const View3D = ({
         backgroundColor: BACKGROUND_COLOR,
     };
 
-    const maxContainerDim = Math.max(container['width'], container['height'], container['depth']);
-
     const parseLength = (length) => length / scaleDim;
 
     const updateControlsTarget = (index) => {
@@ -357,7 +163,7 @@ const View3D = ({
 
     const onPackageClick = (e, pkgIndex) => {
         e.stopPropagation();
-        // focus on package when alt is pressed
+        // center around the package when alt is pressed
         if (e.altKey) {
             updateControlsTarget(pkgIndex);
             return;
@@ -373,6 +179,7 @@ const View3D = ({
         }
     };
 
+    const maxContainerDim = Math.max(container['width'], container['height'], container['depth']);
     return (
         <Canvas 
             style={canvasStyle} 

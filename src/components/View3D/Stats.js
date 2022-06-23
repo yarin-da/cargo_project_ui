@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Typography, LinearProgress } from "@mui/material";
-import CustomText from "../CustomText";
+import CustomText from "../util/CustomText";
 import '../../styles/Stats.css'
 
 function LinearProgressWithLabel(props) {
@@ -19,6 +19,7 @@ function LinearProgressWithLabel(props) {
 }
 
 const Stats = ({ stats, container }) => {
+    // use grid to position all the names and their corresponding values aligned
     return (
         <div className="stats-div">
             <div className="unselectable-text data">

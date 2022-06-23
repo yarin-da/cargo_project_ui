@@ -1,5 +1,5 @@
 import {parseValue, types, stringTypeTesters} from "./Type";
-import Package from "./Package";
+import Package from "../Package";
 import {t} from "i18next";
 
 function containerFields(containerObject) {

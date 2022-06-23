@@ -3,6 +3,7 @@ const REQUEST_URL = 'https://cargo-optimizer-server.herokuapp.com/api/solve';
 
 const getSolution = async (data) => {
     try {
+        // send a post request with a json body
         const request = REQUEST_URL;
         const options = {
             method: 'POST',
@@ -12,8 +13,10 @@ const getSolution = async (data) => {
             },
             body: JSON.stringify(data),
         };
+        // fetch and parse to json
         const response = await fetch(request, options);
         const jsonData =  await response.json();
+        // invalid solution - simply throw an error
         if (jsonData['error']) throw Error("failedToOrganizeYourPackages");
         return jsonData;
     } catch (e) {

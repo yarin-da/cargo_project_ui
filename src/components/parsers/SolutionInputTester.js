@@ -125,9 +125,11 @@ function checkStatsObject(statsObj) {
 }
 
 export const checkSolution = (input) => {
-    const keys = ['container', 'packages', 'solution', 'stats']
+    const keys = ['container', 'packages', 'solution', 'stats', 'scalar'];
 
-    if (Object.keys(input).length !== 4) {
+    // scalar is an optional key, so we make sure that if exists we reach exactly 5 keys.
+    const inputKeys = Object.keys({...input, scalar: 1});
+    if (inputKeys.length !== 5) {
         return {error: t('missingData')};
     }
 

@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { FormControl,InputLabel, Input, Button, Grid } from "@mui/material";
 import ToggleButton from "@mui/material/ToggleButton";
-import CustomText from "./CustomText";
-import Package from "./Package";
-import { parseValue, typeTesters } from "./Type";
+import CustomText from "../util/CustomText";
+import Package from "../Package";
+import { parseValue, typeTesters } from "../parsers/Type";
 import CrossIcon from '@mui/icons-material/ClearRounded';
-import "../styles/AddPackage.css";
+import "../../styles/AddPackage.css";
 import { useTranslation } from "react-i18next";
-import '../styles/Util.css'
+import '../../styles/Util.css'
 
 const CustomBooleanInput = ({ value, setValue, inputId }) => {
     const onClick = () => setValue(curr => !curr);

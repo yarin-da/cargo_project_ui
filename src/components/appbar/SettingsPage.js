@@ -1,8 +1,8 @@
-import UnitsOfMeasurement from "./UnitsOfMeasurement";
+import UnitsOfMeasurement from "../util/UnitsOfMeasurement";
 import { Button } from "@mui/material";
-import israelFlag from '../images/israel_flag.png'
-import americanFlag from '../images/american_flag.png'
-import CustomText from "./CustomText";
+import israelFlag from '../../images/israel_flag.png'
+import americanFlag from '../../images/american_flag.png'
+import CustomText from "../util/CustomText";
 import { changeLanguage } from "i18next";
 import { useTranslation } from "react-i18next";
 

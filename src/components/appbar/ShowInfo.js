@@ -2,19 +2,20 @@ import * as React from 'react';
 import {useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
 import {useLocation} from "react-router-dom";
-import CustomText from "./CustomText";
-import findPacking from '../images/findPacking.png'
-import viewSolution from '../images/viewSolution.png'
-import editColors from '../images/typeColor.png'
-import editButton from '../images/editButton.png'
-import emptyContainer from "../images/empty_container_axes.png";
-import exportButton from '../images/exportButton.png'
-import moveButtons from '../images/moveButtons.png'
-import ctrl from '../images/ctrl.png'
-import alt from '../images/alt.png'
+import CustomText from "../util/CustomText";
+import findPacking from '../../images/findPacking.png'
+import viewSolution from '../../images/viewSolution.png'
+import editColors from '../../images/typeColor.png'
+import editButton from '../../images/editButton.png'
+import emptyContainer from "../../images/empty_container_axes.png";
+import exportButton from '../../images/exportButton.png'
+import moveButtons from '../../images/moveButtons.png'
+import ctrl from '../../images/ctrl.png'
+import alt from '../../images/alt.png'
 import {TabContext, TabPanel, TabList} from '@mui/lab';
 import {Tab, Box} from "@mui/material";
 
+// a component that displays info about the 3D page
 const ViewHelp = () => {
     const {t} = useTranslation();
     const [value, setValue] = React.useState("1");
@@ -96,7 +97,7 @@ const ViewHelp = () => {
     );
 };
 
-
+// a component that displays info about the home page
 const HomeHelp = () => {
     return (
         <div className="show-info-home-page">
@@ -130,6 +131,7 @@ const ShowInfo = () => {
     const [help, setHelp] = useState('/');
 
     useEffect(() => {
+        // match info to the current page
         setHelp(helpComponent[location.pathname])
     }, [location]);
 

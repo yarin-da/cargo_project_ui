@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {LocalShipping} from "@material-ui/icons";
 import {Stepper, Step, StepLabel, Box, Fab, Snackbar, Alert, SpeedDial, SpeedDialAction} from "@mui/material";
 import {Upload} from "@mui/icons-material";
-import CustomText from "./CustomText";
+import CustomText from "../util/CustomText";
 import UploadFile from './UploadFile';
 import AddContainer from './AddContainer';
 import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
@@ -12,10 +12,10 @@ import { styled } from '@mui/material/styles';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import StepConnector, { stepConnectorClasses } from '@mui/material/StepConnector';
 import { useNavigate } from "react-router-dom";
-import { getSolution } from "./ServerHandler";
+import { getSolution } from "../ServerHandler";
 import CircularProgress from '@mui/material/CircularProgress';
-import CustomAppBar from "./CustomAppBar";
-import ConfigPackageList from "./ConfigPackageList";
+import CustomAppBar from "../appbar/CustomAppBar";
+import PackageTable from "./PackageTable";
 import SaveIcon from '@mui/icons-material/Save';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import Dialog from '@mui/material/Dialog';
@@ -25,12 +25,12 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
 import DoneIcon from '@mui/icons-material/Done';
-import { isInputValid } from "./Type";
+import { isInputValid } from "../parsers/Type";
 import { createStyles, makeStyles } from '@mui/styles';
-import saveJson from "./SaveJson";
-import saveCSV from "./SaveCSV"
-import '../styles/Config.css';
-import '../styles/Util.css'
+import saveJson from "../util/SaveJson";
+import saveCSV from "../util/SaveCSV"
+import '../../styles/Config.css';
+import '../../styles/Util.css'
 
 const tabs = [
     {
@@ -182,7 +182,7 @@ const Config = ({
                             (currentPage === 1 && <AddContainer units={units} container={container} setContainer={setContainer} />)
                             ||
                             (currentPage === 2 &&
-                                <ConfigPackageList
+                                <PackageTable
                                     units={units}
                                     packages={packages}
                                     setPackages={setPackages}

@@ -1,5 +1,5 @@
 import Button from "@mui/material/Button";
-import demo from "../demo.csv";
+import demo from "../../files/demo.csv";
 import CustomText from "./CustomText";
 import { saveAs } from "file-saver";
 

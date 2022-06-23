@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Button, TextField } from "@mui/material";
-import containerPhoto from '../images/container.png'
+import containerPhoto from '../../images/container.png'
 import { useTranslation } from "react-i18next";
-import CustomText from "./CustomText";
-import "../styles/AddContainer.css";
-import "../styles/Util.css";
+import CustomText from "../util/CustomText";
+import "../../styles/AddContainer.css";
+import "../../styles/Util.css";
 
 const getLength = (cmLength, units) => {
     if (units['length'] === 'm') return Math.floor(cmLength / 100);

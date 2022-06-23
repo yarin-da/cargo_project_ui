@@ -3,12 +3,12 @@ import { Button, AppBar, Toolbar, Box, Modal, Tooltip } from "@mui/material";
 import SettingsIcon from '@mui/icons-material/Settings';
 import InfoSharpIcon from "@mui/icons-material/InfoSharp";
 import SettingsPage from './SettingsPage';
-import Logo from '../images/logo.png';
+import Logo from '../../images/logo.png';
 import {useLocation, useNavigate} from "react-router-dom";
 import ShowInfo from "./ShowInfo";
 import {useTranslation} from "react-i18next";
-import "../styles/Header.css";
-import '../styles/CustomAppBar.css'
+import "../../styles/Header.css";
+import '../../styles/CustomAppBar.css'
 
 const SettingsButton = ({onClick}) => {
     return (

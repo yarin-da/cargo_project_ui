@@ -3,14 +3,14 @@ import AddPackageForm from "./AddPackageForm";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Button, Modal, Stack } from '@mui/material';
 import { DataGrid, heIL, enUS } from '@mui/x-data-grid';
-import CustomText from "./CustomText";
+import CustomText from "../util/CustomText";
 import { useTranslation } from "react-i18next";
 import EditIcon from '@mui/icons-material/Edit';
 import CheckIcon from '@mui/icons-material/CheckRounded';
 import CrossIcon from '@mui/icons-material/ClearRounded';
 import { makeStyles } from '@material-ui/core/styles';
-import '../styles/Config.css'
-import '../styles/Util.css'
+import '../../styles/Config.css'
+import '../../styles/Util.css'
 
 const useStyles = makeStyles({
     root: {

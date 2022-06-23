@@ -1,3 +1,5 @@
+import { mod } from "../util/Util";
+
 const kellyColors = [
     '#C0C0C0',
     '#99badd',
@@ -17,14 +19,9 @@ const kellyColors = [
 
 let counter = 0;
 
-function mod(n, m) {
-    return ((n % m) + m) % m;
-}
-
-const getColors = (indexValue = -1) => {
-    const r = (indexValue === -1) ?
-            mod(counter++, kellyColors.length)
-                : mod(indexValue, kellyColors.length);
+const getColors = () => {
+    // increase counter each time, but make sure it's in the bounds of the array
+    const r = mod(counter++, kellyColors.length);
     return kellyColors[r];
 };
 

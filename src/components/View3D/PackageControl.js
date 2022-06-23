@@ -3,7 +3,7 @@ import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import ThreeSixtyIcon from '@mui/icons-material/ThreeSixty';
 import UndoIcon from '@mui/icons-material/Undo';
 import RedoIcon from '@mui/icons-material/Redo';
-import CustomText from "../CustomText";
+import CustomText from "../util/CustomText";
 import { useTranslation } from "react-i18next";
 import '../../styles/PackageControl.css'
 
@@ -15,16 +15,23 @@ const PackageControl = ({
     historyFunctions,
     scaleDim
 }) => {
-    const { addHistoryAction, resetHistory, undoHistoryAction, redoHistoryAction } = historyFunctions;
+    
     const { t } = useTranslation();
+    const { addHistoryAction, resetHistory, undoHistoryAction, redoHistoryAction } = historyFunctions;
+    
     const update = (prop, value) => {
+        // to make sure we can undo this action
         addHistoryAction({ packages: selectedPackages, prop, value });
+
+        // create a copy of the current solution and apply the action on it
         const newSolution = [...solution];
         selectedPackages.forEach(selectedPackage => {
             const newPackage = {...solution[selectedPackage]};
             newPackage[prop] += scaleDim * value;
             newSolution[selectedPackage] = newPackage;  
         });
+
+        // finally update the actual solution
         setSolution(curr => ({...curr, solution: newSolution}));
     };
 

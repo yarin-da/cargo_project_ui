@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Header from './components/Header';
-import Config from "./components/Config";
+import Config from "./components/config/Config";
 import ViewPage from "./components/View3D/ViewPage";
 import {
     BrowserRouter as Router,
@@ -9,8 +9,6 @@ import {
 } from "react-router-dom";
 import {createTheme} from "@mui/material";
 import {ThemeProvider} from "@emotion/react";
-
-// TODO: delete all console.logs, debuggers and unused variables/imports
 
 const getJSONFromStorage = (key, defaultValue) => {
     const item = localStorage.getItem(key);

@@ -1,14 +1,14 @@
 import {useNavigate} from "react-router-dom";
 import React, {useRef, useState} from "react";
-import CustomText from "./CustomText";
-import CustomAppBar from "./CustomAppBar";
+import CustomText from "./util/CustomText";
+import CustomAppBar from "./appbar/CustomAppBar";
 import {Button} from "@mui/material";
 import {Typography} from "@material-ui/core";
 import {Snackbar} from "@material-ui/core";
 import {Alert} from "@mui/material";
 import {useTranslation} from "react-i18next";
-import {checkSolution} from "./SolutionInputTester";
-import {scaledSolution} from "./Util";
+import {checkSolution} from "./parsers/SolutionInputTester";
+import {scaledSolution} from "./util/Util";
 import "../styles/Header.css";
 import "../styles/Util.css";
 
