@@ -18,3 +18,7 @@ There are 2 ways to get the user's input:
 ### Second Part: Solution View
 
 We use variants of `three.js` in React to view the solution in 3D. We also let the user edit the solution to his liking and exporting to a file.
+
+## Demonstration
+
+[Youtube Video](https://youtu.be/Zvjm5s7ZOZs)
