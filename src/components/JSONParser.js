@@ -3,6 +3,10 @@ import Package from "./Package";
 import {t} from "i18next";
 
 function containerFields(containerObject) {
+    if (Object.keys(containerObject).length !== 4) {
+        return {error: t('invalidContainer')};
+    }
+
     const container = {};
     for (const [key, value] of Object.entries(containerObject)) {
         const type = types[key];
@@ -19,6 +23,10 @@ function containerFields(containerObject) {
 function packagesFields(packagesObjects) {
     const packages = [];
     for (let i = 0; i < packagesObjects.length; i++) {
+        if (Object.keys(packagesObjects[i]).length !== 11) {
+            return {error: t('packagesFormat')};
+        }
+
         const p = new Package();
         for (const [key, value] of Object.entries(packagesObjects[i])) {
             if (key === 'id') {
