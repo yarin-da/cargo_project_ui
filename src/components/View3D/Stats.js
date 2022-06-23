@@ -7,7 +7,7 @@ function LinearProgressWithLabel(props) {
     return (
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Box sx={{ width: '100%', mr: 1 }}>
-                <LinearProgress sx={{ filter: 'brightness(85%)', height: 5 }} color="secondary" variant="determinate" {...props} />
+                <LinearProgress sx={{ filter: 'brightness(85%)', height: 5 }} color="primary" variant="determinate" {...props} />
             </Box>
             <Box sx={{ minWidth: 35 }}>
                 <Typography variant="body2" color="text.secondary">
