@@ -112,16 +112,7 @@ const ViewPage = ({
 
     useEffect(() => {
         setMinDim(Math.min(...solution['packages'].map(pkg => Math.min(pkg['width'], pkg['height'], pkg['depth']))));
-    }, []);
-
-    const divStyle = {
-        position: 'relative', 
-        width: '100vw', 
-        height: '100vh', 
-        display: 'flex', 
-        flexDirection: 'column', 
-        overflow: 'hidden',
-    };
+    }, [solution]);
 
     return (
         <div className="view-page">

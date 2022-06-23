@@ -11,7 +11,6 @@ function containerFields(containerObject) {
 
     for (const k of inputKeys) {
         if (!containerKeys.includes(k)) {
-            console.log(k)
             return {error: t('invalidContainer')};
         }
     }

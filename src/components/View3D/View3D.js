@@ -5,8 +5,6 @@ import { Text } from "troika-three-text";
 import '../../styles/ColorMap.css';
 import * as THREE from "three";
 
-// TODO: update text size and visibility distance based on units
-
 const EDGE_COLOR = 0x334444;
 const EDGE_WIDTH = 0.5;
 const TEXT_SIZE = 0.3;

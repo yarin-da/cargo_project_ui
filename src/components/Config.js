@@ -117,7 +117,6 @@ const Config = ({
                     setSolution,
                     setOriginalSolution,
                 }) => {
-    const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
     const [currentPage, setCurrentPage] = useState(0);
     const [saveInputDialog, setSaveInputDialog] = useState(false)
     const [loading, setLoading] = useState(false);
@@ -214,7 +213,6 @@ const Config = ({
                             }}
                             icon={<DoneIcon fontSize="large" />}
                             style={{ position: 'fixed', right: 50, bottom: 50 }}
-                            onClick={() => setOpenConfirmDialog(true)}
                         >
                             <SpeedDialAction 
                                 classes={{ staticTooltipLabel: classes.StaticTooltipLabel }}

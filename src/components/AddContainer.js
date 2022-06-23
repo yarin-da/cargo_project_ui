@@ -94,6 +94,30 @@ const StandardContainerButtons = ({ standard, onStandardChosen, units, standardS
     );
 };
 
+const standardSizes = [
+    {
+        size: 'small',
+        width: 200,
+        height: 200,
+        depth: 400,
+        maxWeight: 1240000,
+    },
+    {
+        size: 'medium',
+        width: 200,
+        height: 200,
+        depth: 800,
+        maxWeight: 2480000,
+    },
+    {
+        size: 'large',
+        width: 200,
+        height: 200,
+        depth: 1200,
+        maxWeight: 3720000,
+    }
+];
+
 const ContainerForm = ({container, setContainer, units}) => {
     const { t } = useTranslation();
     const [standard, setStandard] = useState(-1); 
@@ -102,30 +126,6 @@ const ContainerForm = ({container, setContainer, units}) => {
             ...container,
             [field]: parseInt(event.target.value, 10)
         });
-
-    const standardSizes = [
-        {
-            size: 'small',
-            width: 200,
-            height: 200,
-            depth: 400,
-            maxWeight: 1240000,
-        },
-        {
-            size: 'medium',
-            width: 200,
-            height: 200,
-            depth: 800,
-            maxWeight: 2480000,
-        },
-        {
-            size: 'large',
-            width: 200,
-            height: 200,
-            depth: 1200,
-            maxWeight: 3720000,
-        }
-    ];
 
     useEffect(() => {
         if (standard === -1) return;
@@ -136,7 +136,7 @@ const ContainerForm = ({container, setContainer, units}) => {
             maxWeight: getWeight(standardSizes[standard]['maxWeight'], units)
         };
         setContainer(newContainer);
-    }, [units, standard]);
+    }, [units, standard, setContainer]);
 
     return (
         <div className="add-cargo">
