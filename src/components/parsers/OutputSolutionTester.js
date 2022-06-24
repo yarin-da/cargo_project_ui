@@ -61,6 +61,23 @@ const checkSolution = (solution) => {
         }
     }
 
+    for (let pkgIndex = 0; pkgIndex < solution['solution'].length; pkgIndex++) {
+        const pkg = solution['solution'][pkgIndex];
+        const { x, y, z } = pkg;
+        if (z === 0) continue;
+        const { 'rotation-x':rx, 'rotation-y':ry, 'rotation-z':rz } = pkg;
+        const rotation = [rx, ry, rz];
+        const pkgType = pkg['type'];
+        const [w, d, h] = rotate(packageSize[pkgType], rotation);
+        let isFloating = true;
+        for (let i = x; i < x + w; i++) {
+            for (let j = y; j < y + d; j++) {
+                if (space[i][j][z - 1]) isFloating = false;
+            }
+        }
+        if (isFloating) return { error: t('packageFloating', { pkgType }) };
+    }
+
     return {};
 };
 

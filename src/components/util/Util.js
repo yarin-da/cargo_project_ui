@@ -10,26 +10,33 @@ const scaledSolution = (solution, scalar) => {
     
     const dims = ['width', 'depth', 'height'];
     const pos = ['x', 'y', 'z'];
-    const newSolution = {...solution};
 
     // scale container
+    const container = {...solution['container']};
     dims.forEach(dim => {
-        newSolution['container'][dim] *= scalar;
+        container[dim] *= scalar;
     });
+    
     // scale package sizes
-    for (let idx in newSolution['packages']) {
+    const packages = [];
+    for (let idx in solution['packages']) {
+        const pkg = {...solution['packages'][idx]};
         dims.forEach(dim => {
-            newSolution['packages'][idx][dim] *= scalar;
+            pkg[dim] *= scalar;
         });
     }
+    
     // scale package positions
-    for (let idx in newSolution['solution']) {
+    const pkgSolution = [];
+    for (let idx in solution['solution']) {
+        const entry = {...solution['solution'][idx]};
         pos.forEach(p => {
-            newSolution['solution'][idx][p] *= scalar;
+            entry[p] *= scalar;
         });
+        pkgSolution.push(entry);
     }
 
-    return newSolution;
+    return { container, packages, solution: pkgSolution, scalar };
 };
 
 export {
