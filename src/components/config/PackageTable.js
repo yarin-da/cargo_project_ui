@@ -33,10 +33,7 @@ const ConfigPackageList = ({ units, packages, setPackages }) => {
 
     const deleteSelected = () => {
         if (selectedPackages.length > 0) {
-            const newPackages = packages.filter(pkg => 
-                !selectedPackages.find(x => x === pkg['id'])
-            );
-            setPackages(newPackages);    
+            setPackages(curr => curr.filter(pkg => !selectedPackages.find(x => x === pkg['id'])));    
         }
     };
 

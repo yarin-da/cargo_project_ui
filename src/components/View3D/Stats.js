@@ -28,7 +28,7 @@ const Stats = ({ stats, container }) => {
                     Profit
                 </span>
                 <span style={{ gridColumn: 2 }}>
-                    {stats['profit']}
+                    {stats['profit'].toFixed(0)}
                 </span>
                 <span style={{ gridColumn: 1 }}>
                     Weight
