@@ -1,6 +1,6 @@
 import { t } from "i18next";
 
-export default (solution) => {
+const checkSolution = (solution) => {
     const rotate = (scale, rotation) => {
         const newScale = [...scale];
         rotation.forEach((r, i) => {
@@ -63,3 +63,5 @@ export default (solution) => {
 
     return {};
 };
+
+export default checkSolution;

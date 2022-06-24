@@ -116,5 +116,8 @@
   "saveInput": "שמירת הקלט בקובץ",
   "pack": "סידור החבילות",
   "boxesUsed": "חבילות בשימוש",
-  "stats": "נתונים"
+  "stats": "נתונים",
+  "preference": "העדפה",
+  "volume": "נפח",
+  "duplicateTypes": "קיימת חבילה עם סוג זה"
 }

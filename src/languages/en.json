@@ -117,5 +117,8 @@
   "emptyFormValue": "Enter a value for {{varType}}",
   "saveInput": "Save your input",
   "pack": "Pack your packages",
-  "boxesUsed": "Boxes Used"
+  "boxesUsed": "Boxes Used",
+  "preference": "Preference",
+  "volume": "Volume",
+  "duplicateTypes": "There is another package with that type"
 }

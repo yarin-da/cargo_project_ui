@@ -26,7 +26,7 @@ const Information = ({onClick}) => {
     );
 };
 
-const CustomAppBar = ({ units, setUnits }) => {
+const CustomAppBar = ({ units, setUnits, preference, setPreference }) => {
     const { t } = useTranslation();
     const [showSettings, setShowSettings] = useState(false);
     const [showInfo, setShowInfo] = useState(false);
@@ -70,7 +70,12 @@ const CustomAppBar = ({ units, setUnits }) => {
                 onClose={toggleSettingsModal}
             >
                 <div className={'settings-modal'}>
-                    <SettingsPage units={units} setUnits={setUnits}/>
+                    <SettingsPage 
+                        units={units} 
+                        setUnits={setUnits} 
+                        preference={preference} 
+                        setPreference={setPreference}
+                    />
                 </div>
             </Modal>
             <Modal

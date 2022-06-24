@@ -108,15 +108,17 @@ const useStyles = makeStyles((theme) =>
 );
 
 const Config = ({
-                    units,
-                    setUnits,
-                    packages,
-                    setPackages,
-                    container,
-                    setContainer,
-                    setSolution,
-                    setOriginalSolution,
-                }) => {
+    units,
+    setUnits,
+    preference,
+    setPreference,
+    packages,
+    setPackages,
+    container,
+    setContainer,
+    setSolution,
+    setOriginalSolution,
+}) => {
     const [currentPage, setCurrentPage] = useState(0);
     const [saveInputDialog, setSaveInputDialog] = useState(false)
     const [loading, setLoading] = useState(false);
@@ -142,7 +144,7 @@ const Config = ({
 
     const uploadDataToServer = async () => {
         try {
-            const data = { container, packages };
+            const data = { container, packages, preference };
             await notifyLoading();
             const err = isInputValid(data)
             if (err) throw err;
@@ -161,7 +163,12 @@ const Config = ({
 
     return (
         <div className="config-div">
-            <CustomAppBar units={units} setUnits={setUnits} />
+            <CustomAppBar 
+                units={units} 
+                setUnits={setUnits} 
+                preference={preference}
+                setPreference={setPreference}
+            />
             <div style={{ width: '100%', height: '100%' }}>
                 <div className="stepper-div" >
                     <Box sx={{ margin: 5, width: '100%' }}>

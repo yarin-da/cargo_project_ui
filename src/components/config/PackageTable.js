@@ -8,9 +8,11 @@ import { useTranslation } from "react-i18next";
 import EditIcon from '@mui/icons-material/Edit';
 import CheckIcon from '@mui/icons-material/CheckRounded';
 import CrossIcon from '@mui/icons-material/ClearRounded';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { makeStyles } from '@material-ui/core/styles';
 import '../../styles/Config.css'
 import '../../styles/Util.css'
+import Package from "../Package";
 
 const useStyles = makeStyles({
     root: {
@@ -24,6 +26,7 @@ const ConfigPackageList = ({ units, packages, setPackages }) => {
     const [selectedPackages, setSelectedPackages] = useState([]);
     const [editedPackage, setEditedPackage] = useState({});
     const [showEdit, setShowEdit] = useState(false);
+    const [error, setError] = useState('');
     const [mode, setMode] = useState('edit');
 
     const { t, i18n } = useTranslation();
@@ -35,6 +38,25 @@ const ConfigPackageList = ({ units, packages, setPackages }) => {
             );
             setPackages(newPackages);    
         }
+    };
+
+    const copyPackage = (values) => {
+        const pkgType = values['type'];
+        const types = {};
+        packages.map(pkg => pkg['type']).forEach(t => types[t] = true);
+
+        let i = 1;
+        let newType = `${pkgType}-${i}`;
+        while (newType in types) {
+            i++;
+            newType = `${pkgType}-${i}`;
+        }
+        const newValues = new Package();
+        const oldId = newValues['id'];
+        Object.keys(values).forEach(k => newValues[k] = values[k]);
+        newValues['type'] = newType;
+        newValues['id'] = oldId;
+        setPackages(curr => [...curr, newValues]);
     };
 
     const deletePackage = (values) => 
@@ -90,10 +112,14 @@ const ConfigPackageList = ({ units, packages, setPackages }) => {
         field: 'actions',
         headerName: t('actions'),
         minWidth: 160,
+        flex: 2,
         sortable: false,
         renderCell: ({ row }) => {
             return (
                 <div>
+                    <Button onClick={() => copyPackage(row)}>
+                        <ContentCopyIcon />
+                    </Button>
                     <Button onClick={() => {
                         setMode('edit');
                         setEditedPackage({...row});
@@ -109,16 +135,32 @@ const ConfigPackageList = ({ units, packages, setPackages }) => {
         }
     });
 
+    const hasDuplicateTypes = (packages) => {
+        const types = {};
+        for (let i = 0; i < packages.length; i++) {
+            const pkgType = packages[i]['type'];
+            if (pkgType in types) return true;
+            types[pkgType] = true;
+        }
+        return false;
+    };
+
     const onSave = (formPackage) => {
+        const newPackages = [...packages];
         if (mode === 'add') {
+            newPackages.unshift(0);
             setPackages(curr => [formPackage, ...curr]);
         } else if (mode === 'edit') {
-            const newPackages = [...packages];
             const index = newPackages.findIndex(x => x['id'] === editedPackage['id']);
             newPackages[index] = formPackage;
-            setPackages(newPackages);
         }
-        setShowEdit(false);
+        if (!hasDuplicateTypes(newPackages)) {
+            setPackages(newPackages);
+            setShowEdit(false);
+            setError('');
+        } else {
+            setError('duplicateTypes');
+        }
     };
 
     const locale = i18n.language === 'he' ? heIL : enUS;
@@ -174,14 +216,17 @@ const ConfigPackageList = ({ units, packages, setPackages }) => {
             <div className="packages-modal"></div>
             <Modal 
                 open={showEdit} 
-                onClose={() => setShowEdit(false)}
+                onClose={() => { setError(''); setShowEdit(false); }}
             >
                 <div className="modal-popup" >
                     <AddPackageForm 
                         values={{...editedPackage}} 
                         onSubmit={onSave} 
-                        onClose={() => setShowEdit(false)} 
+                        onClose={() => { setError(''); setShowEdit(false); }} 
                     />
+                    <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                        <CustomText text={error} style={{ color: 'red' }} />
+                    </div>
                 </div>
             </Modal>
         </div>

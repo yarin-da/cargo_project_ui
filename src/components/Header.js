@@ -12,7 +12,14 @@ import {scaledSolution} from "./util/Util";
 import "../styles/Header.css";
 import "../styles/Util.css";
 
-const Header = ({units, setUnits, setSolution, setOriginalSolution}) => {
+const Header = ({
+    units, 
+    setUnits, 
+    setSolution, 
+    setOriginalSolution, 
+    preference, 
+    setPreference
+}) => {
     const {t} = useTranslation();
     const [alertType, setAlertType] = useState('info');
     const [alertText, setAlertText] = useState('');
@@ -129,7 +136,12 @@ const Header = ({units, setUnits, setSolution, setOriginalSolution}) => {
                     {t(alertText)}
                 </Alert>
             </Snackbar>
-            <CustomAppBar units={units} setUnits={setUnits}/>
+            <CustomAppBar 
+                units={units} 
+                setUnits={setUnits} 
+                preference={preference} 
+                setPreference={setPreference}
+            />
         </div>
     )
 };

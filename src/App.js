@@ -36,6 +36,7 @@ const theme = createTheme({
 
 
 function App() {
+    const [preference, setPreference] = useState(getJSONFromStorage('preference', 'volume'));
     const [historyIndex, setHistoryIndex] = useState(getJSONFromStorage('historyIndex', 0));
     const [historyActions, setHistoryActions] = useState(getJSONFromStorage('historyActions', []));
     const [originalSolution, setOriginalSolution] = useState(getJSONFromStorage('originalSolution', {}));
@@ -73,6 +74,8 @@ function App() {
                                 setUnits={setUnits} 
                                 setSolution={setSolution} 
                                 setOriginalSolution={setOriginalSolution} 
+                                preference={preference}
+                                setPreference={setPreference}
                             />
                         }
                     >
@@ -89,6 +92,8 @@ function App() {
                                 setContainer={setContainer}
                                 setSolution={setSolution}
                                 setOriginalSolution={setOriginalSolution}
+                                preference={preference}
+                                setPreference={setPreference}
                             />
                         }
                     >
@@ -106,6 +111,8 @@ function App() {
                                 setHistoryIndex={setHistoryIndex}
                                 historyActions={historyActions}
                                 setHistoryActions={setHistoryActions}
+                                preference={preference}
+                                setPreference={setPreference}
                             />
                         }
                     >

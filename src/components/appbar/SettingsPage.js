@@ -1,8 +1,9 @@
-import UnitsOfMeasurement from "../util/UnitsOfMeasurement";
+import UnitsOfMeasurement from "./UnitsOfMeasurement";
 import { Button } from "@mui/material";
 import israelFlag from '../../images/israel_flag.png'
 import americanFlag from '../../images/american_flag.png'
 import CustomText from "../util/CustomText";
+import Preference from "./Preference";
 import { changeLanguage } from "i18next";
 import { useTranslation } from "react-i18next";
 
@@ -29,7 +30,7 @@ const LanguageButton = ({ image, title, isSelected, onClick }) => {
     );
 };
 
-const SettingsPage = ({units, setUnits}) => {
+const SettingsPage = ({units, setUnits, preference, setPreference}) => {
     const { i18n } = useTranslation();
     return (
         <div className="settings-page" >
@@ -54,6 +55,10 @@ const SettingsPage = ({units, setUnits}) => {
             <div className="units-of-measurement-div">
                 <CustomText text="unitsOfMeasurement" variant="h5" />
                 <UnitsOfMeasurement units={units} setUnits={setUnits}/>
+            </div>
+            <div className="units-of-measurement-div">
+                <CustomText text="preference" variant="h5" />
+                <Preference preference={preference} setPreference={setPreference}/>
             </div>
         </div>
 

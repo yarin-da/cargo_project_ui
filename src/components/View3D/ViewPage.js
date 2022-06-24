@@ -39,6 +39,7 @@ const ViewPage = ({
     historyActions, setHistoryActions,
     solution, setSolution, 
     units, setUnits, 
+    preference, setPreference,
     originalSolution,
 }) => {
     const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -117,7 +118,12 @@ const ViewPage = ({
 
     return (
         <div className="view-page">
-            <CustomAppBar units={units} setUnits={setUnits} />
+            <CustomAppBar 
+                units={units} 
+                setUnits={setUnits} 
+                preference={preference}
+                setPreference={setPreference}
+            />
             <div className="view-div">
                 <View3D 
                     solution={solution ? (solution['solution'] ?? []) : []} 
