@@ -145,12 +145,12 @@ const ConfigPackageList = ({ units, packages, setPackages }) => {
     const onSave = (formPackage) => {
         const newPackages = [...packages];
         if (mode === 'add') {
-            newPackages.unshift(0);
-            setPackages(curr => [formPackage, ...curr]);
+            newPackages.unshift(formPackage);
         } else if (mode === 'edit') {
             const index = newPackages.findIndex(x => x['id'] === editedPackage['id']);
             newPackages[index] = formPackage;
         }
+
         if (!hasDuplicateTypes(newPackages)) {
             setPackages(newPackages);
             setShowEdit(false);
