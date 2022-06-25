@@ -83,16 +83,14 @@ function parseCSVFile(file) {
     let containerRow = [];
     let packagesRows = [];
     for (let i = 0; i < dataRows.length; i++) {
-        if (dataRows[i][0] === 'container' && seenContainer) {
-            containerRow.length = 0;
-            packagesRows.length = 0;
-            return { error: t('mustBeOnlyOneContainer') };
-        }
         if (dataRows[i][0] === 'container') {
+            if (seenContainer) {
+                return { error: t('mustBeOnlyOneContainer') };
+            }
             seenContainer = true;
             containerRow = dataRows[i];
         }
-        if (dataRows[i][0] === 'package') {
+        else if (dataRows[i][0] === 'package') {
             packagesRows.push(dataRows[i]);
         }
     }
@@ -107,19 +105,4 @@ function parseCSVFile(file) {
     return { container, packages }
 }
 
-function parseCSV(file, handler) {
-    let reader = new FileReader();
-    reader.readAsText(file);
-    reader.onload = () => {
-        const parsedData = parseCSVFile(reader.result);
-        if (parsedData.error) throw parsedData.error;
-        handler(parsedData);
-    }
-};
-
-export {
-    parseCSV,
-    parseCSVFile,
-}
-
-export default parseCSV
+export default parseCSVFile;
