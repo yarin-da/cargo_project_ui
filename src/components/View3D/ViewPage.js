@@ -17,8 +17,6 @@ import '../../styles/ViewPage.css';
 function downloadSolutionFile(solution){
     const scalar = solution['scalar'];
     const scaled = scaledSolution(solution, scalar);
-    console.log('orig', solution);
-    console.log('scal', scaled);
     saveJson('packing_solution', scaled);
 }
 

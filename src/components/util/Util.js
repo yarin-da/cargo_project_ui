@@ -39,9 +39,20 @@ const scaledSolution = (solution, scalar) => {
     return { container, packages, solution: pkgSolution, scalar };
 };
 
+const getJSONFromStorage = (key, defaultValue) => {
+    const item = localStorage.getItem(key);
+    return item ? JSON.parse(item) : defaultValue;
+}
+
+const saveJSONinStorage = (key, value) => {
+    localStorage.setItem(key, JSON.stringify(value));
+}
+
 export {
     scaledSolution,
     mod,
     dotProduct,
     parsePosition,
+    getJSONFromStorage,
+    saveJSONinStorage,
 };

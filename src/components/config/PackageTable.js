@@ -108,7 +108,7 @@ const ConfigPackageList = ({ units, packages, setPackages }) => {
     columns.push({
         field: 'actions',
         headerName: t('actions'),
-        minWidth: 160,
+        minWidth: 200,
         flex: 2,
         sortable: false,
         renderCell: ({ row }) => {

@@ -9,15 +9,7 @@ import {
 } from "react-router-dom";
 import {createTheme} from "@mui/material";
 import {ThemeProvider} from "@emotion/react";
-
-const getJSONFromStorage = (key, defaultValue) => {
-    const item = localStorage.getItem(key);
-    return item ? JSON.parse(item) : defaultValue;
-}
-
-const saveJSONinStorage = (key, value) => {
-    localStorage.setItem(key, JSON.stringify(value));
-}
+import { getJSONFromStorage, saveJSONinStorage } from "./components/util/Util";
 
 const theme = createTheme({
     palette: {

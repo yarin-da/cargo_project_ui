@@ -1,4 +1,11 @@
-import nextId from "react-id-generator";
+import { getJSONFromStorage, saveJSONinStorage } from "./util/Util";
+
+const nextId = () => {
+    const curr = parseInt(getJSONFromStorage('curr-id', 0));
+    const newId = curr + 1;
+    saveJSONinStorage('curr-id', newId);
+    return newId;
+};
 
 export default class Package {
     constructor() {
