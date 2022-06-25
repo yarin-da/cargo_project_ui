@@ -169,7 +169,7 @@ const ConfigPackageList = ({ units, packages, setPackages }) => {
     const locale = i18n.language === 'he' ? heIL : enUS;
     const classes = useStyles();
     return (
-        <div className="config-package-list">
+        <div className="config-package-table">
             <div className="add-packages-tab">
                 <CustomText text="addPackagesTab" variant="h4" />
             </div>
@@ -216,7 +216,7 @@ const ConfigPackageList = ({ units, packages, setPackages }) => {
                 }}
             />
             {/* add spacing so that the buttons won't overshadow the table's values */}
-            <div className="packages-modal"></div>
+            <div className="bottom-spacing" />
             <Modal 
                 open={showEdit} 
                 onClose={() => { setError(''); setShowEdit(false); }}

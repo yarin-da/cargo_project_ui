@@ -129,8 +129,7 @@ const CustomBox = ({
     text='', 
     parseByScale=null,
     onClick,
-    selected,
-    parseLength
+    selected
 }) => {   
     const [visible, setVisible] = useState(true);
     
