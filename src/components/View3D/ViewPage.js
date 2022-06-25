@@ -20,11 +20,12 @@ function downloadSolutionFile(solution){
     saveJson('packing_solution', scaled);
 }
 
-const initializeColors = (packages) => {  
+const initializeColors = (packages, solution) => {  
     const colorMap = {};
     if (packages) {
-        packages.forEach(pkg => {
-            const pkgType = pkg['type'];
+        const types = {};
+        solution.forEach(sol => !(sol['type'] in types) && (types[sol['type']] = true));
+        Object.keys(types).forEach(pkgType => {
             const pkgColor = getColors();
             colorMap[pkgType] = pkgColor;
         });    
@@ -45,7 +46,10 @@ const ViewPage = ({
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [snackbarTitle, setSnackbarTitle] = useState(false);
     const [selectedPackages, setSelectedPackages] = useState([]);
-    const [colorMap, setColorMap] = useState(initializeColors(solution ? (solution['packages'] ?? []) : []));
+    const [colorMap, setColorMap] = useState(initializeColors(
+        solution ? (solution['packages'] ?? []) : [], 
+        solution ? (solution['solution'] ?? []) : []
+    ));
     const { t } = useTranslation();
 
     // define history related actions
