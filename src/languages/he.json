@@ -120,5 +120,8 @@
   "stats": "נתונים",
   "preference": "העדפה",
   "volume": "נפח",
-  "duplicateTypes": "קיימת חבילה עם סוג זה"
+  "duplicateTypes": "קיימת חבילה עם סוג זה",
+  "copy": "העתקה",
+  "edit": "עריכה",
+  "delete": "מחיקה"
 }

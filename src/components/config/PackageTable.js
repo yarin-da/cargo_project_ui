@@ -1,7 +1,7 @@
 import { useState } from "react";
 import AddPackageForm from "./AddPackageForm";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { Button, Modal, Stack } from '@mui/material';
+import { Button, Modal, Stack, Tooltip } from '@mui/material';
 import { DataGrid, heIL, enUS } from '@mui/x-data-grid';
 import CustomText from "../util/CustomText";
 import { useTranslation } from "react-i18next";
@@ -114,19 +114,25 @@ const ConfigPackageList = ({ units, packages, setPackages }) => {
         renderCell: ({ row }) => {
             return (
                 <div>
-                    <Button onClick={() => copyPackage(row)}>
-                        <ContentCopyIcon />
-                    </Button>
-                    <Button onClick={() => {
-                        setMode('edit');
-                        setEditedPackage({...row});
-                        setShowEdit(true);
-                    }}>
-                        <EditIcon />
-                    </Button>
-                    <Button onClick={() => deletePackage(row)}>
-                        <DeleteIcon />
-                    </Button>
+                    <Tooltip title={t('copy')}>
+                        <Button onClick={() => copyPackage(row)}>
+                            <ContentCopyIcon />
+                        </Button>    
+                    </Tooltip>
+                    <Tooltip title={t('edit')}>
+                        <Button onClick={() => {
+                            setMode('edit');
+                            setEditedPackage({...row});
+                            setShowEdit(true);
+                        }}>
+                            <EditIcon />
+                        </Button>
+                    </Tooltip>
+                    <Tooltip title={t('delete')}>
+                        <Button onClick={() => deletePackage(row)}>
+                            <DeleteIcon />
+                        </Button>
+                    </Tooltip>
                 </div>
             );
         }

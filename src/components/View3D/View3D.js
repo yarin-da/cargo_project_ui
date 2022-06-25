@@ -12,6 +12,12 @@ const CONTAINER_COLOR     = 0x777777;
 const CONTAINER_THICKNESS = 0.1;
 const BACKGROUND_COLOR    = 0xffffff; 
 
+const canvasStyle = {
+    width: '100%',
+    height: '100%',
+    backgroundColor: BACKGROUND_COLOR,
+};
+
 extend({ Text });
 
 const Package = ({ solution, packages, colorMap, index, selected, onSelect, parseLength }) => {
@@ -146,18 +152,13 @@ const View3D = ({
     scaleDim
 }) => {
     const [controlTarget, setControlTarget] = useState([0, 0, 0]);
-    const canvasStyle = {
-        width: '100%',
-        height: '100%',
-        backgroundColor: BACKGROUND_COLOR,
-    };
 
     const parseLength = (length) => length / scaleDim;
 
     const updateControlsTarget = (index) => {
         if (index !== -1) {
             const pkg = solution[index];
-            setControlTarget([pkg['x'],pkg['z'],pkg['y']]);
+            setControlTarget([pkg['x'], pkg['z'], pkg['y']]);
         }
     }
 

@@ -121,5 +121,8 @@
   "boxesUsed": "Boxes Used",
   "preference": "Preference",
   "volume": "Volume",
-  "duplicateTypes": "There is another package with that type"
+  "duplicateTypes": "There is another package with that type",
+  "copy": "Copy",
+  "edit": "Edit",
+  "delete": "Delete"
 }
