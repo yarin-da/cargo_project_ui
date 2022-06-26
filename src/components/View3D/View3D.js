@@ -20,6 +20,49 @@ const canvasStyle = {
 
 extend({ Text });
 
+const initializeWalls = (scale) => {
+    const [width, height, depth] = scale;
+    return [
+        {
+            position: [-(width/2 + CONTAINER_THICKNESS), -CONTAINER_THICKNESS, -CONTAINER_THICKNESS],
+            scale: [CONTAINER_THICKNESS, height + CONTAINER_THICKNESS, depth + CONTAINER_THICKNESS],
+            direction: [1, 0, 0],
+            visible: true,
+        },
+        {
+            position: [width/2, -CONTAINER_THICKNESS, -CONTAINER_THICKNESS],
+            scale: [CONTAINER_THICKNESS, height + CONTAINER_THICKNESS, depth + CONTAINER_THICKNESS],
+            direction: [-1, 0, 0],
+            visible: true,
+        },
+        {
+            position: [-CONTAINER_THICKNESS, -(height/2 + CONTAINER_THICKNESS), -CONTAINER_THICKNESS],
+            scale: [width + CONTAINER_THICKNESS, CONTAINER_THICKNESS, depth + CONTAINER_THICKNESS],
+            direction: [0, 1, 0],
+            visible: true,
+        },
+        {
+            position: [-CONTAINER_THICKNESS, height/2, -CONTAINER_THICKNESS],
+            scale: [width + CONTAINER_THICKNESS, CONTAINER_THICKNESS, depth + CONTAINER_THICKNESS],
+            direction: [0, -1, 0],
+            visible: true,
+        },
+        {
+            position: [-CONTAINER_THICKNESS, -CONTAINER_THICKNESS, -(depth/2 + CONTAINER_THICKNESS)],
+            scale: [width + CONTAINER_THICKNESS, height + CONTAINER_THICKNESS, CONTAINER_THICKNESS],
+            direction: [0, 0, 1],
+            visible: true,
+        },
+
+        {
+            position: [-CONTAINER_THICKNESS, -CONTAINER_THICKNESS, depth/2],
+            scale: [width + CONTAINER_THICKNESS, height + CONTAINER_THICKNESS, CONTAINER_THICKNESS],
+            direction: [0, 0, -1],
+            visible: true,
+        },
+    ];
+};
+
 const Package = ({ solution, packages, colorMap, index, selected, onSelect, parseLength }) => {
     const sol = solution[index];
     const pkg = packages.find(pkg => pkg['type'] === sol['type']);
@@ -60,46 +103,9 @@ const Packages = ({ packages, solution, colorMap, selected, onSelect, parseLengt
 };
 
 const Container = ({ scale, parseLength }) => {
-    const [width, height, depth] = scale.map(s => s + CONTAINER_THICKNESS);
-    const [walls, setWalls] = useState([
-        {
-            position: [-(width/2 + CONTAINER_THICKNESS), -CONTAINER_THICKNESS, -CONTAINER_THICKNESS],
-            scale: [CONTAINER_THICKNESS, height + CONTAINER_THICKNESS, depth + CONTAINER_THICKNESS],
-            direction: [1, 0, 0],
-            visible: true,
-        },
-        {
-            position: [width/2, -CONTAINER_THICKNESS, -CONTAINER_THICKNESS],
-            scale: [CONTAINER_THICKNESS, height + CONTAINER_THICKNESS, depth + CONTAINER_THICKNESS],
-            direction: [-1, 0, 0],
-            visible: true,
-        },
-        {
-            position: [-CONTAINER_THICKNESS, -(height/2 + CONTAINER_THICKNESS), -CONTAINER_THICKNESS],
-            scale: [width + CONTAINER_THICKNESS, CONTAINER_THICKNESS, depth + CONTAINER_THICKNESS],
-            direction: [0, 1, 0],
-            visible: true,
-        },
-        {
-            position: [-CONTAINER_THICKNESS, height/2, -CONTAINER_THICKNESS],
-            scale: [width + CONTAINER_THICKNESS, CONTAINER_THICKNESS, depth + CONTAINER_THICKNESS],
-            direction: [0, -1, 0],
-            visible: true,
-        },
-        {
-            position: [-CONTAINER_THICKNESS, -CONTAINER_THICKNESS, -(depth/2 + CONTAINER_THICKNESS)],
-            scale: [width + CONTAINER_THICKNESS, height + CONTAINER_THICKNESS, CONTAINER_THICKNESS],
-            direction: [0, 0, 1],
-            visible: true,
-        },
-
-        {
-            position: [-CONTAINER_THICKNESS, -CONTAINER_THICKNESS, depth/2],
-            scale: [width + CONTAINER_THICKNESS, height + CONTAINER_THICKNESS, CONTAINER_THICKNESS],
-            direction: [0, 0, -1],
-            visible: true,
-        },
-    ]);
+    const [walls, setWalls] = useState(
+        initializeWalls(scale.map(s => s + CONTAINER_THICKNESS))
+    );
 
     useFrame(({ camera }) => {
         // do not display the walls that can hide the packages from the user
@@ -112,7 +118,8 @@ const Container = ({ scale, parseLength }) => {
             // when the dot product of the camera's direction and the wall's direction is positive
             // then the wall should not be visible
             const dot = dotProduct([x, y, z], w.position);
-            if (w.visible !== (dot <= 0)) {
+            const negativeDot = (dot <= 0);
+            if (w.visible !== negativeDot) {
                 w.visible = !w.visible;
                 shouldUpdate = true;
             }
